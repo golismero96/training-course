@@ -3,11 +3,10 @@ import LanguageContext from '../contexts/LanguageContext';
 
 
 const Button = () => {
-    const things = useContext(LanguageContext)
-    console.log(things)
+    const lang = useContext(LanguageContext)
     return (
         <button className="button ui primary">
-            Submit
+            {lang === 'english' ? 'Submit' : 'بفرست'}
         </button>
     );
 };
