@@ -1,15 +1,15 @@
-import React, {useContext} from 'react';
-import LanguageContext from '../contexts/LanguageContext';
+import React from 'react';
+import LanguageContext from '../contexts/LanguageContext'
 import Field from './Field';
 import Button from './Button';
 import {RtlDiv} from '../styled/userCreate.styled'
 
 
 const UserCreate = () => {
-    const lang = useContext(LanguageContext)
+    const contextType = LanguageContext
     return (
         <>
-            {lang !== 'english' ? (
+            {contextType.language !== 'english' ? (
                 <RtlDiv className="ui form">
                     <Field />
                     <Button />

@@ -1,16 +1,15 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import LanguageContext from '../contexts/LanguageContext'
 
-// LanguageSelector.propTypes = {
-//     onChangeLanguage
-// };
-
-function LanguageSelector(props) {
+function LanguageSelector() {
+    const contextType = LanguageContext
+    console.log(contextType)
+    console.log("contextType")
     return (
         <div>
           <h3>Select a language: </h3>
-          <i className="flag us" onClick={() => props.onChangeLanguage('english')} />
-          <i className="flag ir" onClick={() => props.onChangeLanguage('persian')} />
+          <i className="flag us" onClick={() => contextType.onChangeLanguage('english')} />
+          <i className="flag ir" onClick={() => contextType.onChangeLanguage('persian')} />
           <br />
           <br />
         </div>
