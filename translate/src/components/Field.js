@@ -3,11 +3,20 @@ import LanguageContext from '../contexts/LanguageContext';
 
 
 const Field = () => {
-    const lang = useContext(LanguageContext)
+    // provider
+    // const lang = useContext(LanguageContext)
+    // {value === 'english' ? 'Name' : 'نام'}
+    
+    // Consumer
+    const renderLabel = (value) => {
+        return value === 'english' ? 'Name' : 'نام'
+    }
     return (
         <div className='ui field'>
             <label htmlFor="name">    
-                {lang === 'english' ? 'Name' : 'نام'}
+                <LanguageContext.Consumer>
+                    {(value) => renderLabel(value)}
+                </LanguageContext.Consumer>
             </label>
             <input id="name" className="input ui info" />
         </div>

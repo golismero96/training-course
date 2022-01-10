@@ -3,10 +3,18 @@ import LanguageContext from '../contexts/LanguageContext';
 
 
 const Button = () => {
-    const lang = useContext(LanguageContext)
+    // provider
+    // const lang = useContext(LanguageContext)
+
+    // Consumer
+    const renderSubmit = (value) => {
+        return value === 'english' ? 'Submit' : 'بفرست'
+    }
     return (
         <button className="button ui primary">
-            {lang === 'english' ? 'Submit' : 'بفرست'}
+            <LanguageContext.Consumer>
+                {(value) => renderSubmit(value)}
+            </LanguageContext.Consumer>
         </button>
     );
 };
