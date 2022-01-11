@@ -1,12 +1,12 @@
-import React from 'react';
+import React,{useContext} from 'react';
 import LanguageContext from '../contexts/LanguageContext';
 
 
 const Field = () => {
     // provider
-    // const lang = useContext(LanguageContext)
+    const [state,_] = useContext(LanguageContext)
     // {value === 'english' ? 'Name' : 'نام'}
-    
+    console.log("field")
     // Consumer
     const renderLabel = (value) => {
         return value === 'english' ? 'Name' : 'نام'
@@ -14,9 +14,7 @@ const Field = () => {
     return (
         <div className='ui field'>
             <label htmlFor="name">    
-                <LanguageContext.Consumer>
-                    {(value) => renderLabel(value)}
-                </LanguageContext.Consumer>
+            {renderLabel(state.language)}
             </label>
             <input id="name" className="input ui info" />
         </div>

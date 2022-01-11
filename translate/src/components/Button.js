@@ -1,20 +1,23 @@
-import React from 'react';
-import LanguageContext from '../contexts/LanguageContext';
+import React,{useContext,useMemo} from 'react';
+import {useLangContext} from '../contexts/LanguageContext';
 
 
 const Button = () => {
     // provider
-    // const lang = useContext(LanguageContext)
-
+    const [state,dispatch] = useLangContext()
+    const memo = useMemo(()=>{
+        return{
+            language:state.language
+        }
+    },[state.language])
     // Consumer
-    const renderSubmit = (value) => {
-        return value === 'english' ? 'Submit' : 'بفرست'
+    console.log('button',memo)
+    const renderSubmit = () => {
+        return memo.language === 'english' ? 'Submit'+state.test : 'بفرست'+state.test
     }
     return (
         <button className="button ui primary">
-            <LanguageContext.Consumer>
-                {(value) => renderSubmit(value)}
-            </LanguageContext.Consumer>
+            {renderSubmit()}
         </button>
     );
 };
