@@ -1,17 +1,20 @@
-import React from 'react';
-import {LanguageStore} from '../contexts/LanguageContext';
-import UserCreate from './UserCreate';
-import LanguageSelector from './LanguageSelector';
-import '../App.css'
+import React from "react";
+import { LanguageStore } from "../contexts/LanguageContext";
+import UserCreate from "./UserCreate";
+import LanguageSelector from "./LanguageSelector";
+import ErrorBoundary from "./ErrorBoundary";
+import "../App.css";
 
 function App() {
   return (
-      <div>
+    <div>
+      <ErrorBoundary>
         <LanguageStore>
-          <LanguageSelector/>
+          <LanguageSelector />
           <UserCreate />
         </LanguageStore>
-      </div>
+      </ErrorBoundary>
+    </div>
   );
 }
 
