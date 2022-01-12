@@ -3,12 +3,21 @@ import React, { useContext, useReducer } from "react";
 // export default React.createContext('english')
 const initialState = {
   language: "english",
+  ram_language: "english",
   test: true,
 };
 const reducer = (state, action) => {
   switch (action.type) {
-    case "setlang":
-      return { ...state, language: action.language };
+    case "setlang": {
+      if (action.language === "english" || action.language === "persian") {
+        return { ...state, language: action.language };
+      } else {
+        alert("just languages: Persian and English");
+        return { ...state, language: state.language };
+      }
+    }
+    case "setRamlang":
+      return { ...state, ram_language: action.ram_language };
     case "setTest":
       return { ...state, test: action.test };
     default:

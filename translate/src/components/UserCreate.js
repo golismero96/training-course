@@ -9,10 +9,17 @@ const UserCreate = () => {
   return (
     <>
       <Suspense fallback={<div>Loading...</div>}>
-        <RtlDiv className="ui form">
-          <FieldLazy />
-          {state.language == "persian" && <ButtonLazy />}
-        </RtlDiv>
+        {state.language === "persian" ? (
+          <RtlDiv className="ui form">
+            <FieldLazy />
+            {state.test && <ButtonLazy />}
+          </RtlDiv>
+        ) : (
+          <div className="ui form">
+            <FieldLazy />
+            {state.test && <ButtonLazy />}
+          </div>
+        )}
       </Suspense>
     </>
   );
