@@ -2,9 +2,7 @@ import React, { useContext, useMemo } from "react";
 import LanguageContext from "../contexts/LanguageContext";
 
 const Field = () => {
-  // provider
   const [state, dispatch] = useContext(LanguageContext);
-  // Consumer
   const renderLabel = (value) => {
     return value === "english" ? "Name" : "نام";
   };
