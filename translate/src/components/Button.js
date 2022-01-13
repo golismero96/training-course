@@ -1,19 +1,17 @@
 import React, { useMemo } from "react";
 import { useLangContext } from "../contexts/LanguageContext";
-// const clickConsole = () => {
-//   console.log("test");
-// };
 const Button = () => {
-  // provider
-
   const [state, dispatch] = useLangContext();
+  // const clickConsole = () => {
+  //   console.log("test");
+  // };
   // useEffect(() => {
   //   window.addEventListener("click", clickConsole, true);
   //   console.log("monted");
   //   return () => {
-  //     //    *********************************create error in page for ErrorBoundary********************************************
+  //     //    *******************create error in page for ErrorBoundary*******************
   //     // dispatch("ts");
-  //     //    *********************************create error in page for ErrorBoundary********************************************
+  //     //    *******************create error in page for ErrorBoundary*******************
   //     window.removeEventListener("click", clickConsole, true);
   //     console.log("unmonted");
   //   };
@@ -35,7 +33,5 @@ const Button = () => {
     );
   }, [state.language, state.ram_language]);
 };
-
-// Button.contextType = LanguageContext
 
 export default Button;
