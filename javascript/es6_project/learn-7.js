@@ -13,4 +13,4 @@ let user = new User("Mostafa", "golismero96@gmail.com");
 
 user.changeEmail("golismero@gmail.com");
 
-console.log(user.name + ": " + user.email);
+console.log(user.username + ": " + user.email);
