@@ -7,9 +7,14 @@ class User {
   changeEmail(newEmail) {
     this.email = newEmail;
   }
+
+  static register(...args) {
+    // static register(username, email)
+    return User(...args);
+  }
 }
 
-let user = new User("Mostafa", "golismero96@gmail.com");
+let user = User.register("Mostafa", "golismero96@gmail.com");
 
 user.changeEmail("golismero@gmail.com");
 
