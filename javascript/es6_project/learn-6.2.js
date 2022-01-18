@@ -1,16 +1,10 @@
-// Object Shorthand
+// Object distructoring
 
-function getPerson() {
-  let name = "Mostafa";
-  let age = 25;
+let person = {
+  name: "Mostafa",
+  age: 25,
+};
 
-  return {
-    name,
-    age,
-    greet() {
-      return `Salam ${this.name}`;
-    },
-  };
-}
+let { name, age } = person;
 
-console.log(getPerson().greet());
+console.log(name);
