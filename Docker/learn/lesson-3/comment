@@ -1,0 +1,6 @@
+docker run --rm -it ubuntu-18.04 bash
+docker ps
+docker image ls
+docker diff <Name Container> // کارهایی که در کانتینر انجام شده
+docker commit -a "Mostafa dadfar" -m <Custom massage> <Number Container> <New Image Name>
+// ^ برای ساخت ایمیج جدید از کانتینر ساخته شده
