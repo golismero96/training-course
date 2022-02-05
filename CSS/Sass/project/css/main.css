@@ -1,0 +1,50 @@
+.div-bg {
+  background-color: lightblue;
+}
+
+h1 {
+  color: darkblue;
+  font-size: 20px;
+}
+
+.variable-scope {
+  background-color: grey;
+}
+
+.variable-scope-other {
+  background-color: grey;
+}
+
+nav ul {
+  list-style: none;
+  margin: 1px;
+  padding: 1px;
+}
+
+nav li {
+  display: inline-block;
+}
+
+nav a {
+  display: block;
+  padding: 12px 12px;
+  text-decoration: none;
+}
+
+.text-important {
+  color: white;
+  font-size: 30px;
+  font-weight: bold;
+  border: 2px solid red;
+  background-color: black;
+}
+
+.button-standard, .button-home {
+  border: none;
+  padding: 30px 30px;
+  font-size: 20px;
+}
+
+.button-home {
+  background-color: red;
+}
