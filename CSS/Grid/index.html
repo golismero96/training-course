@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Media Grid</title>
+</head>
+<style>
+    body {
+        margin: 0px;
+    }
+
+    h1 {
+        text-align: center;
+    }
+
+    .container {
+        max-width: 1435px;
+        margin: 0 auto;
+        background-color: burlywood;
+    }
+
+    .row {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: flex-start;
+        background-color: aqua;
+    }
+
+    .item {
+        height: 350px;
+        flex-basis: 20%;
+        width: 259px;
+        padding: 10px;
+        box-sizing: border-box;
+        background-color: chocolate;
+    }
+
+    .item div {
+        background-color: blueviolet;
+        height: 100%
+    }
+
+    @media(max-width: 1300px) {
+        .item {
+            flex-basis: 33.33%;
+        }
+    }
+
+    @media(max-width: 1100px) {
+        .item {
+            flex-basis: 33.33%;
+        }
+    }
+
+    @media(max-width: 900px) {
+        .item {
+            flex-basis: 50%;
+        }
+    }
+
+    @media(max_width:600px) {
+        .item {
+            flex-basis: 100%;
+        }
+    }
+</style>
+
+<body>
+    <h1>FlexBox Media Grid</h1>
+    <div class="container">
+        <div class="row">
+            <div class="item">
+                <div>content</div>
+            </div>
+            <div class="item">
+                <div>content</div>
+            </div>
+            <div class="item">
+                <div>content</div>
+            </div>
+            <div class="item">
+                <div>content</div>
+            </div>
+            <div class="item">
+                <div>content</div>
+            </div>
+            <div class="item">
+                <div>content</div>
+            </div>
+            <div class="item">
+                <div>content</div>
+            </div>
+            <div class="item">
+                <div>content</div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
