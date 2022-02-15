@@ -4,5 +4,5 @@ from .models import Events
 
 
 class LeadListCreate(generics.ListCreateAPIView):
-    queryset = reversed(Events.objects.all())
+    queryset = Events.objects.all()
     serializer_class = LeadSerializer
