@@ -32,11 +32,14 @@ class App extends Component {
   render() {
     return (
       <div>
+        <h1>List Events</h1>
+        <hr />
         {this.state.data.map((events) => {
           return (
             <div>
-              Event: {events.title}
-              Details {events.details}
+              <p>Event: {events.title}</p>
+              <p>Details: {events.details}</p>
+              <hr />
             </div>
           );
         })}
@@ -46,3 +49,6 @@ class App extends Component {
 }
 
 export default App;
+
+const container = document.getElementById("api");
+render(<App />, container);
