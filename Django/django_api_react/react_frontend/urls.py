@@ -4,5 +4,5 @@ from . import views
 app_name = 'react_frontend'
 
 urlpatterns = [
-    path('', views.index),
+    path('dashboard/', views.index),
 ]
