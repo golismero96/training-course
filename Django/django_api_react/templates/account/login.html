@@ -1,3 +1,5 @@
+{% load socialaccount %}
+
 <!doctype html>
 <html lang="en">
 
@@ -17,16 +19,24 @@
 
     <div class="container text-dark mt-5">
         <div class="row justify-content-md-center">
-            <div class="col-md-5 p-3">
-                <h1>My Google Login Project</h1>
-                {% if user.is_authenticated %}
-                <p>Welcome, {{ user.username }} !</p>
-                <p>
-                    <a href="/accounts/logout/" rel="logout">Sign Out</a>
-                </p>
-                {% else %}
-                <h1>Welcome Friend, please <a href="/accounts/login/">log in</a></h1>
-                {% endif %}
+            <div class="col-md-5 bg-grey p-3">
+                <form class="form-signin">
+                    <h1 class="h3 mb-3">Please sign in</h1>
+                    <label for="inputEmail" class="sr-only">Email address</label>
+                    <input type="text" id="inputEmail" class="form-control" placeholder="Username / Email address"
+                        required autofocus>
+                    <label for="inputPassword" class="sr-only">Password</label>
+                    <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                    <div class="checkbox mb-3">
+                        <label>
+                            <input type="checkbox" value="remember-me"> Remember me
+                        </label>
+                    </div>
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+                    <a href="{% provider_login_url 'google' %}" class="btn btn btn-danger btn-lg btn-block"
+                        role="button" aria-pressed="true">Sign in with Google</a>
+                    <p class="mt-5 mb-3 text-muted">&copy; 2021-2022</p>
+                </form>
             </div>
         </div>
     </div>
