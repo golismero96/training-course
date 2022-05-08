@@ -1,4 +1,5 @@
 <template>
+  <div>
   <div id="todo">
     <div class="container mt-5">
       <div class="row justify-content-md-center">
@@ -36,6 +37,11 @@
         </div>
       </div>
     </div>
+  </div>
+  <br/>
+  <div id="app">
+    <router-view />
+  </div>
   </div>
 </template>
 
