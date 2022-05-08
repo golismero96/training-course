@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "@expo/metro-config": "^0.3.16",
+    "create-react-app": "^5.0.1",
+    "create-react-native-app": "^3.8.0",
+    "expo-cli": "^5.4.3",
+    "react-native": "^0.68.1",
+    "react-native-cli": "^2.0.1"
+  }
+}
