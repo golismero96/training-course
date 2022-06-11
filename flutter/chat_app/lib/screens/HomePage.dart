@@ -1,12 +1,13 @@
 
 import 'dart:ffi';
 
+import 'package:chat_app/modules/MessageWidget.dart';
 import 'package:chat_app/modules/UserWidget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../modules/CategoryTitle.dart';
-import '../modules/ImageColorCircleAvatar.dart';
+import '../modules/MessageWidget.dart';
+import 'dart:math' as math;
 
 
 class HomePage extends StatelessWidget {
@@ -17,76 +18,88 @@ class HomePage extends StatelessWidget {
     final members = ["Selma", "Emeline", "Sonia", "Jean", "Jack", "Rajesh", "Sharma", "Pahlavi", "Arman", "Roy"];
     return Scaffold(
       body: SafeArea(
-          child: Container(
-              padding: EdgeInsets.all(15),
-              margin: EdgeInsets.symmetric(vertical: 15),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
-                      CategoryTitle('Messages', Colors.black87, 26),
-                      Icon(Icons.edit, color: Colors.green),
-                      // TextButton(
-                      //     child: Icon(Icons.edit_outlined, color: Colors.green),
-                      //     onPressed: (){}
-                      // )
-                    ],
-                  ),
-                  TextField(
-
-                  ),
-                  const SizedBox(height: 25,),
-                  const CategoryTitle('Activities', Colors.black, 20),
-                  const SizedBox(height: 25,),
-                  Container(
-                    height: 115,
-                    child:
-                      ListView(
-                          scrollDirection: Axis.horizontal,
-                          children: [
-                            for(var member=0; member < 10; member++) ...[
-                              UserWidget('avatars/150-$member.jpg', members[member])
-                            ]
-                          ],
-                      ),
-                  ),
-                  const SizedBox(height: 25,),
-                  const CategoryTitle('Messages', Colors.black, 20),
-                  const SizedBox(height: 20),
-                  Container(
-                    child: Row(
-                      children: [
-                        UserWidget('avatars/150-1.jpg', members[1], hAvatarBox: 60, wAvatarBox: 60, showFamily: false),
-                        const SizedBox(width: 10,),
-                        Expanded(child:
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              CategoryTitle(members[1], Colors.black87, 18),
-                              const SizedBox(height: 10,),
-                              const CategoryTitle('Hello how are you? I am going to market. do you want burgers?', Colors.black54, 15),
-                            ],
+        child: Container(
+          margin: EdgeInsets.symmetric(vertical: 15),
+          child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child:
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          CategoryTitle('Instagram', Colors.black87, 26),
+                          Transform.rotate(
+                            angle: 180 * math.pi / 100,
+                            child:
+                              const Icon(Icons.send_sharp, color: Colors.green),
                           )
+                          // TextButton(
+                          //     child: Icon(Icons.edit_outlined, color: Colors.green),
+                          //     onPressed: (){}
+                          // )
+                        ],
+                      ),
+                ),
+                const SizedBox(height: 25,),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child:
+                    TextField(
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                            gapPadding: 4
+                          ),
+                          fillColor: Colors.grey,
+                          labelStyle: TextStyle(color: Colors.grey[500], fontSize: 20),
+                          labelText: 'Search',
+                          prefixIcon: Icon(Icons.search_outlined, color: Colors.grey, size:28)==null ? null : Icon(Icons.search_outlined, color: Colors.grey, size:28)
                         ),
-                        Column(
-                          children: [
-                            const CategoryTitle('23min', Colors.greenAccent, 15),
-                            const SizedBox(height: 10,),
-                            CircleAvatar(
-                              backgroundColor: Colors.green.shade400,
-                              radius: 15,
-                              child: CategoryTitle('1', Colors.white, 12)
-                            )
-                          ],
-                        )
-                      ],
-                    )
-                  )
-                ],
-              )
-          ),
+                      ),
+                ),
+                const SizedBox(height: 25,),
+                Expanded(
+                  child:
+                  ListView(
+                  scrollDirection: Axis.vertical,
+                  children: [
+                    Container(
+                      height: 115,
+                      child:
+                        ListView(
+                            scrollDirection: Axis.horizontal,
+                            children: [
+                              for(var member=0; member < 10; member++) ...[
+                                UserWidget('avatars/150-$member.jpg', members[member])
+                              ]
+                            ],
+                        ),
+                    ),
+                    Container(
+                      width: 100,
+                      height: 0.5,
+                      color: Colors.grey.shade200
+                    ),
+                    for(var member=0; member < 10; member++) ...[
+                      MessageWidget(family: members[member], msg: 'Hello how are you? I am going to market. do you want burgers?', pic: 'avatars/150-$member.jpg', time: '2$member min', count: (math.pi * (member + 1)).round())
+                    ]
+                  ],
+                )
+              ),
+            ],
+          )
+        ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        iconSize: 35,
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.chat_outlined, color: Colors.grey), activeIcon: Icon(Icons.chat_outlined, color: Colors.black87), label: 'Chat'),
+          BottomNavigationBarItem(icon: Icon(Icons.phone_outlined, color: Colors.grey), activeIcon: Icon(Icons.phone_outlined, color: Colors.black87), label: 'Call'),
+          BottomNavigationBarItem(icon: Icon(Icons.camera_alt_outlined, color: Colors.grey), activeIcon: Icon(Icons.camera_alt_outlined, color: Colors.black87), label: 'Camera'),
+          BottomNavigationBarItem(icon: Icon(Icons.settings_outlined, color: Colors.grey), activeIcon: Icon(Icons.settings_outlined, color: Colors.black87), label: 'Setting'),
+        ]
       )
     );
   }

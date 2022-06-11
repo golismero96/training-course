@@ -14,31 +14,23 @@ class UserWidget extends StatelessWidget {
     return Column(
       children: [
         Container(
-            padding: EdgeInsets.all(3),
-            margin: EdgeInsets.symmetric(horizontal: 10),
+            padding: const EdgeInsets.all(3),
+            margin: const EdgeInsets.symmetric(horizontal: 10),
             decoration: BoxDecoration(
-              color: Colors.green,
+              color: Colors.deepOrange,
               borderRadius: BorderRadius.circular(45),
             ),
             child: Container(
-                child: Container(
-                  padding: EdgeInsets.all(2),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(45),
-                  ),
-                  child: Container(
-                    height: hAvatarBox ?? 55,
-                    width: wAvatarBox ?? 55,
-                    padding: EdgeInsets.all(2),
-                    decoration: BoxDecoration(
-                        color: Colors.green,
-                        borderRadius: BorderRadius.circular(45),
-                        image: DecorationImage(image: AssetImage('images/$image'))
-                    ),
-                  ),
-                )
-            )
+              height: hAvatarBox ?? 55,
+              width: wAvatarBox ?? 55,
+              padding: const EdgeInsets.all(2),
+              decoration: BoxDecoration(
+                  color: Colors.green,
+                  borderRadius: BorderRadius.circular(45),
+                  border: Border.all(color: Colors.white, width: 3),
+                  image: DecorationImage(image: AssetImage('images/$image'))
+              ),
+            ),
         ),
         const SizedBox(height: 10,),
         if(showFamily ?? true)
