@@ -1,14 +1,24 @@
+import 'package:chat_app/modules/MyProvider.dart';
+import 'package:chat_app/screens/HomePage.dart';
 import 'package:chat_app/screens/Login.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+      MultiProvider(
+          providers: [
+            ChangeNotifierProvider(create: (_)=>MyProvider())
+          ],
+        child: const MyApp()
+      )
+  );
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
+  // This widgets is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -23,7 +33,9 @@ class MyApp extends StatelessWidget {
         /* dark theme settings */
       ),
       themeMode: ThemeMode.light,
-      home: const Login(),
+      home: context.watch<MyProvider>().user == null
+        ? const Login()
+        : const HomePage()
     );
   }
 }
