@@ -1,10 +1,9 @@
 
-import 'dart:ffi';
-
 import 'package:chat_app/modules/MessageWidget.dart';
+import 'package:chat_app/modules/MyProvider.dart';
 import 'package:chat_app/modules/UserWidget.dart';
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
 import '../modules/CategoryTitle.dart';
 import '../modules/MessageWidget.dart';
 import 'dart:math' as math;
@@ -41,6 +40,21 @@ class HomePage extends StatelessWidget {
                           // )
                         ],
                       ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CategoryTitle(context.read<MyProvider>().toString(), Colors.black87, 26),
+                    Transform.rotate(
+                      angle: 180 * math.pi / 100,
+                      child:
+                      const Icon(Icons.send_sharp, color: Colors.green),
+                    )
+                    // TextButton(
+                    //     child: Icon(Icons.edit_outlined, color: Colors.green),
+                    //     onPressed: (){}
+                    // )
+                  ],
                 ),
                 const SizedBox(height: 25,),
                 Padding(

@@ -1,0 +1,22 @@
+Center(
+child: InkWell(
+onTap: (){
+Navigator.push(context, MaterialPageRoute(builder: (context)=> const RegPage()));
+},
+child:
+Container(
+margin: const EdgeInsets.only(top: 40, left: 25, right: 25),
+width: double.infinity,
+height: 50,
+decoration: const BoxDecoration(
+borderRadius: BorderRadius.all(Radius.circular(100)),
+gradient: LinearGradient(
+colors: [Colors.deepOrangeAccent, Colors.orange],
+end: Alignment.centerLeft,
+begin: Alignment.centerRight
+)
+),
+alignment: Alignment.center,
+child: const CategoryTitle('Login', Colors.white, 22.5)
+),
+)
