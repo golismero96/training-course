@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class HeaderContainer extends StatelessWidget {
-  const HeaderContainer({Key? key}) : super(key: key);
+  final String image;
+  const HeaderContainer(this.image, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,7 @@ class HeaderContainer extends StatelessWidget {
           borderRadius: BorderRadius.only(bottomLeft: Radius.circular(100))
         ),
         child: Center(
-          child: Image.asset('images/13.png')
+          child: Image.asset('images/$image')
         ),
     );
   }

@@ -17,7 +17,12 @@ class UserWidget extends StatelessWidget {
             padding: const EdgeInsets.all(3),
             margin: const EdgeInsets.symmetric(horizontal: 10),
             decoration: BoxDecoration(
-              color: Colors.deepOrange,
+              gradient: const LinearGradient(
+                  colors: [Colors.deepOrange, Colors.yellow],
+                  end: Alignment.bottomCenter,
+                  begin: Alignment.topCenter
+              ),
+              // color: Colors.deepOrange,
               borderRadius: BorderRadius.circular(45),
             ),
             child: Container(

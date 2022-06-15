@@ -1,5 +1,8 @@
 import 'package:chat_app/modules/CategoryTitle.dart';
+import 'package:chat_app/screens/ForgetPass.dart';
 import 'package:chat_app/modules/TextInput.dart';
+import 'package:chat_app/screens/HomePage.dart';
+import 'package:chat_app/screens/Registry.dart';
 import 'package:chat_app/widgets/ButtonWidget.dart';
 import 'package:chat_app/widgets/HeaderContainer.dart';
 import 'package:flutter/cupertino.dart';
@@ -14,7 +17,7 @@ class Login extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: <Widget>[
-            const HeaderContainer(),
+            const HeaderContainer('13.png'),
             const SizedBox(height: 10,),
             Expanded(
                 child:
@@ -25,27 +28,57 @@ class Login extends StatelessWidget {
                     Container(
                         margin: const EdgeInsets.only(top: 10, right: 25),
                         alignment: Alignment.centerRight,
-                        child: const CategoryTitle('Forget Password ?', Colors.redAccent, 15)
+                        child: InkWell(
+                          onTap: (){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context)=>const ForgetPass())
+                            );
+                          },
+                          child:
+                            const CategoryTitle('Forget Password ?', Colors.redAccent, 15)
+                        )
                     ),
                     const SizedBox(height: 40),
-                    const Center(
-                      child: ButtonWidget()
+                    Center(
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context)=> const HomePage())
+                          );
+                        },
+                        child: const ButtonWidget('SignIn')
+                      )
                     )
                   ]
                 )
             ),
-            RichText(text: const TextSpan(
-                children: [
-                  TextSpan(
-                      text: "Don't have an account? ",
-                      style: TextStyle(color: Colors.black, fontSize: 16)
-                  ),
-                  TextSpan(
-                      text: "Register",
-                      style: TextStyle(color: Colors.deepOrangeAccent, fontSize: 16)
-                  ),
-                ]
-            )),
+            Center(
+              child: InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context)=> const Registry())
+                  );
+                },
+                child:
+                  RichText(
+                    text: const TextSpan(
+                      children: [
+                        TextSpan(
+                          text: "Don't have an account? ",
+                          style: TextStyle(color: Colors.black, fontSize: 16)
+                        ),
+                        TextSpan(
+                          text: "Register",
+                          style: TextStyle(color: Colors.deepOrangeAccent, fontSize: 16)
+                        ),
+                      ],
+                    )
+                  )
+              )
+            ),
             const SizedBox(height: 20,)
           ],
         )
