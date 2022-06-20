@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:chat_app/modules/CategoryTitle.dart';
 import 'package:chat_app/screens/ForgetPass.dart';
 import 'package:chat_app/modules/TextInput.dart';
@@ -5,7 +7,6 @@ import 'package:chat_app/screens/HomePage.dart';
 import 'package:chat_app/screens/Registry.dart';
 import 'package:chat_app/widgets/ButtonWidget.dart';
 import 'package:chat_app/widgets/HeaderContainer.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Login extends StatelessWidget {
@@ -45,7 +46,7 @@ class Login extends StatelessWidget {
                         onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context)=> const HomePage())
+                            MaterialPageRoute(builder: (context)=> HomePage())
                           );
                         },
                         child: const ButtonWidget('SignIn')

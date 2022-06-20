@@ -24,15 +24,17 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Chat App',
+      // theme: ThemeData(
+      //   brightness: Brightness.light,
+      //   /* light theme settings */
+      // ),
+      // darkTheme: ThemeData(
+      //   brightness: Brightness.dark,
+      //   /* dark theme settings */
+      // ),
+      // themeMode: ThemeMode.light,
       theme: ThemeData(
-        brightness: Brightness.light,
-        /* light theme settings */
-      ),
-      darkTheme: ThemeData(
-        brightness: Brightness.dark,
-        /* dark theme settings */
-      ),
-      themeMode: ThemeMode.light,
+        brightness: context.watch<MyProvider>().theme == Themdata.light ? Brightness.light : Brightness.dark),
       home: context.watch<MyProvider>().user == null
         ? const Login()
         : const HomePage()

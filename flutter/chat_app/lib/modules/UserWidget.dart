@@ -1,3 +1,4 @@
+import 'package:chat_app/modules/CategoryTitle.dart';
 import 'package:flutter/material.dart';
 
 
@@ -39,7 +40,7 @@ class UserWidget extends StatelessWidget {
         ),
         const SizedBox(height: 10,),
         if(showFamily ?? true)
-          Text(family, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black54))
+          CategoryTitle(family, Colors.black54, 16, fontWeight: FontWeight.bold)
       ],
     );
   }

@@ -1,4 +1,5 @@
 import 'package:chat_app/modules/CategoryTitle.dart';
+import 'package:chat_app/modules/MyElements.dart';
 import 'package:chat_app/modules/TextInput.dart';
 import 'package:chat_app/screens/Login.dart';
 import 'package:chat_app/widgets/HeaderContainer.dart';
@@ -23,6 +24,13 @@ class Registry extends StatelessWidget {
                         const TextInput('Family', Icons.family_restroom, false),
                         const TextInput('Username', Icons.supervised_user_circle, false),
                         const TextInput('Password', Icons.password, true),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: const [
+                            CategoryTitle('I agree with the rules of the site', Colors.black87, 15),
+                            MyCheckbox(),
+                          ],
+                        ),
                         Center(
                             child: InkWell(
                               onTap: (){
@@ -30,7 +38,7 @@ class Registry extends StatelessWidget {
                               },
                               child:
                               Container(
-                                  margin: const EdgeInsets.only(top: 40, left: 25, right: 25),
+                                  margin: const EdgeInsets.only(top: 10, left: 25, right: 25),
                                   width: double.infinity,
                                   height: 50,
                                   decoration: const BoxDecoration(

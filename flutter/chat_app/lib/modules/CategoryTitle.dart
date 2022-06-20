@@ -1,14 +1,22 @@
+import 'package:chat_app/modules/MyProvider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 
 class CategoryTitle extends StatelessWidget {
   final String title;
   final Color color;
   final double fontSize;
-  const CategoryTitle(this.title, this.color, this.fontSize , {Key? key}) : super(key: key);
+  final FontWeight? fontWeight;
+  const CategoryTitle(this.title, this.color, this.fontSize, {Key? key, this.fontWeight}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Text(title, style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.bold, color: color));
+    // ignore: unrelated_type_equality_checks
+    return Text(title, 
+        style: TextStyle(
+          fontSize: fontSize, 
+          fontWeight: fontWeight == FontWeight.bold ? FontWeight.bold : fontWeight, 
+          color: context.watch<MyProvider>().theme == Themdata.light ? color : Colors.white));
   }
 }

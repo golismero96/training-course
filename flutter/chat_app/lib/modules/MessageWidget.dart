@@ -43,7 +43,7 @@ class MessageWidget extends StatelessWidget {
                 const SizedBox(height: 10,),
                 if(count != 0) ...{
                   CircleAvatar(
-                      backgroundColor: Colors.lightBlue,
+                      backgroundColor: Colors.yellow[900],
                       radius: 15,
                       child: CategoryTitle('$count', Colors.white, 12)
                   )

@@ -1,15 +1,24 @@
+// ignore_for_file: file_names
 
 import 'package:chat_app/modules/MessageWidget.dart';
+import 'package:chat_app/modules/MyElements.dart';
+import 'package:chat_app/modules/MyProvider.dart';
 import 'package:chat_app/modules/UserWidget.dart';
 import 'package:flutter/material.dart';
 import '../modules/CategoryTitle.dart';
 import '../modules/MessageWidget.dart';
+import 'package:provider/provider.dart';
 import 'dart:math' as math;
 
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage>{
   @override
   Widget build(BuildContext context) {
     final members = ["Selma", "Emeline", "Sonia", "Jean", "Jack", "Rajesh", "Sharma", "Pahlavi", "Arman", "Roy"];
@@ -27,11 +36,23 @@ class HomePage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           const CategoryTitle('Instagram', Colors.black87, 26),
-                          Transform.rotate(
-                            angle: 180 * math.pi / 100,
-                            child:
-                              Icon(Icons.send, color: Colors.grey.shade800, size: 30,),
-                          )
+                          // MySwitch(),
+                          const MyDropDownButton([
+                            DropdownMenuItem(child: CategoryTitle('تهران', Colors.black87, 23), value: 1),
+                            DropdownMenuItem(child: CategoryTitle('مشهد', Colors.black87, 23), value: 2),
+                            DropdownMenuItem(child: CategoryTitle('اصفهان', Colors.black87, 23), value: 3),
+                          ]),
+                          Switch(
+                            value: context.watch<MyProvider>().theme == Themdata.dark, 
+                            onChanged: (val)=> {
+                              context.read<MyProvider>().setTheme(val ? Themdata.dark : Themdata.light)
+                            }, activeColor: Colors.orange[700], inactiveTrackColor: Colors.orange[300], inactiveThumbColor: Colors.orange[600],)
+                          // Transform.rotate(
+                          //   angle: 180 * math.pi / 100,
+                          //   child:
+                          //     Icon(Icons.send, color: Colors.grey.shade800, size: 30,),
+                          // ),
+                          // CategoryTitle(swt.value ? 'true' : 'false', Colors.black, 23)
                           // TextButton(
                           //     child: Icon(Icons.edit_outlined, color: Colors.green),
                           //     onPressed: (){}
@@ -91,11 +112,11 @@ class HomePage extends StatelessWidget {
       ),
       bottomNavigationBar: BottomNavigationBar(
         iconSize: 35,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.chat_outlined, color: Colors.grey), activeIcon: Icon(Icons.chat_outlined, color: Colors.black87), label: 'Chat'),
-          BottomNavigationBarItem(icon: Icon(Icons.phone_outlined, color: Colors.grey), activeIcon: Icon(Icons.phone_outlined, color: Colors.black87), label: 'Call'),
-          BottomNavigationBarItem(icon: Icon(Icons.camera_alt_outlined, color: Colors.grey), activeIcon: Icon(Icons.camera_alt_outlined, color: Colors.black87), label: 'Camera'),
-          BottomNavigationBarItem(icon: Icon(Icons.settings_outlined, color: Colors.grey), activeIcon: Icon(Icons.settings_outlined, color: Colors.black87), label: 'Setting'),
+        items: [
+          BottomNavigationBarItem(icon: Icon(Icons.chat_outlined, color: Colors.grey), activeIcon: Icon(Icons.chat, color: context.watch<MyProvider>().theme == Themdata.light ? Colors.black87 : Colors.white), label: 'Chat'),
+          BottomNavigationBarItem(icon: Icon(Icons.phone_outlined, color: Colors.grey), activeIcon: Icon(Icons.phone, color: context.watch<MyProvider>().theme == Themdata.light ? Colors.black87 : Colors.white), label: 'Call'),
+          BottomNavigationBarItem(icon: Icon(Icons.camera_alt_outlined, color: Colors.grey), activeIcon: Icon(Icons.camera_alt, color: context.watch<MyProvider>().theme == Themdata.light ? Colors.black87 : Colors.white), label: 'Camera'),
+          BottomNavigationBarItem(icon: Icon(Icons.settings_outlined, color: Colors.grey), activeIcon: Icon(Icons.settings, color: context.watch<MyProvider>().theme == Themdata.light ? Colors.black87 : Colors.white), label: 'Setting'),
         ]
       )
     );
