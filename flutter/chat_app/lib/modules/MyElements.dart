@@ -15,7 +15,7 @@ class MySwitch extends StatelessWidget {
       builder: (context, snapshot) {
         return Switch(value: snapshot.data ?? false, onChanged: (val){
           swt.setValue(val);
-        }, activeColor: Colors.deepOrange);
+        });
       }
     );
   }
