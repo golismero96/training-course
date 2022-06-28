@@ -1,6 +1,5 @@
 // ignore_for_file: file_names
 
-import 'package:chat_app/modules/CategoryTitle.dart';
 import 'package:chat_app/modules/bloc.dart';
 import 'package:flutter/material.dart';
 
