@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'CategoryTitle.dart';
 import 'UserWidget.dart';
 
-
 class MessageWidget extends StatelessWidget {
-  const MessageWidget({Key? key,
+  const MessageWidget({
+    Key? key,
     required this.family,
     required this.msg,
     required this.pic,
@@ -27,33 +27,49 @@ class MessageWidget extends StatelessWidget {
         margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 15),
         child: Row(
           children: [
-            UserWidget(pic, family, hAvatarBox: 60, wAvatarBox: 60, showFamily: false),
-            const SizedBox(width: 10,),
-            Expanded(child:
-            Column(
+            UserWidget(pic, family, showFamily: false),
+            const SizedBox(
+              width: 10,
+            ),
+            Expanded(
+                child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CategoryTitle(family, Colors.black87, 18),
-                const SizedBox(height: 10,),
-                CategoryTitle(msg, Colors.black54, 15),
+                const SizedBox(
+                  height: 10,
+                ),
+                CategoryTitle(msg, Colors.black54, 15,
+                    overflow: TextOverflow.ellipsis),
               ],
-            )
-            ),
+            )),
             Column(
               children: [
-                CategoryTitle(time, Colors.black38, 15),
-                const SizedBox(height: 10,),
-                if(count != 0) ...{
+                CategoryTitle(
+                  time,
+                  Colors.black38,
+                  13,
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                if (count != 0) ...{
                   CircleAvatar(
                       backgroundColor: Colors.yellow[900],
                       radius: 15,
-                      child: CategoryTitle('$count', Colors.white, 12)
-                  )
+                      child: CategoryTitle('$count', Colors.white, 12))
                 }
               ],
-            )
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 5, left: 10, right: 5),
+              child: Icon(
+                Icons.camera_alt_outlined,
+                color: Colors.grey[600],
+                size: 33,
+              ),
+            ),
           ],
-        )
-    );
+        ));
   }
 }

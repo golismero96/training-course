@@ -24,7 +24,7 @@ class UserWidget extends StatelessWidget {
     return Column(
       children: [
         Container(
-          padding: const EdgeInsets.all(3),
+          padding: EdgeInsets.all(hAvatarBox != 55 ? 1 : 3),
           margin: const EdgeInsets.symmetric(horizontal: 10),
           decoration: BoxDecoration(
             gradient: const LinearGradient(colors: [
@@ -40,7 +40,7 @@ class UserWidget extends StatelessWidget {
             width: wAvatarBox ?? 55,
             padding: const EdgeInsets.all(2),
             decoration: BoxDecoration(
-                color: Colors.green,
+                color: Colors.blueGrey[50],
                 borderRadius: BorderRadius.circular(45),
                 border: Border.all(color: border_mode, width: 3),
                 image: DecorationImage(image: AssetImage('images/$image'))),

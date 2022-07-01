@@ -1,10 +1,10 @@
 // ignore_for_file: file_names
 
-import 'package:chat_app/modules/MyProvider.dart';
-import 'package:chat_app/modules/UserWidget.dart';
+import 'package:chat_app/modules/MainPage.dart';
 import 'package:chat_app/screens/MessagesPage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:chat_app/modules/MyProvider.dart';
 import 'package:provider/provider.dart';
 import 'dart:math' as math;
 
@@ -96,42 +96,8 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
                   ),
-                  // const SizedBox(height: 25),
-                  // Padding(
-                  //   padding: const EdgeInsets.symmetric(horizontal: 15),
-                  //   child:
-                  //     TextField(
-                  //         decoration: InputDecoration(
-                  //           border: OutlineInputBorder(
-                  //             borderRadius: BorderRadius.circular(15.0),
-                  //             gapPadding: 4
-                  //           ),
-                  //           fillColor: Colors.grey,
-                  //           labelStyle: TextStyle(color: Colors.grey[500], fontSize: 20),
-                  //           labelText: 'Search',
-                  //           prefixIcon: const Icon(Icons.search_outlined, color: Colors.grey, size:28) == null ? null : Icon(Icons.search_outlined, color: Colors.grey, size:28)
-                  //         ),
-                  //       ),
-                  // ),
                   const SizedBox(height: 10),
-                  Expanded(
-                      child: ListView(
-                    scrollDirection: Axis.vertical,
-                    children: [
-                      Container(
-                        height: 115,
-                        child: ListView(
-                          scrollDirection: Axis.horizontal,
-                          children: [
-                            for (var member = 0; member < 10; member++) ...[
-                              UserWidget(
-                                  'avatars/150-$member.jpg', members[member])
-                            ]
-                          ],
-                        ),
-                      ),
-                    ],
-                  ))
+                  const MainPage(),
                 ],
               )),
         ),
@@ -144,26 +110,34 @@ class _HomePageState extends State<HomePage> {
                       : Colors.white),
               label: 'Chat'),
           BottomNavigationBarItem(
-              icon: const Icon(Icons.phone_outlined, color: Colors.grey),
-              activeIcon: Icon(Icons.phone,
+              icon: const Icon(Icons.search_outlined, color: Colors.grey),
+              activeIcon: Icon(Icons.search,
                   color: context.watch<MyProvider>().theme == Themdata.light
                       ? Colors.black87
                       : Colors.white),
-              label: 'Call'),
+              label: 'Search'),
           BottomNavigationBarItem(
-              icon: const Icon(Icons.camera_alt_outlined, color: Colors.grey),
+              icon: const Icon(Icons.add_box_outlined, color: Colors.grey),
+              activeIcon: Icon(Icons.add_box_rounded,
+                  color: context.watch<MyProvider>().theme == Themdata.light
+                      ? Colors.black87
+                      : Colors.white),
+              label: 'New'),
+          BottomNavigationBarItem(
+              icon: const Icon(Icons.favorite_border_outlined,
+                  color: Colors.grey),
               activeIcon: Icon(Icons.camera_alt,
                   color: context.watch<MyProvider>().theme == Themdata.light
                       ? Colors.black87
                       : Colors.white),
-              label: 'Camera'),
+              label: 'Like'),
           BottomNavigationBarItem(
-              icon: const Icon(Icons.settings_outlined, color: Colors.grey),
-              activeIcon: Icon(Icons.settings,
+              icon: const Icon(Icons.person_outline, color: Colors.grey),
+              activeIcon: Icon(Icons.person,
                   color: context.watch<MyProvider>().theme == Themdata.light
                       ? Colors.black87
                       : Colors.white),
-              label: 'Setting'),
+              label: 'Profile'),
         ]));
   }
 }

@@ -73,7 +73,7 @@ class MessagesPage extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    Icon(Icons.camera_enhance_outlined,
+                    Icon(Icons.add_a_photo_outlined,
                         color:
                             context.watch<MyProvider>().theme == Themdata.dark
                                 ? Colors.white
@@ -108,7 +108,7 @@ class MessagesPage extends StatelessWidget {
                     child: TextField(
                       decoration: InputDecoration(
                           filled: true,
-                          fillColor: Colors.black54,
+                          fillColor: Colors.blueGrey[50],
                           border: OutlineInputBorder(
                               borderSide: BorderSide.none,
                               borderRadius: BorderRadius.circular(12),
