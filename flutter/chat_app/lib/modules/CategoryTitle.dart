@@ -17,6 +17,7 @@ class CategoryTitle extends StatelessWidget {
     Key? key,
     this.fontWeight,
     this.overflow,
+    required,
   }) : super(key: key);
 
   @override
@@ -26,8 +27,7 @@ class CategoryTitle extends StatelessWidget {
         style: TextStyle(
             overflow: overflow != null ? overflow : TextOverflow.visible,
             fontSize: fontSize,
-            fontWeight:
-                fontWeight == FontWeight.bold ? FontWeight.bold : fontWeight,
+            fontWeight: fontWeight ?? FontWeight.bold,
             color: context.watch<MyProvider>().theme == Themdata.light
                 ? color
                 : Colors.white));

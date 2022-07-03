@@ -22,6 +22,8 @@ class UserWidget extends StatelessWidget {
         ? Colors.black54
         : Colors.white;
     return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Container(
           padding: EdgeInsets.all(hAvatarBox != 55 ? 1 : 3),

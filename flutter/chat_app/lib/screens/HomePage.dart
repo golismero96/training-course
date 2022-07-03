@@ -2,6 +2,7 @@
 
 import 'package:chat_app/modules/MainPage.dart';
 import 'package:chat_app/screens/MessagesPage.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:chat_app/modules/MyProvider.dart';
@@ -124,9 +125,8 @@ class _HomePageState extends State<HomePage> {
                       : Colors.white),
               label: 'New'),
           BottomNavigationBarItem(
-              icon: const Icon(Icons.favorite_border_outlined,
-                  color: Colors.grey),
-              activeIcon: Icon(Icons.camera_alt,
+              icon: const Icon(CupertinoIcons.heart, color: Colors.grey),
+              activeIcon: Icon(CupertinoIcons.heart_fill,
                   color: context.watch<MyProvider>().theme == Themdata.light
                       ? Colors.black87
                       : Colors.white),
