@@ -3,6 +3,7 @@
 import 'package:chat_app/modules/CategoryTitle.dart';
 import 'package:chat_app/modules/MessageWidget.dart';
 import 'package:chat_app/modules/MyElements.dart';
+import 'package:chat_app/modules/NewMessage.dart';
 import 'package:chat_app/screens/HomePage.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
@@ -34,63 +35,71 @@ class MessagesPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Row(
-                  children: [
-                    InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const HomePage()));
-                        },
-                        child: Icon(Icons.arrow_back,
-                            color: context.watch<MyProvider>().theme ==
-                                    Themdata.dark
-                                ? Colors.white
-                                : Colors.black,
-                            size: 30)),
-                    const SizedBox(
-                      width: 30,
-                    ),
-                    const MyDropDownButton([
-                      DropdownMenuItem(
-                          child: CategoryTitle('Tehran', Colors.black87, 20),
-                          value: 1),
-                      DropdownMenuItem(
-                          child: CategoryTitle('Mashad', Colors.black87, 20),
-                          value: 2),
-                      DropdownMenuItem(
-                          child: CategoryTitle('Isfehan', Colors.black87, 20),
-                          value: 3),
-                    ]),
-                  ],
-                ),
-                const SizedBox(
-                  width: 70,
-                ),
-                Row(
-                  children: [
-                    Icon(Icons.add_a_photo_outlined,
-                        color:
-                            context.watch<MyProvider>().theme == Themdata.dark
-                                ? Colors.white
-                                : Colors.black,
-                        size: 30),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    Icon(Icons.add,
-                        color:
-                            context.watch<MyProvider>().theme == Themdata.dark
-                                ? Colors.white
-                                : Colors.black,
-                        size: 30),
-                  ],
-                ),
-              ],
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const HomePage()));
+                          },
+                          child: Icon(Icons.arrow_back,
+                              color: context.watch<MyProvider>().theme ==
+                                      Themdata.dark
+                                  ? Colors.white
+                                  : Colors.black,
+                              size: 30)),
+                      const SizedBox(
+                        width: 30,
+                      ),
+                      const MyDropDownButton([
+                        DropdownMenuItem(
+                            child: CategoryTitle('Tehran', Colors.black87, 20),
+                            value: 1),
+                        DropdownMenuItem(
+                            child: CategoryTitle('Mashad', Colors.black87, 20),
+                            value: 2),
+                        DropdownMenuItem(
+                            child: CategoryTitle('Isfehan', Colors.black87, 20),
+                            value: 3),
+                      ]),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Icon(Icons.add_a_photo_outlined,
+                          color:
+                              context.watch<MyProvider>().theme == Themdata.dark
+                                  ? Colors.white
+                                  : Colors.black,
+                          size: 30),
+                      const SizedBox(
+                        width: 20,
+                      ),
+                      InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const NewMessage()));
+                          },
+                          child: Icon(Icons.add,
+                              color: context.watch<MyProvider>().theme ==
+                                      Themdata.dark
+                                  ? Colors.white
+                                  : Colors.black,
+                              size: 30)),
+                    ],
+                  ),
+                ],
+              ),
             ),
             const SizedBox(
               height: 10,
@@ -139,12 +148,13 @@ class MessagesPage extends StatelessWidget {
                 ),
                 for (var member = 0; member < 10; member++) ...[
                   MessageWidget(
-                      family: members[member],
-                      msg:
-                          'Hello how are you? I am going to market. do you want burgers?',
-                      pic: 'avatars/150-$member.jpg',
-                      time: '2$member min',
-                      count: (math.pi * (member + 1)).round())
+                    family: members[member],
+                    msg:
+                        'Hello how are you? I am going to market. do you want burgers?',
+                    pic: 'avatars/150-$member.jpg',
+                    time: '2$member min',
+                    count: (math.pi * (member + 1)).round(),
+                  )
                 ]
               ],
             ))

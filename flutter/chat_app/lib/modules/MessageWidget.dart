@@ -6,20 +6,24 @@ import 'CategoryTitle.dart';
 import 'UserWidget.dart';
 
 class MessageWidget extends StatelessWidget {
-  const MessageWidget({
+  MessageWidget({
     Key? key,
     required this.family,
-    required this.msg,
+    this.username = '',
+    this.msg = '',
     required this.pic,
-    required this.time,
-    required this.count,
+    this.time = '',
+    this.count = 0,
+    this.callVideo = true,
   }) : super(key: key);
 
   final String family;
-  final String msg;
+  String username;
+  String msg;
   final String pic;
-  final String time;
-  final int count;
+  String time;
+  int count;
+  bool callVideo;
 
   @override
   Widget build(BuildContext context) {
@@ -39,17 +43,24 @@ class MessageWidget extends StatelessWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                CategoryTitle(msg, Colors.black54, 15,
-                    overflow: TextOverflow.ellipsis),
+                if (msg != "") ...{
+                  CategoryTitle(msg, Colors.black54, 15,
+                      overflow: TextOverflow.ellipsis)
+                },
+                if (username != "") ...{
+                  CategoryTitle(username, Colors.black54, 15,
+                      overflow: TextOverflow.ellipsis)
+                },
               ],
             )),
             Column(
               children: [
-                CategoryTitle(
-                  time,
-                  Colors.black38,
-                  13,
-                ),
+                if (time != '')
+                  CategoryTitle(
+                    time,
+                    Colors.black38,
+                    13,
+                  ),
                 const SizedBox(
                   height: 10,
                 ),
@@ -61,14 +72,16 @@ class MessageWidget extends StatelessWidget {
                 }
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 5, left: 10, right: 5),
-              child: Icon(
-                Icons.camera_alt_outlined,
-                color: Colors.grey[600],
-                size: 33,
-              ),
-            ),
+            if (callVideo) ...{
+              Padding(
+                padding: const EdgeInsets.only(top: 5, left: 10, right: 5),
+                child: Icon(
+                  Icons.camera_alt_outlined,
+                  color: Colors.grey[600],
+                  size: 33,
+                ),
+              )
+            },
           ],
         ));
   }
