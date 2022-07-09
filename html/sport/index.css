@@ -1,0 +1,82 @@
+body {
+  margin: 0;
+}
+a {
+  text-decoration: none;
+  color: #000;
+  font-weight: 500;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+.btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 5rem;
+  height: 2rem;
+  font-size: 0.85rem;
+}
+.btn-sm {
+  width: 4rem;
+  height: 1.8rem;
+  font-size: 0.75rem;
+}
+.btn-lg {
+  width: 6rem;
+  height: 2.2rem;
+  font-size: 1.5rem;
+}
+.text-dark {
+  color: #000;
+}
+.text-white {
+  color: #fff;
+}
+.bg-dark {
+  background-color: #000;
+}
+.bg-light {
+  background-color: #fff;
+}
+.head-page {
+  display: block;
+  width: 100%;
+  height: 800px;
+}
+.header_left {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1rem;
+  padding-right: 25rem;
+}
+#header-logo img {
+  width: 60px;
+  height: 30px;
+}
+
+.header-menu ul {
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+  gap: 20px 20px;
+}
+.header-menu ul a:hover {
+  color: #fa9931;
+}
+.header_right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 320px;
+  height: 800px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #fa9931;
+}
+.header_right div.btn {
+  position: absolute;
+  top: 0;
+  margin-top: 30px;
+}
