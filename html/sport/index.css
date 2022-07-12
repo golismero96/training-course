@@ -38,45 +38,113 @@ a {
   background-color: #fff;
 }
 .head-page {
-  display: block;
+  display: flex;
   width: 100%;
   height: 800px;
 }
-.header_left {
+#header_left {
+  display: flex;
+  position: relative;
+  height: 100%;
+  width: 80%;
+  justify-content: space-between;
+  align-items: center;
+  background: rgb(79, 60, 51);
+  background: linear-gradient(
+    86deg,
+    rgba(79, 60, 51, 1) 0%,
+    rgba(27, 26, 27, 0.8239670868347339) 96%
+  );
+}
+#header_top {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 1rem;
-  padding-right: 25rem;
+  width: 100%;
+  padding-left: 2rem;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 #header-logo img {
   width: 60px;
   height: 30px;
 }
 
-.header-menu ul {
+#header-menu {
+  margin-right: 4rem;
+}
+#header-menu ul {
   list-style-type: none;
   display: flex;
   flex-direction: row;
-  gap: 20px 20px;
+  gap: 20px 35px;
 }
-.header-menu ul a:hover {
+#header-menu ul a {
+  color: #ffffff;
+  transition: 0.5s;
+}
+#header-menu ul a:hover {
   color: #fa9931;
 }
-.header_right {
+#header_right {
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
-  width: 320px;
-  height: 800px;
-  position: absolute;
-  top: 0;
-  right: 0;
+  width: 20%;
+  height: 100%;
   background-color: #fa9931;
 }
-.header_right div.btn {
+#header_right div.btn {
   position: absolute;
   top: 0;
+  border-radius: 3px;
   margin-top: 30px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 3px 10px;
+}
+#header_center {
+  display: flex;
+  position: relative;
+  margin-top: 8%;
+  height: 100%;
+  width: 100%;
+}
+#header_center #hc_left {
+  display: block;
+  height: 100%;
+  width: 80%;
+}
+
+#header_center #hc_right {
+  display: flex;
+  position: relative;
+  justify-content: flex-end;
+  height: 100%;
+  width: 20%;
+  top: 3%;
+  left: 10%;
+}
+#header_center #hc_right #crescent {
+  position: absolute;
+  animation-name: crescent-img;
+  animation-duration: 3s;
+  animation-fill-mode: forwards;
+  height: 25em;
+}
+
+@keyframes crescent-img {
+  from {
+    left: 100px;
+  }
+  to {
+    left: 0;
+  }
+}
+#header_center #hc_right #hero_on_crescent {
+  position: absolute;
+  top: 12%;
+  z-index: 2;
+  width: 22em;
+  height: 32em;
 }
