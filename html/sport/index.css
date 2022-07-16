@@ -145,6 +145,42 @@ a {
   position: absolute;
   top: 12%;
   z-index: 2;
-  width: 22em;
-  height: 32em;
+  width: 22rem;
+  height: 32rem;
+}
+#header_right #heart_box {
+  position: absolute;
+  animation-name: heart-box;
+  animation-duration: 3s;
+  animation-fill-mode: forwards;
+  top: 20%;
+  right: 0;
+  width: 6rem;
+  height: 7rem;
+  background-color: rgb(80, 77, 77);
+  z-index: 1;
+  padding: 10px;
+  border-radius: 4.5px;
+}
+#header_right #heart_box #heart_img {
+  width: 32.5px;
+  height: 30px;
+}
+#header_right #heart_box #heart_text {
+  color: rgb(141, 136, 136);
+  font-size: 14px;
+  font-weight: 600;
+}
+#header_right #heart_box #bpm {
+  font-size: 20px;
+  color: #fff;
+}
+
+@keyframes heart-box {
+  from {
+    right: 20px;
+  }
+  to {
+    right: 5px;
+  }
 }
