@@ -38,17 +38,21 @@ a {
   background-color: #fff;
 }
 .head-page {
-  display: flex;
+  display: block;
   width: 100%;
   height: 800px;
 }
-#header_left {
+#header {
   display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+}
+#header_left {
+  display: block;
   position: relative;
   height: 100%;
   width: 80%;
-  justify-content: space-between;
-  align-items: center;
   background: rgb(79, 60, 51);
   background: linear-gradient(
     86deg,
@@ -66,19 +70,34 @@ a {
   top: 0;
   left: 0;
 }
-#header-logo img {
+#header-logo {
+  background-image: url("../images/logo-light.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  max-width: 100%;
   width: 60px;
   height: 30px;
+  margin-top: 2em;
+  min-width: 4rem;
+  min-height: 2rem;
 }
 
 #header-menu {
+  margin-top: 2em;
   margin-right: 4rem;
+}
+@media screen and (max-width: 768px) {
+  #header-menu {
+    display: none;
+  }
 }
 #header-menu ul {
   list-style-type: none;
   display: flex;
   flex-direction: row;
-  gap: 20px 35px;
+  margin: 0;
+  gap: 35px;
 }
 #header-menu ul a {
   color: #ffffff;
@@ -89,11 +108,12 @@ a {
 }
 #header_right {
   display: flex;
-  align-items: center;
+  z-index: 2;
   justify-content: center;
   position: relative;
   width: 20%;
   height: 100%;
+  transform-style: preserve-3d;
   background-color: #fa9931;
 }
 #header_right div.btn {
@@ -106,7 +126,7 @@ a {
 #header_center {
   display: flex;
   position: relative;
-  margin-top: 8%;
+  padding-top: 8%;
   height: 100%;
   width: 100%;
 }
@@ -116,42 +136,54 @@ a {
   width: 80%;
 }
 
-#header_center #hc_right {
+#header_right #hr_left {
   display: flex;
-  position: relative;
-  justify-content: flex-end;
-  height: 100%;
-  width: 20%;
-  top: 3%;
-  left: 10%;
-}
-#header_center #hc_right #crescent {
   position: absolute;
+  z-index: 2;
+  justify-content: flex-end;
+  height: 34em;
+  width: 12em;
+  top: 20%;
+  transform: translateZ(-10px);
+}
+#header_right #hr_right {
+  display: flex;
+  position: absolute;
+  z-index: 2;
+  height: 38em;
+  width: 15em;
+  bottom: 0;
+  left: 0;
+}
+#header_right #hr_left #crescent {
+  position: absolute;
+  z-index: 1;
   animation-name: crescent-img;
-  animation-duration: 3s;
+  animation-duration: 1.8s;
   animation-fill-mode: forwards;
   height: 25em;
+  left: 0;
+  width: 30em;
+  max-width: 100%;
 }
 
 @keyframes crescent-img {
   from {
-    left: 100px;
+    left: 0em;
   }
   to {
-    left: 0;
+    left: -15em;
   }
 }
-#header_center #hc_right #hero_on_crescent {
-  position: absolute;
-  top: 12%;
+#header_right #hr_right #hero_on_crescent {
   z-index: 2;
-  width: 22rem;
-  height: 32rem;
+  width: 17em;
+  height: 25em;
 }
 #header_right #heart_box {
   position: absolute;
   animation-name: heart-box;
-  animation-duration: 3s;
+  animation-duration: 1.7s;
   animation-fill-mode: forwards;
   top: 20%;
   right: 0;
@@ -178,9 +210,9 @@ a {
 
 @keyframes heart-box {
   from {
-    right: 20px;
+    right: 0px;
   }
   to {
-    right: 5px;
+    right: 5rem;
   }
 }
