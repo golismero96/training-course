@@ -62,31 +62,81 @@ class BankPage extends StatelessWidget {
                                 ],
                                 begin: Alignment.centerRight,
                                 end: Alignment.centerLeft))),
-                    Padding(
+                    Container(
                       padding: const EdgeInsets.all(32.0),
-                      child: Column(children: [
-                        Container(
-                          width: 100,
-                          height: 25,
-                          child: Stack(
-                            children: const [
-                              Positioned(
-                                  left: 0,
-                                  child: CircleAvatar(
-                                    backgroundColor: Colors.deepOrange,
-                                    radius: 8,
-                                  )),
-                              Positioned(
-                                  left: 10,
-                                  child: CircleAvatar(
-                                    backgroundColor:
-                                        Color.fromARGB(255, 255, 240, 34),
-                                    radius: 8,
-                                  ))
-                            ],
-                          ),
-                        )
-                      ]),
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              width: 100,
+                              height: 25,
+                              child: Stack(
+                                children: [
+                                  Positioned(
+                                      left: 0,
+                                      child: CircleAvatar(
+                                        backgroundColor:
+                                            Colors.deepOrange.withOpacity(0.75),
+                                        radius: 8,
+                                      )),
+                                  Positioned(
+                                      left: 9,
+                                      child: CircleAvatar(
+                                        backgroundColor:
+                                            Color.fromARGB(255, 255, 240, 34)
+                                                .withOpacity(0.75),
+                                        radius: 8,
+                                      ))
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            const Text('Card Name',
+                                style: TextStyle(
+                                    color: Colors.grey, fontSize: 12)),
+                            const Text('Master Card',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 14)),
+                            const SizedBox(height: 20),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: const [
+                                Text('**** **** **** 5689',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 28,
+                                        fontWeight: FontWeight.bold)),
+                              ],
+                            ),
+                            const SizedBox(height: 12),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Column(
+                                  children: const [
+                                    Text('Expires',
+                                        style: TextStyle(
+                                            color: Colors.grey, fontSize: 12)),
+                                    SizedBox(width: 5),
+                                    Text('12/20',
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 12)),
+                                  ],
+                                ),
+                                Column(
+                                  children: const [
+                                    Text('CVV@',
+                                        style: TextStyle(
+                                            color: Colors.grey, fontSize: 12)),
+                                    SizedBox(width: 5),
+                                    Text('0933',
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 12)),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ]),
                     )
                   ])
                 ],
