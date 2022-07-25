@@ -2,6 +2,7 @@
 
 import 'package:chat_app/modules/CategoryTitle.dart';
 import 'package:chat_app/modules/UserWidget.dart';
+import 'package:chat_app/screens/BankPage.dart';
 import 'package:flutter/material.dart';
 import 'package:chat_app/modules/MyProvider.dart';
 import 'package:provider/provider.dart';
@@ -58,12 +59,19 @@ class _PostState extends State<Post> {
                         ),
                       ],
                     ),
-                    Icon(Icons.more_horiz,
-                        size: 28,
-                        color:
-                            context.watch<MyProvider>().theme == Themdata.dark
+                    InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => BankPage()));
+                        },
+                        child: Icon(Icons.more_horiz,
+                            size: 28,
+                            color: context.watch<MyProvider>().theme ==
+                                    Themdata.dark
                                 ? Colors.white
-                                : Colors.grey[700])
+                                : Colors.grey[700]))
                   ],
                 ),
               ),
