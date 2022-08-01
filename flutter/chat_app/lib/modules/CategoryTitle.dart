@@ -25,7 +25,7 @@ class CategoryTitle extends StatelessWidget {
     // ignore: unrelated_type_equality_checks
     return Text(title,
         style: TextStyle(
-            overflow: overflow != null ? overflow : TextOverflow.visible,
+            overflow: overflow ?? TextOverflow.visible,
             fontSize: fontSize,
             fontWeight: fontWeight ?? FontWeight.bold,
             color: context.watch<MyProvider>().theme == Themdata.light

@@ -20,7 +20,7 @@ class SidebarStory extends StatelessWidget {
       "Arman",
       "Roy"
     ];
-    return Container(
+    return SizedBox(
       height: 115,
       child: ListView(
         scrollDirection: Axis.horizontal,

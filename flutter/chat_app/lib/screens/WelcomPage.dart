@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 
 class WelcomPage extends StatelessWidget {
@@ -6,18 +8,20 @@ class WelcomPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: new Stack(
-          children: <Widget>[
-            new Container(
-              decoration: new BoxDecoration(
-                image: new DecorationImage(image: new AssetImage("images/sigma/14.png"), fit: BoxFit.cover,),
-              ),
+        body: Stack(
+      children: <Widget>[
+        Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("images/sigma/14.png"),
+              fit: BoxFit.cover,
             ),
-            new Center(
-              child: new Text("Hello background"),
-            )
-          ],
+          ),
+        ),
+        const Center(
+          child: Text("Hello background"),
         )
-    );
+      ],
+    ));
   }
 }

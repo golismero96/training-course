@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'CategoryTitle.dart';
 import 'UserWidget.dart';
 
+// ignore: must_be_immutable
 class MessageWidget extends StatelessWidget {
   MessageWidget({
     Key? key,

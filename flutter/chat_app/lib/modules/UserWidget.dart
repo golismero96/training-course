@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:chat_app/modules/CategoryTitle.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -18,7 +20,7 @@ class UserWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final border_mode = context.watch<MyProvider>().theme == Themdata.dark
+    final borderMode = context.watch<MyProvider>().theme == Themdata.dark
         ? Colors.black54
         : Colors.white;
     return Column(
@@ -44,7 +46,7 @@ class UserWidget extends StatelessWidget {
             decoration: BoxDecoration(
                 color: Colors.blueGrey[50],
                 borderRadius: BorderRadius.circular(45),
-                border: Border.all(color: border_mode, width: 3),
+                border: Border.all(color: borderMode, width: 3),
                 image: DecorationImage(image: AssetImage('images/$image'))),
           ),
         ),

@@ -16,75 +16,64 @@ class Login extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            const HeaderContainer('13.png'),
-            const SizedBox(height: 10,),
-            Expanded(
-                child:
-                ListView(
-                  children: [
-                    const TextInput('Username', Icons.supervised_user_circle, false),
-                    const TextInput('Password', Icons.password, true),
-                    Container(
-                        margin: const EdgeInsets.only(top: 10, right: 25),
-                        alignment: Alignment.centerRight,
-                        child: InkWell(
-                          onTap: (){
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context)=>const ForgetPass())
-                            );
-                          },
-                          child:
-                            const CategoryTitle('Forget Password ?', Colors.redAccent, 15)
-                        )
-                    ),
-                    const SizedBox(height: 40),
-                    Center(
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context)=> HomePage())
-                          );
-                        },
-                        child: const ButtonWidget('SignIn')
-                      )
-                    )
-                  ]
-                )
-            ),
+          child: Column(
+        children: <Widget>[
+          const HeaderContainer('13.png'),
+          const SizedBox(
+            height: 10,
+          ),
+          Expanded(
+              child: ListView(children: [
+            const TextInput('Username', Icons.supervised_user_circle, false),
+            const TextInput('Password', Icons.password, true),
+            Container(
+                margin: const EdgeInsets.only(top: 10, right: 25),
+                alignment: Alignment.centerRight,
+                child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const ForgetPass()));
+                    },
+                    child: const CategoryTitle(
+                        'Forget Password ?', Colors.redAccent, 15))),
+            const SizedBox(height: 40),
             Center(
+                child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const HomePage()));
+                    },
+                    child: const ButtonWidget('SignIn')))
+          ])),
+          Center(
               child: InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context)=> const Registry())
-                  );
-                },
-                child:
-                  RichText(
-                    text: const TextSpan(
-                      children: [
-                        TextSpan(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Registry()));
+                  },
+                  child: RichText(
+                      text: const TextSpan(
+                    children: [
+                      TextSpan(
                           text: "Don't have an account? ",
-                          style: TextStyle(color: Colors.black, fontSize: 16)
-                        ),
-                        TextSpan(
+                          style: TextStyle(color: Colors.black, fontSize: 16)),
+                      TextSpan(
                           text: "Register",
-                          style: TextStyle(color: Colors.deepOrangeAccent, fontSize: 16)
-                        ),
-                      ],
-                    )
-                  )
-              )
-            ),
-            const SizedBox(height: 20,)
-          ],
-        )
-      ),
+                          style: TextStyle(
+                              color: Colors.deepOrangeAccent, fontSize: 16)),
+                    ],
+                  )))),
+          const SizedBox(
+            height: 20,
+          )
+        ],
+      )),
     );
   }
 }
-

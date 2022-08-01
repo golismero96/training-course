@@ -2,7 +2,6 @@
 
 import 'package:chat_app/modules/CategoryTitle.dart';
 import 'package:chat_app/screens/ForgetPass.dart';
-import 'package:chat_app/widgets/HeaderContainer.dart';
 import 'package:flutter/material.dart';
 
 class Setting extends StatelessWidget {
@@ -12,39 +11,29 @@ class Setting extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            Expanded(
-                child:
-                ListView(
-                  children: [
-                    Column(
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.only(top: 30, left: 25),
-                          alignment: Alignment.centerLeft,
-                          child: 
-                            InkWell(
-                              onTap: (){
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context)=>const ForgetPass())
-                                );
-                              },
-                              child:
-                                const CategoryTitle('Forget Password ?', Colors.redAccent, 15),
-                            )
-                        ),
-                        Center(child: Switch(value: false, onChanged: (val){})),
-                      ]
-                    ),
-                  ]
-                )
-            ),
-          ],
-        )
-      ),
+          child: Column(
+        children: <Widget>[
+          Expanded(
+              child: ListView(children: [
+            Column(children: [
+              Container(
+                  margin: const EdgeInsets.only(top: 30, left: 25),
+                  alignment: Alignment.centerLeft,
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const ForgetPass()));
+                    },
+                    child: const CategoryTitle(
+                        'Forget Password ?', Colors.redAccent, 15),
+                  )),
+              Center(child: Switch(value: false, onChanged: (val) {})),
+            ]),
+          ])),
+        ],
+      )),
     );
   }
 }
-

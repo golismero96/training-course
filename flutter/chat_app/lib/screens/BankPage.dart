@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 
 class BankPage extends StatelessWidget {
@@ -7,7 +9,7 @@ class BankPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Color.fromARGB(255, 27, 32, 39),
+        color: const Color.fromARGB(255, 27, 32, 39),
         height: double.infinity,
         width: double.infinity,
         child: SafeArea(
@@ -41,9 +43,9 @@ class BankPage extends StatelessWidget {
                               borderRadius: BorderRadius.circular(38),
                               gradient: LinearGradient(
                                   colors: [
-                                    Color.fromARGB(255, 69, 74, 88)
+                                    const Color.fromARGB(255, 69, 74, 88)
                                         .withOpacity(0.15),
-                                    Color.fromARGB(255, 96, 113, 134)
+                                    const Color.fromARGB(255, 96, 113, 134)
                                         .withOpacity(0.45)
                                   ],
                                   begin: Alignment.centerRight,
@@ -55,9 +57,9 @@ class BankPage extends StatelessWidget {
                             borderRadius: BorderRadius.circular(38),
                             gradient: LinearGradient(
                                 colors: [
-                                  Color.fromARGB(255, 69, 74, 88)
+                                  const Color.fromARGB(255, 69, 74, 88)
                                       .withOpacity(0.15),
-                                  Color.fromARGB(255, 96, 113, 134)
+                                  const Color.fromARGB(255, 96, 113, 134)
                                       .withOpacity(0.45)
                                 ],
                                 begin: Alignment.centerRight,
@@ -67,7 +69,7 @@ class BankPage extends StatelessWidget {
                       child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Container(
+                            SizedBox(
                               width: 100,
                               height: 25,
                               child: Stack(
@@ -82,9 +84,9 @@ class BankPage extends StatelessWidget {
                                   Positioned(
                                       left: 9,
                                       child: CircleAvatar(
-                                        backgroundColor:
-                                            Color.fromARGB(255, 255, 240, 34)
-                                                .withOpacity(0.75),
+                                        backgroundColor: const Color.fromARGB(
+                                                255, 255, 240, 34)
+                                            .withOpacity(0.75),
                                         radius: 8,
                                       ))
                                 ],
@@ -125,7 +127,7 @@ class BankPage extends StatelessWidget {
                                 ),
                                 Column(
                                   children: const [
-                                    Text('CVV@',
+                                    Text('CVV2',
                                         style: TextStyle(
                                             color: Colors.grey, fontSize: 12)),
                                     SizedBox(width: 5),
@@ -138,7 +140,42 @@ class BankPage extends StatelessWidget {
                             ),
                           ]),
                     )
-                  ])
+                  ]),
+                  const SizedBox(height: 35),
+                  const Text('Send money',
+                      style: TextStyle(color: Colors.white, fontSize: 16)),
+                  const SizedBox(height: 15),
+                  Row(
+                    children: [
+                      Column(
+                        children: [
+                          Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(25),
+                                  color: Colors.transparent,
+                                  border: Border.all(color: Colors.grey)),
+                              padding: const EdgeInsets.all(8),
+                              child: const Icon(Icons.add, color: Colors.grey)),
+                          const SizedBox(height: 5),
+                          const Text('Add',
+                              style: TextStyle(color: Colors.white))
+                        ],
+                      ),
+                      Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 8),
+                        child: Column(
+                          children: const [
+                            CircleAvatar(
+                              backgroundImage:
+                                  AssetImage('images/avatars/150-1.jpg'),
+                            ),
+                            SizedBox(height: 5),
+                            Text('Sara', style: TextStyle(color: Colors.white))
+                          ],
+                        ),
+                      )
+                    ],
+                  )
                 ],
               )),
         ),

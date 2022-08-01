@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:chat_app/modules/CategoryTitle.dart';
 import 'package:flutter/material.dart';
 
@@ -16,13 +18,8 @@ class ButtonWidget extends StatelessWidget {
             gradient: LinearGradient(
                 colors: [Colors.deepOrangeAccent, Colors.orange],
                 end: Alignment.centerLeft,
-                begin: Alignment.centerRight
-            )
-        ),
+                begin: Alignment.centerRight)),
         alignment: Alignment.center,
-        child: CategoryTitle(
-            text,
-            Colors.white, 22.5)
-    );
+        child: CategoryTitle(text, Colors.white, 22.5));
   }
 }

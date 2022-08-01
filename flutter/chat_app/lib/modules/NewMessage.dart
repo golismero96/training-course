@@ -2,10 +2,8 @@
 
 import 'package:chat_app/modules/CategoryTitle.dart';
 import 'package:chat_app/modules/MessageWidget.dart';
-import 'package:chat_app/modules/MyElements.dart';
 import 'package:chat_app/screens/MessagesPage.dart';
 import 'package:flutter/material.dart';
-import 'dart:math' as math;
 
 import 'package:chat_app/modules/MyProvider.dart';
 import 'package:provider/provider.dart';
@@ -33,7 +31,6 @@ class MyStatefulWidget extends StatefulWidget {
 }
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
-  BestTutorSite _site = BestTutorSite.javatpoint;
   List<Map> availableHobbies = [
     {"username": "Selma", "name": "Selma", "isChecked": false},
     {"username": "Emeline", "name": "Emeline", "isChecked": false},
@@ -46,6 +43,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     {"username": "Roy", "name": "Roy", "isChecked": false},
   ];
 
+  @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(top: 10),

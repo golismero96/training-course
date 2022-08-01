@@ -64,7 +64,7 @@ class _PostState extends State<Post> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => BankPage()));
+                                  builder: (context) => const BankPage()));
                         },
                         child: Icon(Icons.more_horiz,
                             size: 28,
