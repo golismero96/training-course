@@ -3,6 +3,7 @@
 import 'package:chat_app/modules/CategoryTitle.dart';
 import 'package:chat_app/modules/UserWidget.dart';
 import 'package:chat_app/screens/BankPage.dart';
+import 'package:chat_app/screens/LearnPage.dart';
 import 'package:flutter/material.dart';
 import 'package:chat_app/modules/MyProvider.dart';
 import 'package:provider/provider.dart';
@@ -107,10 +108,23 @@ class _PostState extends State<Post> {
                             icon: Icon(CupertinoIcons.chat_bubble_text,
                                 color: Colors.grey[700], size: 26),
                             onPressed: () {}),
-                        IconButton(
-                            icon: Icon(Icons.send_outlined,
-                                color: Colors.grey[700], size: 26),
-                            onPressed: () {}),
+                        Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const LearnPage()));
+                              },
+                              child: Icon(Icons.send_outlined,
+                                  size: 28,
+                                  color: context.watch<MyProvider>().theme ==
+                                          Themdata.dark
+                                      ? Colors.white
+                                      : Colors.grey[700])),
+                        )
                       ],
                     ),
                     IconButton(
