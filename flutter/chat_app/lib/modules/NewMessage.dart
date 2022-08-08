@@ -60,10 +60,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                   children: [
                     InkWell(
                         onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const MessagesPage()));
+                          Navigator.of(context).pop();
                         },
                         child: Icon(Icons.arrow_back,
                             color: context.watch<MyProvider>().theme ==
@@ -84,10 +81,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 ),
                 InkWell(
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const MessagesPage()));
+                      Navigator.of(context).pop();
                     },
                     child: const CategoryTitle('Chat', Colors.lightBlue, 20)),
               ],

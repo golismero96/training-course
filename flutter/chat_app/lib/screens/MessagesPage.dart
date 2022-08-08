@@ -45,10 +45,7 @@ class MessagesPage extends StatelessWidget {
                     children: [
                       InkWell(
                           onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const HomePage()));
+                            Navigator.of(context).pop();
                           },
                           child: Icon(Icons.arrow_back,
                               color: context.watch<MyProvider>().theme ==

@@ -5,14 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(
-      MultiProvider(
-          providers: [
-            ChangeNotifierProvider(create: (_)=>MyProvider())
-          ],
-        child: const MyApp()
-      )
-  );
+  runApp(MultiProvider(
+      providers: [ChangeNotifierProvider(create: (_) => MyProvider())],
+      child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -22,22 +17,23 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Chat App',
-      // theme: ThemeData(
-      //   brightness: Brightness.light,
-      //   /* light theme settings */
-      // ),
-      // darkTheme: ThemeData(
-      //   brightness: Brightness.dark,
-      //   /* dark theme settings */
-      // ),
-      // themeMode: ThemeMode.light,
-      theme: ThemeData(
-        brightness: context.watch<MyProvider>().theme == Themdata.light ? Brightness.light : Brightness.dark),
-      home: context.watch<MyProvider>().user == null
-        ? const Login()
-        : const HomePage()
-    );
+        debugShowCheckedModeBanner: false,
+        title: 'Chat App',
+        // theme: ThemeData(
+        //   brightness: Brightness.light,
+        //   /* light theme settings */
+        // ),
+        // darkTheme: ThemeData(
+        //   brightness: Brightness.dark,
+        //   /* dark theme settings */
+        // ),
+        // themeMode: ThemeMode.light,
+        theme: ThemeData(
+            brightness: context.watch<MyProvider>().theme == Themdata.light
+                ? Brightness.light
+                : Brightness.dark),
+        home: context.watch<MyProvider>().user == null
+            ? const Login()
+            : const HomePage());
   }
 }

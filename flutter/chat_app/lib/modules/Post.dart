@@ -78,12 +78,13 @@ class _PostState extends State<Post> {
               ),
               Container(
                 height: 300,
+                width: double.infinity,
                 padding: const EdgeInsets.all(2),
                 decoration: BoxDecoration(
                     color: Colors.blueGrey[50],
                     image: const DecorationImage(
                         fit: BoxFit.cover,
-                        image: AssetImage('images/125.png'))),
+                        image: AssetImage('images/Icon-192.png'))),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 5),

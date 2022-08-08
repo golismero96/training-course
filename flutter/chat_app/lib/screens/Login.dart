@@ -17,7 +17,7 @@ class Login extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
           child: Column(
-        children: <Widget>[
+        children: [
           const HeaderContainer('13.png'),
           const SizedBox(
             height: 10,
