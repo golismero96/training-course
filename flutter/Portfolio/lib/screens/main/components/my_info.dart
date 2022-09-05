@@ -24,7 +24,7 @@ class MyInfo extends StatelessWidget {
                 'Flutter Developer & Designer',
                 style: TextStyle(fontWeight: FontWeight.w200, height: 1.5),
               ),
-              Spacer(flex: 2)
+              Spacer(flex: 1)
             ],
           )),
     );

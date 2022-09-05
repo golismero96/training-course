@@ -23,7 +23,7 @@ class MainScreen extends StatelessWidget {
                     Expanded(
                         flex: 7,
                         child: Container(
-                            color: Colors.blue,
+                            color: Color(0X151727FF),
                             child: Center(
                                 child: Text('Hello World', style: TextStyle(color: Colors.white, fontSize: 30))
                             )
