@@ -1,12 +1,12 @@
 import 'package:Portfolio/constants.dart';
-import 'package:Portfolio/components/animated_circular_progress_indicator.dart';
 import 'package:Portfolio/screens/main/components/Coding.dart';
 import 'package:Portfolio/screens/main/components/area_info_text.dart';
+import 'package:Portfolio/screens/main/components/knowledges.dart';
 import 'package:Portfolio/screens/main/components/my_info.dart';
 import 'package:Portfolio/screens/main/components/skills.dart';
 import 'package:flutter/material.dart';
 import 'package:age_calculator/age_calculator.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class SideMenu extends StatelessWidget {
   const SideMenu({Key? key}) : super(key: key);
@@ -30,16 +30,34 @@ class SideMenu extends StatelessWidget {
                       const Skills(),
                       const SizedBox(height: defaultPadding),
                       const Coding(),
+                      const Knowledges(),
                       Divider(),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: defaultPadding),
-                        child: Text('Knowledge', style: Theme.of(context).textTheme.subtitle2),
+                      SizedBox(height: defaultPadding / 2),
+                      TextButton(onPressed: () {},
+                          child: FittedBox(
+                            child: Row(
+                              children: [
+                                Text('Download CV',
+                                  style: TextStyle(color: Theme.of(context).textTheme.bodyText1!.color)
+                                ),
+                                SizedBox(width: defaultPadding / 2),
+                                SvgPicture.asset("assets/icons/download.svg")
+                              ]
+                            ),
+                          )
                       ),
-                      Row(
-                        children: [
-                          SvgPicture.asset("assets/icons/check.svg"),
-                        ]
-                      )
+                      Container(
+                        margin: EdgeInsets.only(top: defaultPadding),
+                        color: Color(0XFF24242E),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            IconButton(onPressed: () {}, icon: SvgPicture.asset("assets/icons/linkedin.svg")),
+                            IconButton(onPressed: () {}, icon: SvgPicture.asset("assets/icons/github.svg")),
+                            IconButton(onPressed: () {}, icon: SvgPicture.asset("assets/icons/twitter.svg")),
+                          ],
+                        )
+                      ),
                     ]
                   )
               ),
