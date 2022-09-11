@@ -8,9 +8,21 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MainScreen(
+    return MainScreen(
       children: [
         HomeBanner(),
+        Row(
+          children: [
+            TweenAnimationBuilder(
+                tween: IntTween(begin: 0, end: 100),
+                duration: Duration(seconds: 5),
+                builder: (context, value, child) => Text(
+                  "$value+",
+                  style: Theme.of(context).textTheme.headline6!.copyWith(color: primaryColor),
+                )
+            )
+          ],
+        )
       ],
     );
   }
