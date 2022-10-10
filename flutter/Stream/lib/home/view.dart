@@ -15,8 +15,9 @@ class _State extends State<HomeView> {
   final StreamController<int> streamController = StreamController<int>();
   int? _randomValue;
   final Random randomNumber = Random(2);
+  TextEditingController textEditingController = TextEditingController();
 
-  final textStyle = const TextStyle(fontSize: 50, color: Colors.blueGrey);
+  final textStyle = const TextStyle(fontSize: 50, color: Colors.white);
   final buttonStyle = const TextStyle(fontSize: 36, color: Colors.black);
 
   @override
@@ -38,25 +39,57 @@ class _State extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(_randomValue?.toString() ?? '', style: textStyle),
-          Padding(
-              padding: const EdgeInsets.only(top: 50),
-              child: Center(
-                child: TextButton(
-                    onPressed: () {
-                      getRandomValue().listen((event) {
-                        streamController.sink.add(event);
-                      });
-                    },
-                    child: Text('ADD DATA', style: buttonStyle)
-                ),
-              )),
-        ],
-      ),
+      body: Container(
+        height: double.infinity,
+        width: double.infinity,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Colors.blue, Colors.white],
+          ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(_randomValue?.toString() ?? '', style: textStyle),
+            Padding(
+                padding: const EdgeInsets.only(top: 50),
+                child: Center(
+                  child: TextButton(
+                      onPressed: () {
+                        getRandomValue().listen((event) {
+                          streamController.sink.add(event);
+                        });
+                      },
+                      child: Text('ADD DATA', style: buttonStyle)
+                  ),
+                )),
+            Padding(
+                padding: const EdgeInsets.all(10),
+              child: Row(
+                children: [
+                  ElevatedButton(
+                      onPressed: (){
+                        print(textEditingController.value.toString())
+                      },
+                      child: Text('find')
+                  ),
+                  Expanded(
+                    child: TextField(
+                      controller: textEditingController,
+                      decoration: InputDecoration(
+                        icon: Icon()
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
+      )
     );
   }
   Stream<int> getRandomValue() async* {
