@@ -39,6 +39,22 @@ class _State extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('MrBug'),
+        elevation: 2,
+        actions: <Widget>[
+          PopupMenuButton<String>(
+              itemBuilder: (BuildContext context){
+                return {'Setting', 'Profile', 'Logout'}.map((String Choice) {
+                  return PopupMenuItem(
+                    value: Choice,
+                    child: Text(Choice),
+                  );
+                }).toList();
+              } 
+          )
+        ],
+      ),
       body: Container(
         height: double.infinity,
         width: double.infinity,
@@ -72,17 +88,19 @@ class _State extends State<HomeView> {
                 children: [
                   ElevatedButton(
                       onPressed: (){
-                        print(textEditingController.value.toString())
+                        print(textEditingController.text);
                       },
                       child: Text('find')
                   ),
+                  const SizedBox(width: 10,),
                   Expanded(
-                    child: TextField(
-                      controller: textEditingController,
-                      decoration: InputDecoration(
-                        icon: Icon()
-                      ),
-                    ),
+                      child: TextField(
+                        controller: textEditingController,
+                        decoration: const InputDecoration(
+                          hintText: 'Enter a city name',
+                          border: UnderlineInputBorder()
+                        ),
+                      )
                   )
                 ],
               ),
