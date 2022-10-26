@@ -18,7 +18,7 @@ class _State extends State<HomeView> {
   TextEditingController textEditingController = TextEditingController();
 
   final textStyle = const TextStyle(fontSize: 50, color: Colors.white);
-  final buttonStyle = const TextStyle(fontSize: 36, color: Colors.black);
+  final buttonStyle = const TextStyle(fontSize: 36, color: Colors.white);
 
   @override
   void initState() {
@@ -40,8 +40,9 @@ class _State extends State<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('MrBug'),
+        title: const Text('MrBug'),
         elevation: 2,
+        backgroundColor: Colors.grey.shade900,
         actions: <Widget>[
           PopupMenuButton<String>(
               itemBuilder: (BuildContext context){
@@ -58,18 +59,41 @@ class _State extends State<HomeView> {
       body: Container(
         height: double.infinity,
         width: double.infinity,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Colors.blue, Colors.white],
-          ),
-        ),
+        color: Colors.black,
+        // decoration: const BoxDecoration(
+        //   gradient: LinearGradient(
+        //     begin: Alignment.topCenter,
+        //     end: Alignment.bottomCenter,
+        //     colors: [Colors.black, Colors.white],
+        //   ),
+        // ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(_randomValue?.toString() ?? '', style: textStyle),
+            // Padding(
+            //   padding: const EdgeInsets.all(10),
+            //   child: Row(
+            //     children: [
+            //       ElevatedButton(
+            //           onPressed: (){
+            //             print(textEditingController.text);
+            //           },
+            //           child: Text('find')
+            //       ),
+            //       const SizedBox(width: 10,),
+            //       Expanded(
+            //           child: TextField(
+            //             controller: textEditingController,
+            //             decoration: const InputDecoration(
+            //                 hintText: 'Enter a city name',
+            //                 border: UnderlineInputBorder()
+            //             ),
+            //           )
+            //       )
+            //     ],
+            //   ),
+            // ),
+            // Text(_randomValue?.toString() ?? '', style: textStyle),
             Padding(
                 padding: const EdgeInsets.only(top: 50),
                 child: Center(
@@ -79,31 +103,90 @@ class _State extends State<HomeView> {
                           streamController.sink.add(event);
                         });
                       },
-                      child: Text('ADD DATA', style: buttonStyle)
+                      child: Text('Mountain View', style: TextStyle(color: Colors.white, fontSize: 36))
                   ),
-                )),
+                )
+            ),
+            const Padding(
+              padding: EdgeInsets.only(top: 20),
+              child: Text('Clear Sky', style: TextStyle(color: Colors.grey, fontSize: 20))
+            ),
+            const Padding(
+              padding: EdgeInsets.only(top: 30),
+              child: Icon(Icons.wb_sunny_outlined, color: Colors.yellow, size: 80)
+            ),
+            const Padding(
+              padding: EdgeInsets.only(top: 15),
+              child: Text('14' + '\u00B0', style: TextStyle(color: Colors.white, fontSize: 65))
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Column(
+                  children:  [
+                    Text('max', style: TextStyle(color: Colors.grey.shade700, fontSize: 15)),
+                    Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                      child: Text('16' + '\u00B0', style: TextStyle(color: Colors.grey.shade400, fontSize: 19))
+                    )
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: Container(
+                    width: 1,
+                    height: 30,
+                    color: Colors.grey.shade400,
+                  ),
+                ),
+                Column(
+                  children: [
+                    Text('max', style: TextStyle(color: Colors.grey.shade700, fontSize: 15)),
+                    Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: Text('12' + '\u00B0', style: TextStyle(color: Colors.grey.shade400, fontSize: 19))
+                    )
+                  ],
+                )
+              ],
+            ),
             Padding(
-                padding: const EdgeInsets.all(10),
-              child: Row(
-                children: [
-                  ElevatedButton(
-                      onPressed: (){
-                        print(textEditingController.text);
-                      },
-                      child: Text('find')
-                  ),
-                  const SizedBox(width: 10,),
-                  Expanded(
-                      child: TextField(
-                        controller: textEditingController,
-                        decoration: const InputDecoration(
-                          hintText: 'Enter a city name',
-                          border: UnderlineInputBorder()
-                        ),
-                      )
-                  )
-                ],
+              padding: const EdgeInsets.only(top: 10),
+              child: Container(
+                color: Colors.grey,
+                height: 1,
+                width: double.infinity,
               ),
+            ),
+            Container(
+              width: double.infinity,
+              height: 100,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: Center(
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    itemCount: 10,
+                      itemBuilder: (BuildContext context, int pos) {
+                        return Container(
+                          height: 50,
+                          width: 70,
+                          child: Card(
+                            color: Colors.transparent,
+                            child: Column(
+                              children: [
+                                Text('Fri, 8pm', style: TextStyle(color: Colors.white, fontSize: 15)),
+                                Icon(Icons.wb_cloudy, color: Colors.white, size: 30),
+                                Text('14' + '\u00B0', style: TextStyle(color: Colors.white, fontSize: 20))
+                              ],
+                            ),
+                          ),
+                        );
+                      }
+                  ),
+                ),
+              )
             )
           ],
         ),
