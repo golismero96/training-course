@@ -5,6 +5,7 @@ class CurrentCityDataModel{
   var _lat;
   String _main;
   String _description;
+  String _icon;
   var _temp;
   var _temp_min;
   var _temp_max;
@@ -22,6 +23,7 @@ class CurrentCityDataModel{
       this._lat,
       this._main,
       this._description,
+      this._icon,
       this._temp,
       this._temp_min,
       this._temp_max,
@@ -55,6 +57,8 @@ class CurrentCityDataModel{
   get temp => _temp;
 
   String get description => _description;
+
+  String get icon => _icon;
 
   String get main => _main;
 

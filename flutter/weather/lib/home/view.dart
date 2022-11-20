@@ -4,7 +4,9 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import 'package:progress_indicators/progress_indicators.dart';
 import 'package:weather/Model/CurrentCityModel.dart';
+import 'package:intl/intl.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -14,7 +16,10 @@ class HomeView extends StatefulWidget {
 }
 
 class _State extends State<HomeView> {
-
+  Future<CurrentCityDataModel>? currentWeatherFuture;
+  Future<CurrentCityDataModel>? changedCurrentWeatherFuture;
+  bool isLoading = false;
+  var city_name = 'mashhad';
   final StreamController<int> streamController = StreamController<int>();
   int? _randomValue;
   final Random randomNumber = Random(2);
@@ -30,8 +35,9 @@ class _State extends State<HomeView> {
     //     _randomValue = event;
     //   });
     // });
+    print('tehran222');
     super.initState();
-    SendRequestCurrentWeather();
+    currentWeatherFuture = SendRequestCurrentWeather(city_name);
   }
 
   @override
@@ -61,253 +67,301 @@ class _State extends State<HomeView> {
           )
         ],
       ),
-      body: SafeArea(
-        child: Column(
-            children: [
-              Container(
-                decoration: const BoxDecoration(
-                    image: DecorationImage(
-                        alignment: Alignment.center,
-                        fit: BoxFit.cover,
-                        image: AssetImage('images/background.jpg')
-                    )
-                ),
-                width: double.infinity,
-                // color: Colors.black,
-                // decoration: const BoxDecoration(
-                //   gradient: LinearGradient(
-                //     begin: Alignment.topCenter,
-                //     end: Alignment.bottomCenter,
-                //     colors: [Colors.black, Colors.white],
-                //   ),
-                // ),
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Row(
+       body: FutureBuilder<CurrentCityDataModel>(
+        future: currentWeatherFuture,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            CurrentCityDataModel? cityDataModel = snapshot.data;
+            final formatter = DateFormat.jm();
+            var sunrise = formatter.format(
+              new DateTime.fromMillisecondsSinceEpoch(
+                cityDataModel!.sunrise * 1000,
+                isUtc: true));
+            var sunset = formatter.format(
+                new DateTime.fromMillisecondsSinceEpoch(
+                    cityDataModel!.sunset * 1000,
+                    isUtc: true));
+            return SafeArea(
+                      child: Column(
                           children: [
-                            ElevatedButton(
-                                onPressed: (){
-                                  print(textEditingController.text);
-                                },
-                                style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.transparent,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8.0),
-                                    )
-                                ),
-                                child: const Text('find', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),)
-                            ),
-                            const SizedBox(width: 10,),
-                            Expanded(
-                                child: TextField(
-                                  controller: textEditingController,
-                                  decoration: const InputDecoration(
-                                      labelStyle: TextStyle(color: Colors.white),
-                                      hintStyle: TextStyle(color: Colors.white),
-                                      hintText: 'Enter a city name',
-                                      border: UnderlineInputBorder()
-                                  ),
-                                )
-                            )
-                          ],
-                        ),
-                      ),
-                      // Text(_randomValue?.toString() ?? '', style: textStyle),
-                      Padding(
-                          padding: const EdgeInsets.only(top: 5),
-                          child: Center(
-                            child: TextButton(
-                                onPressed: () {
-                                  getRandomValue().listen((event) {
-                                    streamController.sink.add(event);
-                                  });
-                                },
-                                child: Text('Mountain View', style: TextStyle(color: Colors.white, fontSize: 26))
-                            ),
-                          )
-                      ),
-                      const Padding(
-                          padding: EdgeInsets.only(top: 8),
-                          child: Text('Clear Sky', style: TextStyle(color: Colors.grey, fontSize: 16))
-                      ),
-                      const Padding(
-                          padding: EdgeInsets.only(top: 15),
-                          child: Icon(Icons.wb_sunny_outlined, color: Colors.yellow, size: 60)
-                      ),
-                      Padding(
-                          padding: EdgeInsets.only(top: 10),
-                          child: Text(makeRandomNumber() + '\u00B0', style: TextStyle(color: Colors.white, fontSize: 55))
-                      ),
-                      const SizedBox(height: 10,),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Column(
-                            children:  [
-                              Text('max', style: TextStyle(color: Colors.grey.shade500, fontSize: 15)),
-                              Padding(
-                                  padding: const EdgeInsets.only(top: 10),
-                                  child: Text('16' + '\u00B0', style: TextStyle(color: Colors.grey.shade300, fontSize: 16))
-                              )
-                            ],
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 15),
-                            child: Container(
-                              width: 1,
-                              height: 30,
-                              color: Colors.grey.shade400,
-                            ),
-                          ),
-                          Column(
-                            children: [
-                              Text('max', style: TextStyle(color: Colors.grey.shade500, fontSize: 15)),
-                              Padding(
-                                  padding: const EdgeInsets.only(top: 10),
-                                  child: Text('12' + '\u00B0', style: TextStyle(color: Colors.grey.shade300, fontSize: 16))
-                              )
-                            ],
-                          )
-                        ],
-                      ),
-                      const SizedBox(height: 20,),
-                      Container(
-                          width: double.infinity,
-                          height: 100,
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 10),
-                            child: Center(
-                              child: ListView.builder(
-                                  shrinkWrap: true,
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: 10,
-                                  itemBuilder: (BuildContext context, int pos) {
-                                    return Container(
-                                      height: 50,
-                                      width: 70,
-                                      child: Card(
-                                        elevation: 0,
-                                        color: Colors.transparent,
-                                        child: Column(
-                                          children: [
-                                            const Text('Fri, 8pm', style: TextStyle(color: Colors.white, fontSize: 12)),
-                                            const SizedBox(height: 10,),
-                                            Icon(pos % 2 == 0 ? Icons.wb_cloudy_outlined : Icons.cloudy_snowing, color: Colors.white, size: 28),
-                                            const SizedBox(height: 7,),
-                                            Text('${makeRandomNumber()}\u00B0', style: TextStyle(color: Colors.white, fontSize: 18))
+                            Container(
+                              decoration: const BoxDecoration(
+                                  image: DecorationImage(
+                                      alignment: Alignment.center,
+                                      fit: BoxFit.cover,
+                                      image: AssetImage('images/background.jpg')
+                                  )
+                              ),
+                              width: double.infinity,
+                              // color: Colors.black,
+                              // decoration: const BoxDecoration(
+                              //   gradient: LinearGradient(
+                              //     begin: Alignment.topCenter,
+                              //     end: Alignment.bottomCenter,
+                              //     colors: [Colors.black, Colors.white],
+                              //   ),
+                              // ),
+                              child: BackdropFilter(
+                                filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(10),
+                                      child: Row(
+                                        children: [
+                                          ElevatedButton(
+                                              onPressed: (){
+                                                changedCurrentWeatherFuture = SendRequestCurrentWeather(textEditingController.text);
+                                                setState(() {
+                                                  currentWeatherFuture = changedCurrentWeatherFuture;
+                                                });
+                                                textEditingController.text = '';
+                                              },
+                                              style: ElevatedButton.styleFrom(
+                                                  backgroundColor: Colors.transparent,
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.circular(8.0),
+                                                  )
+                                              ),
+                                              child: const Text('find', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),)
+                                          ),
+                                          const SizedBox(width: 10,),
+                                          Expanded(
+                                              child: TextField(
+                                                controller: textEditingController,
+                                                decoration: const InputDecoration(
+                                                    labelStyle: TextStyle(color: Colors.white),
+                                                    hintStyle: TextStyle(color: Colors.white),
+                                                    hintText: 'Enter a city name',
+                                                    border: UnderlineInputBorder()
+                                                ),
+                                              )
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                    // Text(_randomValue?.toString() ?? '', style: textStyle),
+                                    Padding(
+                                        padding: const EdgeInsets.only(top: 5),
+                                        child: Center(
+                                          child: TextButton(
+                                              onPressed: () {
+                                                getRandomValue().listen((event) {
+                                                  streamController.sink.add(event);
+                                                });
+                                              },
+                                              child: Text(cityDataModel!.cityname, style: TextStyle(color: Colors.white, fontSize: 26))
+                                          ),
+                                        )
+                                    ),
+                                    Padding(
+                                        padding: const EdgeInsets.only(top: 8),
+                                        child: Text(cityDataModel!.description, style: TextStyle(color: Colors.grey.shade400, fontSize: 16))
+                                    ),
+                                    Padding(
+                                        padding: const EdgeInsets.only(top: 15),
+                                        child: setIconForMain(cityDataModel!.description)
+                                    ),
+                                    Padding(
+                                        padding: EdgeInsets.only(top: 10),
+                                        child: Text('${cityDataModel!.temp}\u00B0', style: TextStyle(color: Colors.white, fontSize: 50))
+                                    ),
+                                    const SizedBox(height: 10,),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Column(
+                                          children:  [
+                                            Text('max', style: TextStyle(color: Colors.grey.shade500, fontSize: 15)),
+                                            Padding(
+                                                padding: const EdgeInsets.only(top: 10),
+                                                child: Text('${cityDataModel.temp_max}\u00B0', style: TextStyle(color: Colors.grey.shade300, fontSize: 16))
+                                            )
                                           ],
                                         ),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                                          child: Container(
+                                            width: 1,
+                                            height: 30,
+                                            color: Colors.grey.shade400,
+                                          ),
+                                        ),
+                                        Column(
+                                          children: [
+                                            Text('min', style: TextStyle(color: Colors.grey.shade500, fontSize: 15)),
+                                            Padding(
+                                                padding: const EdgeInsets.only(top: 10),
+                                                child: Text('${cityDataModel.temp_min}\u00B0', style: TextStyle(color: Colors.grey.shade300, fontSize: 16))
+                                            )
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                    const SizedBox(height: 20,),
+                                    Container(
+                                        width: double.infinity,
+                                        height: 100,
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(top: 10),
+                                          child: Center(
+                                            child: ListView.builder(
+                                                shrinkWrap: true,
+                                                scrollDirection: Axis.horizontal,
+                                                itemCount: 10,
+                                                itemBuilder: (BuildContext context, int pos) {
+                                                  return Container(
+                                                    height: 50,
+                                                    width: 70,
+                                                    child: Card(
+                                                      elevation: 0,
+                                                      color: Colors.transparent,
+                                                      child: Column(
+                                                        children: [
+                                                          const Text('Fri, 8pm', style: TextStyle(color: Colors.white, fontSize: 12)),
+                                                          const SizedBox(height: 10,),
+                                                          Icon(pos % 2 == 0 ? Icons.wb_cloudy_outlined : Icons.cloudy_snowing, color: Colors.white, size: 28),
+                                                          const SizedBox(height: 7,),
+                                                          Text('${makeRandomNumber()}\u00B0', style: TextStyle(color: Colors.white, fontSize: 18))
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  );
+                                                }
+                                            ),
+                                          ),
+                                        )
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(vertical: 25),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Column(
+                                            children: [
+                                              Text('Wind speed', style: TextStyle(color: Colors.grey.shade300, fontSize: 15, fontWeight: FontWeight.bold)),
+                                              const SizedBox(height: 10,),
+                                              Text('${cityDataModel!.windSpeed} m/s', style: TextStyle(color: Colors.white)),
+                                            ],
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(horizontal: 15),
+                                            child: Container(
+                                              width: 1.4,
+                                              height: 30,
+                                              color: Colors.grey.shade400,
+                                            ),
+                                          ),
+                                          Column(
+                                            children: [
+                                              Text('Sunrise', style: TextStyle(color: Colors.grey.shade300, fontSize: 15, fontWeight: FontWeight.bold)),
+                                              const SizedBox(height: 10,),
+                                              Text(sunrise, style: TextStyle(color: Colors.white)),
+                                            ],
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(horizontal: 15),
+                                            child: Container(
+                                              width: 1.4,
+                                              height: 30,
+                                              color: Colors.grey.shade400,
+                                            ),
+                                          ),
+                                          Column(
+                                            children: [
+                                              Text('Sunset', style: TextStyle(color: Colors.grey.shade300, fontSize: 15, fontWeight: FontWeight.bold)),
+                                              const SizedBox(height: 10,),
+                                              Text(sunset, style: TextStyle(color: Colors.white)),
+                                            ],
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(horizontal: 15),
+                                            child: Container(
+                                              width: 1.4,
+                                              height: 30,
+                                              color: Colors.grey.shade400,
+                                            ),
+                                          ),
+                                          Column(
+                                            children: [
+                                              Text('Humidity', style: TextStyle(color: Colors.grey.shade300, fontSize: 15, fontWeight: FontWeight.bold)),
+                                              const SizedBox(height: 10,),
+                                              Text('${cityDataModel!.hunidity}%', style: TextStyle(color: Colors.white)),
+                                            ],
+                                          ),
+                                        ],
                                       ),
-                                    );
-                                  }
+                                    )
+                                  ],
+                                ),
                               ),
-                            ),
-                          )
+                            )
+                          ]
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 25),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Column(
-                              children: [
-                                Text('Wind speed', style: TextStyle(color: Colors.grey.shade300, fontSize: 15, fontWeight: FontWeight.bold)),
-                                const SizedBox(height: 10,),
-                                const Text('4.73 m/s', style: TextStyle(color: Colors.white)),
-                              ],
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 15),
-                              child: Container(
-                                width: 1.4,
-                                height: 30,
-                                color: Colors.grey.shade400,
-                              ),
-                            ),
-                            Column(
-                              children: [
-                                Text('Sunrise', style: TextStyle(color: Colors.grey.shade300, fontSize: 15, fontWeight: FontWeight.bold)),
-                                const SizedBox(height: 10,),
-                                const Text('6:19 PM', style: TextStyle(color: Colors.white)),
-                              ],
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 15),
-                              child: Container(
-                                width: 1.4,
-                                height: 30,
-                                color: Colors.grey.shade400,
-                              ),
-                            ),
-                            Column(
-                              children: [
-                                Text('Sunset', style: TextStyle(color: Colors.grey.shade300, fontSize: 15, fontWeight: FontWeight.bold)),
-                                const SizedBox(height: 10,),
-                                const Text('9:3 PM', style: TextStyle(color: Colors.white)),
-                              ],
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 15),
-                              child: Container(
-                                width: 1.4,
-                                height: 30,
-                                color: Colors.grey.shade400,
-                              ),
-                            ),
-                            Column(
-                              children: [
-                                Text('Humidity', style: TextStyle(color: Colors.grey.shade300, fontSize: 15, fontWeight: FontWeight.bold)),
-                                const SizedBox(height: 10,),
-                                const Text('72%', style: TextStyle(color: Colors.white)),
-                              ],
-                            ),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                ),
+                   );
+          } else {
+            return Center(
+              child: JumpingDotsProgressIndicator(
+                color: Colors.blueAccent,
+                fontSize: 60,
+                dotSpacing: 2
               )
-            ]
-        ),
+            );
+          }
+        }
       ),
     );
   }
 
-  Future<void> SendRequestCurrentWeather() async {
+  Future<CurrentCityDataModel> SendRequestCurrentWeather(String city_name) async {
     var API_key = '89bcba8c6272afacbe9318d9958d2616';
-    var city_name = 'tehran';
-    try {
-      var response = await Dio().get('https://api.openweathermap.org/data/2.5/weather?q=${city_name}&appid=${API_key}&units=metric');
-      print(response.data);
-      var data = response.data;
-      print('status code:  ${data['coord']['lon']}');
-      
-      var datamodel = CurrentCityDataModel(
-          data['name'],
-          data['coord']['lon'],
-          data['coord']['lat'],
-          data['weather'][0]['main'],
-          data['weather'][0]['description'],
-          data['main']['temp'],
-          data['main']['temp_min'],
-          data['main']['temp_max'],
-          data['main']['pressure'],
-          data['main']['humidity'],
-          data['main']['speed'],
-          data['dt']
-          data['sys']['country'],
-          data['sys']['sunrise'],
-          data['sys']['sunset']
-      )
-      
-    } catch (e) {
-      print(e);
+    isLoading = true;
+    var response = await Dio().get('https://api.openweathermap.org/data/2.5/weather?q=${city_name}&appid=${API_key}&units=metric');
+    isLoading = false;
+    var data = response.data;
+
+    var datamodel = CurrentCityDataModel(
+        data['name'],
+        data['coord']['lon'],
+        data['coord']['lat'],
+        data['weather'][0]['main'],
+        data['weather'][0]['description'],
+        data['weather'][0]['icon'],
+        data['main']['temp'],
+        data['main']['temp_min'],
+        data['main']['temp_max'],
+        data['main']['pressure'],
+        data['main']['humidity'],
+        data['main']['speed'],
+        data['dt'],
+        data['sys']['country'],
+        data['sys']['sunrise'],
+        data['sys']['sunset']
+    );
+    return datamodel;
+  }
+
+  Image setIconForMain(description) {
+    final int size = 65;
+    switch (description) {
+      case 'clear sky':
+        return Image(image: AssetImage('images/icons8-sun-96.png'), color: Colors.yellow);
+      case 'few clouds':
+        return Image(
+            image: AssetImage('images/icons8-partly-cloudy-day-80.png'), color: Colors.yellow);
+      case 'clouds':
+        return Image(image: AssetImage('images/icons8-clouds-80.png'), color: Colors.yellow);
+      case 'thunderstorm':
+        return Image(image: AssetImage('images/icons8-storm-80.png'), color: Colors.yellow);
+      case 'drizzle':
+        return Image(image: AssetImage('images/icons8-cloud-80.png'), color: Colors.yellow);
+      case 'rain':
+        return Image(image: AssetImage('images/icons8-rain-80.png'), color: Colors.yellow);
+      case 'snow':
+        return Image(image: AssetImage('images/icons8-snow-80.png'), color: Colors.yellow);
+      default:
+        return Image(image: AssetImage('images/icons8-windy-weather-80.png'), color: Colors.grey);
     }
   }
 
