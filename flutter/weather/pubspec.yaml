@@ -40,6 +40,8 @@ dependencies:
   progress_indicators: ^1.0.0
   skeletons: ^0.0.3
   intl: ^0.17.0
+  location: ^4.4.0
+  geocoding: ^2.0.5
 
 dev_dependencies:
   flutter_test:

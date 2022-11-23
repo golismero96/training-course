@@ -7,6 +7,10 @@ import 'package:dio/dio.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 import 'package:weather/Model/CurrentCityModel.dart';
 import 'package:intl/intl.dart';
+import 'package:weather/Model/ForecastDaysModel.dart';
+
+// import 'package:geocoding/geocoding.dart' as GeoCoding;
+// import 'package:location/location.dart' as Loc;
 
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -18,10 +22,12 @@ class HomeView extends StatefulWidget {
 class _State extends State<HomeView> {
   Future<CurrentCityDataModel>? currentWeatherFuture;
   Future<CurrentCityDataModel>? changedCurrentWeatherFuture;
+  StreamController<List<ForecastDaysModel>>? StreamForecastdays;
   bool isLoading = false;
+  final String API_key = '89bcba8c6272afacbe9318d9958d2616';
+
   var city_name = 'mashhad';
   final StreamController<int> streamController = StreamController<int>();
-  int? _randomValue;
   final Random randomNumber = Random(2);
   TextEditingController textEditingController = TextEditingController();
 
@@ -35,9 +41,12 @@ class _State extends State<HomeView> {
     //     _randomValue = event;
     //   });
     // });
-    print('tehran222');
+    // GetLocation();
     super.initState();
     currentWeatherFuture = SendRequestCurrentWeather(city_name);
+
+    StreamForecastdays = StreamController<List<ForecastDaysModel>>();
+
   }
 
   @override
@@ -67,20 +76,12 @@ class _State extends State<HomeView> {
           )
         ],
       ),
-       body: FutureBuilder<CurrentCityDataModel>(
+      body: FutureBuilder<CurrentCityDataModel>(
         future: currentWeatherFuture,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             CurrentCityDataModel? cityDataModel = snapshot.data;
-            final formatter = DateFormat.jm();
-            var sunrise = formatter.format(
-              new DateTime.fromMillisecondsSinceEpoch(
-                cityDataModel!.sunrise * 1000,
-                isUtc: true));
-            var sunset = formatter.format(
-                new DateTime.fromMillisecondsSinceEpoch(
-                    cityDataModel!.sunset * 1000,
-                    isUtc: true));
+            SendRequest7DaysForecast(cityDataModel!.lat, cityDataModel!.lon);
             return SafeArea(
                       child: Column(
                           children: [
@@ -257,7 +258,7 @@ class _State extends State<HomeView> {
                                             children: [
                                               Text('Sunrise', style: TextStyle(color: Colors.grey.shade300, fontSize: 15, fontWeight: FontWeight.bold)),
                                               const SizedBox(height: 10,),
-                                              Text(sunrise, style: TextStyle(color: Colors.white)),
+                                              Text(cityDataModel!.sunrise.toString(), style: TextStyle(color: Colors.white)),
                                             ],
                                           ),
                                           Padding(
@@ -272,7 +273,7 @@ class _State extends State<HomeView> {
                                             children: [
                                               Text('Sunset', style: TextStyle(color: Colors.grey.shade300, fontSize: 15, fontWeight: FontWeight.bold)),
                                               const SizedBox(height: 10,),
-                                              Text(sunset, style: TextStyle(color: Colors.white)),
+                                              Text(cityDataModel!.sunset.toString(), style: TextStyle(color: Colors.white)),
                                             ],
                                           ),
                                           Padding(
@@ -315,12 +316,23 @@ class _State extends State<HomeView> {
   }
 
   Future<CurrentCityDataModel> SendRequestCurrentWeather(String city_name) async {
-    var API_key = '89bcba8c6272afacbe9318d9958d2616';
     isLoading = true;
     var response = await Dio().get('https://api.openweathermap.org/data/2.5/weather?q=${city_name}&appid=${API_key}&units=metric');
     isLoading = false;
     var data = response.data;
 
+    var lon = data['coord']['lon'];
+    var lat = data['coord']['lat'];
+
+    final formatter = DateFormat.jm();
+    var sunrise = formatter.format(
+        DateTime.fromMillisecondsSinceEpoch(
+            data['sys']['sunrise'] * 1000,
+            isUtc: true));
+    var sunset = formatter.format(
+        DateTime.fromMillisecondsSinceEpoch(
+            data['sys']['sunset'] * 1000,
+            isUtc: true));
     var datamodel = CurrentCityDataModel(
         data['name'],
         data['coord']['lon'],
@@ -336,8 +348,8 @@ class _State extends State<HomeView> {
         data['main']['speed'],
         data['dt'],
         data['sys']['country'],
-        data['sys']['sunrise'],
-        data['sys']['sunset']
+        sunrise,
+        sunset
     );
     return datamodel;
   }
@@ -363,6 +375,86 @@ class _State extends State<HomeView> {
       default:
         return Image(image: AssetImage('images/icons8-windy-weather-80.png'), color: Colors.grey);
     }
+  }
+
+
+  Future GetLocation() async {
+    // print('GetLocation');
+
+    // Loc.Location location = new Loc.Location();
+
+    // bool _serviceEnabled;
+    // Loc.PermissionStatus _permissionGranted;
+    // Loc.LocationData _locationData;
+
+    // location.enableBackgroundMode(enable: true);
+
+    // _serviceEnabled = await location.serviceEnabled();
+    // if (!_serviceEnabled) {
+    //   _serviceEnabled = await location.requestService();
+    //   if (!_serviceEnabled) {
+    //     return;
+    //   }
+    // }
+    //
+    // _permissionGranted = await location.hasPermission();
+    // if (_permissionGranted == Loc.PermissionStatus.denied) {
+    //   _permissionGranted = await location.requestPermission();
+    //   if (_permissionGranted != Loc.PermissionStatus.granted) {
+    //     return;
+    //   }
+    // }
+
+    // _locationData = await location.getLocation();
+    // print('latitude: ${_locationData.latitude}');
+    // print('longitude: ${_locationData.longitude}');
+    //   List<GeoCoding.Placemark> placemarks = await GeoCoding
+    //       .placemarkFromCoordinates(
+    //       _locationData.latitude!, _locationData.longitude!);
+    //   print('placemarks: ${placemarks}');
+  }
+
+  void SendRequest7DaysForecast(double lat, double lon) async {
+    List<ForecastDaysModel> list = [];
+    print("lat: ${lat} , lon: ${lon} , API_key: ${API_key}");
+    try{
+    var response = await Dio().get('https://api.openweathermap.org/data/2.5/onecall',
+      queryParameters: {
+        'lat': lat,
+        'lon': lon,
+        'exclude': 'minutely,hourly',
+        'appid': API_key,
+        'units': 'metric'
+      }
+    );
+    var data = response.data;
+
+    final formatter = DateFormat.MMMd();
+
+    for (int i = 0; i < 8; i++) {
+      var model = data['daily'][i];
+      var dt = formatter.format(DateTime.fromMillisecondsSinceEpoch(
+          model['dt'] * 1000,
+          isUtc: true
+      ));
+
+      ForecastDaysModel forecastDaysModel = ForecastDaysModel(
+          dt,
+          model['temp']['day'],
+          model['weather'][0]['main'],
+          model['weather'][0]['description']
+      );
+      list.add(forecastDaysModel);
+    }
+    StreamForecastdays?.add(list);
+
+      
+    } on DioError catch (e) {
+      print(e.response!.statusCode);
+      print(e.message);
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('There is on')));
+    }
+    
   }
 
   String makeRandomNumber() {
