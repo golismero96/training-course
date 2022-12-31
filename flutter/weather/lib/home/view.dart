@@ -22,11 +22,12 @@ class HomeView extends StatefulWidget {
 class _State extends State<HomeView> {
   Future<CurrentCityDataModel>? currentWeatherFuture;
   Future<CurrentCityDataModel>? changedCurrentWeatherFuture;
-  StreamController<List<ForecastDaysModel>>? StreamForecastdays;
+  // StreamController<List<ForecastDaysModel>>? StreamForecastdays;
   bool isLoading = false;
   final String API_key = '89bcba8c6272afacbe9318d9958d2616';
 
   var city_name = 'mashhad';
+  var lang_name = 'en';
   final StreamController<int> streamController = StreamController<int>();
   final Random randomNumber = Random(2);
   TextEditingController textEditingController = TextEditingController();
@@ -45,7 +46,7 @@ class _State extends State<HomeView> {
     super.initState();
     currentWeatherFuture = SendRequestCurrentWeather(city_name);
 
-    StreamForecastdays = StreamController<List<ForecastDaysModel>>();
+    // StreamForecastdays = StreamController<List<ForecastDaysModel>>();
 
   }
 
@@ -65,8 +66,32 @@ class _State extends State<HomeView> {
         backgroundColor: Colors.grey.shade900,
         actions: <Widget>[
           PopupMenuButton<String>(
+              onSelected: (newValue) {
+                if(newValue == 'Refresh') {
+                  changedCurrentWeatherFuture = SendRequestCurrentWeather(city_name);
+                  setState(() {
+                    currentWeatherFuture = changedCurrentWeatherFuture;
+                  });
+                }else if (newValue == 'English' || newValue == 'Persian') {
+                  if (newValue.contains('English')) {
+                    setState(() {
+                      lang_name = 'en';
+                    });
+                  }else if (newValue.contains('Persian')) {
+                    setState(() {
+                      lang_name = 'fa';
+                    });
+                  }
+                  changedCurrentWeatherFuture =
+                      SendRequestCurrentWeather(city_name);
+                  setState(() {
+                    currentWeatherFuture =
+                        changedCurrentWeatherFuture;
+                  });
+                }
+              },
               itemBuilder: (BuildContext context){
-                return {'Setting', 'Profile', 'Logout'}.map((String Choice) {
+                return {'Refresh', 'English', 'Persian', 'Logout'}.map((String Choice) {
                   return PopupMenuItem(
                     value: Choice,
                     child: Text(Choice),
@@ -81,7 +106,7 @@ class _State extends State<HomeView> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             CurrentCityDataModel? cityDataModel = snapshot.data;
-            SendRequest7DaysForecast(cityDataModel!.lat, cityDataModel!.lon);
+            // SendRequest7DaysForecast(cityDataModel!.lat, cityDataModel!.lon);
             return SafeArea(
                       child: Column(
                           children: [
@@ -111,23 +136,6 @@ class _State extends State<HomeView> {
                                       padding: const EdgeInsets.all(10),
                                       child: Row(
                                         children: [
-                                          ElevatedButton(
-                                              onPressed: (){
-                                                changedCurrentWeatherFuture = SendRequestCurrentWeather(textEditingController.text);
-                                                setState(() {
-                                                  currentWeatherFuture = changedCurrentWeatherFuture;
-                                                });
-                                                textEditingController.text = '';
-                                              },
-                                              style: ElevatedButton.styleFrom(
-                                                  backgroundColor: Colors.transparent,
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius: BorderRadius.circular(8.0),
-                                                  )
-                                              ),
-                                              child: const Text('find', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),)
-                                          ),
-                                          const SizedBox(width: 10,),
                                           Expanded(
                                               child: TextField(
                                                 controller: textEditingController,
@@ -138,7 +146,36 @@ class _State extends State<HomeView> {
                                                     border: UnderlineInputBorder()
                                                 ),
                                               )
-                                          )
+                                          ),
+                                          const SizedBox(width: 10,),
+                                          ElevatedButton(
+                                              onPressed: (){
+                                                if(textEditingController.text != '') {
+                                                  setState(() {
+                                                    city_name =
+                                                        textEditingController
+                                                            .text;
+                                                  });
+                                                  changedCurrentWeatherFuture =
+                                                      SendRequestCurrentWeather(
+                                                          textEditingController
+                                                              .text);
+                                                  setState(() {
+                                                    currentWeatherFuture =
+                                                        changedCurrentWeatherFuture;
+                                                  });
+                                                  textEditingController.text =
+                                                  '';
+                                                }
+                                              },
+                                              style: ElevatedButton.styleFrom(
+                                                  backgroundColor: Colors.transparent,
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.circular(8.0),
+                                                  )
+                                              ),
+                                              child: const Text('find', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),)
+                                          ),
                                         ],
                                       ),
                                     ),
@@ -288,7 +325,7 @@ class _State extends State<HomeView> {
                                             children: [
                                               Text('Humidity', style: TextStyle(color: Colors.grey.shade300, fontSize: 15, fontWeight: FontWeight.bold)),
                                               const SizedBox(height: 10,),
-                                              Text('${cityDataModel!.hunidity}%', style: TextStyle(color: Colors.white)),
+                                              Text('${cityDataModel!.humidity}%', style: TextStyle(color: Colors.white)),
                                             ],
                                           ),
                                         ],
@@ -317,7 +354,7 @@ class _State extends State<HomeView> {
 
   Future<CurrentCityDataModel> SendRequestCurrentWeather(String city_name) async {
     isLoading = true;
-    var response = await Dio().get('https://api.openweathermap.org/data/2.5/weather?q=${city_name}&appid=${API_key}&units=metric');
+    var response = await Dio().get('https://api.openweathermap.org/data/2.5/weather?q=${city_name}&lang=${lang_name}&appid=${API_key}&units=metric');
     isLoading = false;
     var data = response.data;
 
@@ -351,6 +388,7 @@ class _State extends State<HomeView> {
         sunrise,
         sunset
     );
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('There is on')));
     return datamodel;
   }
 
@@ -414,48 +452,47 @@ class _State extends State<HomeView> {
     //   print('placemarks: ${placemarks}');
   }
 
-  void SendRequest7DaysForecast(double lat, double lon) async {
-    List<ForecastDaysModel> list = [];
-    print("lat: ${lat} , lon: ${lon} , API_key: ${API_key}");
-    try{
-    var response = await Dio().get('https://api.openweathermap.org/data/2.5/onecall',
-      queryParameters: {
-        'lat': lat,
-        'lon': lon,
-        'exclude': 'minutely,hourly',
-        'appid': API_key,
-        'units': 'metric'
-      }
-    );
-    var data = response.data;
-
-    final formatter = DateFormat.MMMd();
-
-    for (int i = 0; i < 8; i++) {
-      var model = data['daily'][i];
-      var dt = formatter.format(DateTime.fromMillisecondsSinceEpoch(
-          model['dt'] * 1000,
-          isUtc: true
-      ));
-
-      ForecastDaysModel forecastDaysModel = ForecastDaysModel(
-          dt,
-          model['temp']['day'],
-          model['weather'][0]['main'],
-          model['weather'][0]['description']
-      );
-      list.add(forecastDaysModel);
-    }
-    StreamForecastdays?.add(list);
-
-      
-    } on DioError catch (e) {
-      print(e.response!.statusCode);
-      print(e.message);
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('There is on')));
-    }
-    
-  }
+  // void SendRequest7DaysForecast(double lat, double lon) async {
+  //   List<ForecastDaysModel> list = [];
+  //   print("lat: ${lat} , lon: ${lon} , API_key: ${API_key}");
+  //   try{
+  //   var response = await Dio().get('https://api.openweathermap.org/data/2.5/onecall',
+  //     queryParameters: {
+  //       'lat': lat,
+  //       'lon': lon,
+  //       'exclude': 'minutely,hourly',
+  //       'appid': API_key,
+  //       'units': 'metric'
+  //     }
+  //   );
+  //   var data = response.data;
+  //
+  //   final formatter = DateFormat.MMMd();
+  //
+  //   for (int i = 0; i < 8; i++) {
+  //     var model = data['daily'][i];
+  //     var dt = formatter.format(DateTime.fromMillisecondsSinceEpoch(
+  //         model['dt'] * 1000,
+  //         isUtc: true
+  //     ));
+  //
+  //     ForecastDaysModel forecastDaysModel = ForecastDaysModel(
+  //         dt,
+  //         model['temp']['day'],
+  //         model['weather'][0]['main'],
+  //         model['weather'][0]['description']
+  //     );
+  //     list.add(forecastDaysModel);
+  //   }
+  //   StreamForecastdays?.add(list);
+  //
+  //
+  //   } on DioError catch (e) {
+  //     print(e.response!.statusCode);
+  //     print(e.message);
+  //   }
+  //
+  // }
 
   String makeRandomNumber() {
     var random = randomNumber.nextInt(45);

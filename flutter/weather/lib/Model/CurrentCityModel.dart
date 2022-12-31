@@ -10,7 +10,7 @@ class CurrentCityDataModel{
   var _temp_min;
   var _temp_max;
   var _pressure;
-  var _hunidity;
+  var _humidity;
   var _windSpeed;
   var _dataTime;
   String _country;
@@ -28,7 +28,7 @@ class CurrentCityDataModel{
       this._temp_min,
       this._temp_max,
       this._pressure,
-      this._hunidity,
+      this._humidity,
       this._windSpeed,
       this._dataTime,
       this._country,
@@ -46,7 +46,7 @@ class CurrentCityDataModel{
 
   get windSpeed => _windSpeed;
 
-  get hunidity => _hunidity;
+  get humidity => _humidity;
 
   get pressure => _pressure;
 
