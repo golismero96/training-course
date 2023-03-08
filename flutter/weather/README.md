@@ -1,6 +1,6 @@
 # weather
 
-Weather
+weather
 
 ## Getting Started
 
