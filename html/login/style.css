@@ -15,6 +15,8 @@ body {
   box-sizing: border-box;
 }
 
+/* AppBar */
+
 header {
   position: fixed;
   top: 0;
@@ -34,6 +36,8 @@ header {
   color: #fff;
   user-select: none;
 }
+
+/* Navigation */
 .navigation {
   display: flex;
   align-items: center;
@@ -79,6 +83,8 @@ nav.navigation a:hover::after {
   transform-origin: left;
   transform: scaleX(1);
 }
+
+/* Login Button */
 .navigation .btnLogin-popup {
   width: 130px;
   height: 50px;
@@ -95,4 +101,37 @@ nav.navigation a:hover::after {
 .navigation .btnLogin-popup:hover {
   background: #fff;
   color: #162938;
+}
+
+/* Login Popup */
+.wrapper {
+  position: relative;
+  width: 400px;
+  height: 440px;
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 20px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.wrapper .form-box {
+  width: 100%;
+  padding: 40px;
+}
+
+.form-box h2 {
+  font-size: 2em;
+  font-weight: 700;
+  color: #162938;
+  text-align: center;
+}
+
+.input-box {
+  position: relative;
+  width: 100%;
+  height: 50px;
+  border-bottom: 2px solid #162938;
 }
