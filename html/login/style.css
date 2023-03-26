@@ -111,7 +111,7 @@ nav.navigation a:hover::after {
   background: transparent;
   border: 2px solid rgba(255, 255, 255, 0.5);
   border-radius: 20px;
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(3rem);
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
@@ -132,6 +132,104 @@ nav.navigation a:hover::after {
 .input-box {
   position: relative;
   width: 100%;
-  height: 50px;
+  height: 3rem;
   border-bottom: 2px solid #162938;
+  margin: 1.7em 0;
+}
+
+.input-box label {
+  position: absolute;
+  top: 50%;
+  left: 0.3em;
+  transform: translateY(-50%);
+  font-size: 1em;
+  color: #162938;
+  font-weight: 500;
+  pointer-events: none;
+  transition: 0.5s;
+}
+
+.input-box input:focus ~ label,
+.input-box input:valid ~ label {
+  top: -0.01rem;
+}
+
+.input-box input {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #162938;
+  font-size: 1em;
+  font-weight: 600;
+  padding: 0 2.2em 0 0.3em;
+}
+
+.input-box .icon {
+  position: absolute;
+  right: 0.4em;
+  font-size: 1.2em;
+  color: #162938;
+  line-height: 3em;
+}
+
+/* Login - Remember Forgot */
+
+.remember-forgot {
+  font-size: 0.9em;
+  color: #162938;
+  font-weight: 600;
+  margin: -1.2em 0 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.remember-forgot label input {
+  accent-color: #162938;
+  margin-right: 0.2em;
+}
+
+.remember-forgot a {
+  color: #162938;
+  text-decoration: none;
+}
+
+.remember-forgot a:hover {
+  text-decoration: underline;
+}
+
+.btn {
+  width: 100%;
+  height: 3rem;
+  background: #162938;
+  border: none;
+  outline: none;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  margin: 1.2rem 0 0;
+  font-size: 1rem;
+  color: #fff;
+  font-weight: 500;
+  transition: 0.5s;
+}
+.btn:hover {
+  background: #344450;
+}
+
+.login-register {
+  font-size: 0.9em;
+  color: #fff;
+  font-weight: 600;
+  margin: 1em 0 0.5rem;
+  text-align: center;
+}
+
+.login-register p a {
+  color: #2095ee;
+  text-decoration: none;
+}
+
+.login-register p a:hover {
+  text-decoration: underline;
 }
