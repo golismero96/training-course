@@ -116,10 +116,60 @@ nav.navigation a:hover::after {
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
+  transform: scale(0);
+  transition: transform 0.5s ease, height 2s ease;
 }
+
+.wrapper.active-popup {
+  transform: scale(1);
+}
+
+.wrapper.active {
+  height: 32rem;
+}
+
 .wrapper .form-box {
   width: 100%;
   padding: 40px;
+}
+
+.wrapper .form-box.login {
+  transition: transform 0.18 ease;
+  transform: translateX(0);
+}
+
+.wrapper.active .form-box.login {
+  transition: none;
+  transform: translateX(-400px);
+}
+
+.wrapper .form-box.register {
+  position: absolute;
+  transition: none;
+  transform: translateX(400px);
+}
+
+.wrapper.active .form-box.register {
+  transition: transform 0.18 ease;
+  transform: translateX(0);
+}
+
+.wrapper .icon-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 3rem;
+  height: 3rem;
+  background: #162938;
+  font-size: 2rem;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom-left-radius: 1.4rem;
+  cursor: pointer;
+  z-index: 1;
 }
 
 .form-box h2 {
@@ -183,6 +233,12 @@ nav.navigation a:hover::after {
   margin: -1.2em 0 0;
   display: flex;
   justify-content: space-between;
+  cursor: pointer;
+}
+
+.remember-forgot label:hover,
+.remember-forgot input:hover {
+  cursor: pointer;
 }
 
 .remember-forgot label input {
