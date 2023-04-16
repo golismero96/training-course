@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:chatgpt/utils/MyDrawer.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-
 import 'Model/PageViewModel.dart';
+import 'Model/SpecialOfferModel.dart';
 
 void main() {
   runApp(const MaterialApp(
@@ -22,15 +22,16 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late Future<List<PageViewModel>> pageViewFuture;
+  late Future<List<SpecialOfferModel>> specialofferFuture;
 
   PageController pageController = PageController();
 
   @override
   void initState() {
     super.initState();
-    pageViewFuture = SendRequestPageView();
+    pageViewFuture = sendRequestPageView();
+    specialofferFuture = sendRequestSpecialOffer();
   }
-  // Projects/learning/training_course/Django/django_api_react Django
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +44,7 @@ class _HomePageState extends State<HomePage> {
           IconButton(
             icon: const Icon(Icons.search),
             onPressed: () {
-              SendRequestPageView();
+              sendRequestPageView();
             },
           ),
           IconButton(
@@ -81,17 +82,20 @@ class _HomePageState extends State<HomePage> {
                                 controller: PageController(),
                                 count: model.length,
                                 effect: const ExpandingDotsEffect(
-                                    dotColor: Colors.white,
-                                    activeDotColor: Colors.red,
-                                    dotHeight: 10,
-                                    dotWidth: 10,
-                                    spacing: 5.0),
-                                onDotClicked: (index) =>
-                                    pageController.animateToPage(
-                                  index,
-                                  duration: const Duration(milliseconds: 500),
-                                  curve: Curves.ease,
+                                  dotColor: Colors.white,
+                                  activeDotColor: Colors.red,
+                                  dotHeight: 10,
+                                  dotWidth: 10,
+                                  spacing: 5.0,
+                                  expansionFactor: 4,
                                 ),
+                                onDotClicked: (index) => {
+                                  pageController.animateToPage(
+                                    index,
+                                    duration: const Duration(milliseconds: 500),
+                                    curve: Curves.ease,
+                                  )
+                                },
                               ),
                             )
                           ],
@@ -105,13 +109,28 @@ class _HomePageState extends State<HomePage> {
                         );
                       }
                     }),
-              )
+              ),
+              Padding(
+                  padding: const EdgeInsets.only(bottom: 20),
+                  child: Container(
+                      color: Colors.red,
+                      height: 300,
+                      child: FutureBuilder<List<SpecialOfferModel>>(
+                          future: specialofferFuture,
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              List<SpecialOfferModel>? model = snapshot.data;
+                              return Container();
+                            } else {
+                              return Center();
+                            }
+                          })))
             ],
           )),
     );
   }
 
-  Future<List<PageViewModel>> SendRequestPageView() async {
+  Future<List<PageViewModel>> sendRequestPageView() async {
     List<PageViewModel> model = [];
 
     var response = await Dio().get('http://192.168.100.7:8000/pageViewPics/');
@@ -120,6 +139,27 @@ class _HomePageState extends State<HomePage> {
       model.add(PageViewModel(item['id'], item['imgurl']));
     }
     return model;
+  }
+
+  Future<List<SpecialOfferModel>> sendRequestSpecialOffer() async {
+    List<SpecialOfferModel> models = [];
+
+    var response = await Dio().get('http://192.168.100.7:8000/specialOffer/');
+
+    print(response.data);
+    print(response.statusCode);
+
+    for (var item in response.data['product']) {
+      models.add(SpecialOfferModel(
+          item['id'],
+          item['productName'],
+          item['price'],
+          item['off_price'],
+          item['off_precent'],
+          item['imgUrl']));
+    }
+
+    return models;
   }
 
   Padding PageViewItems(PageViewModel pageViewModel) {
@@ -131,5 +171,11 @@ class _HomePageState extends State<HomePage> {
             child: Image.network(pageViewModel.imgurl, fit: BoxFit.fill),
           ),
         ));
+  }
+
+  @override
+  void dispose() {
+    pageController.dispose();
+    super.dispose();
   }
 }
