@@ -64,7 +64,7 @@ class _HomePageState extends State<HomePage> {
                       if (snapshot.hasData) {
                         List<PageViewModel>? model = snapshot.data;
                         return Stack(
-                          alignment: Alignment.center,
+                          alignment: Alignment.bottomCenter,
                           children: [
                             PageView.builder(
                               controller: pageController,
@@ -76,7 +76,7 @@ class _HomePageState extends State<HomePage> {
                               },
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(bottom: 20),
+                              padding: const EdgeInsets.only(bottom: 10),
                               child: SmoothPageIndicator(
                                 controller: PageController(),
                                 count: model.length,
