@@ -16,7 +16,7 @@ const Navbar = () => (
     <div className={`${styles.innerWidth} mx-auto flex justify-between gap-8`}>
       <img src="/search.svg" alt="search" className='w-[24px] h-[24px] object-contain' />
       <h2 className="font-extrabold text-[24px] leading-[30px] text-white">
-        Dadfar<span className='text-yellow-400 text-[26px]'>JS</span>
+        DADFAR<span className='text-yellow-400'>JS</span>
       </h2>
       <img src="/menu.svg" alt="search" className='w-[24px] h-[24px] object-contain' />
     </div>
