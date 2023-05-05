@@ -24,6 +24,8 @@ ios/.xcode.env.local
 
 # Android/IntelliJ
 #
+
+.expo/web
 build/
 .idea
 .gradle
