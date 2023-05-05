@@ -54,7 +54,7 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       body: Container(
-          color: Colors.purple,
+          color: Colors.white,
           child: Column(
             children: [
               Container(
@@ -68,6 +68,7 @@ class _HomePageState extends State<HomePage> {
                           alignment: Alignment.bottomCenter,
                           children: [
                             PageView.builder(
+                              reverse: true,
                               controller: pageController,
                               scrollDirection: Axis.horizontal,
                               allowImplicitScrolling: true,
@@ -79,13 +80,14 @@ class _HomePageState extends State<HomePage> {
                             Padding(
                               padding: const EdgeInsets.only(bottom: 10),
                               child: SmoothPageIndicator(
+                                textDirection: TextDirection.rtl,
                                 controller: PageController(),
                                 count: model.length,
                                 effect: const ExpandingDotsEffect(
                                   dotColor: Colors.white,
                                   activeDotColor: Colors.red,
                                   dotHeight: 10,
-                                  dotWidth: 10,
+                                  dotWidth: 8,
                                   spacing: 5.0,
                                   expansionFactor: 4,
                                 ),
@@ -102,16 +104,22 @@ class _HomePageState extends State<HomePage> {
                         );
                       } else {
                         return Center(
-                          child: JumpingDotsProgressIndicator(
+                            child:
+                                Stack(alignment: Alignment.center, children: [
+                          Image.asset('images/notImage.png'),
+                          JumpingDotsProgressIndicator(
                             fontSize: 65.0,
                             dotSpacing: 9,
                           ),
-                        );
+                        ]));
                       }
                     }),
               ),
+              const SizedBox(
+                height: 10,
+              ),
               Padding(
-                  padding: const EdgeInsets.only(bottom: 20),
+                  padding: const EdgeInsets.only(bottom: 10),
                   child: Container(
                       color: Colors.red,
                       height: 300,
@@ -120,7 +128,45 @@ class _HomePageState extends State<HomePage> {
                           builder: (context, snapshot) {
                             if (snapshot.hasData) {
                               List<SpecialOfferModel>? model = snapshot.data;
-                              return Container();
+                              return ListView.builder(
+                                reverse: true,
+                                shrinkWrap: true,
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (context, position) {
+                                  if (position == 0) {
+                                    return Container(
+                                        height: 300,
+                                        width: 200,
+                                        child: Column(children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 10, right: 10),
+                                            child: Image.asset(
+                                                'images/d4976a5e.png',
+                                                height: 200,
+                                                width: 200),
+                                          ),
+                                          OutlinedButton(
+                                              style: OutlinedButton.styleFrom(
+                                                  side: const BorderSide(
+                                                      width: 2,
+                                                      color: Colors.white)),
+                                              onPressed: () {},
+                                              child: const Text(
+                                                'مشاهده همه',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.w800,
+                                                    color: Colors.white),
+                                              )),
+                                        ]));
+                                  } else {
+                                    return Container(
+                                      width: 200,
+                                    );
+                                  }
+                                },
+                                itemCount: model!.length,
+                              );
                             } else {
                               return Center();
                             }
