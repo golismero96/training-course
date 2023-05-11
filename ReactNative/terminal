@@ -1,6 +1,14 @@
-// make a big Project  //
+# make a big Project
 npx react-native init MyTestApp
-npm install expo-cli --save // install package expo-cli
-npx expo install react-native-web@~0.18.10 react-dom@18.2.0 // for web app
-cd project_name
-npm expo start // start project
+# npx expo init MyReactNative
+npx install expo-cli --save # install package expo-cli
+npx expo install react-native-web@~0.18.10 react-dom@18.2.0 # for web app
+# cd project_name
+npx expo start # start project
+
+
+# index.js change to these lines
+import {registerRootComponent} from 'expo';
+import App from './App';
+registerRootComponent(App);
+#----------------------------------------------------------------
