@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <style>
+        [class], [id] {
+            font-size: 6px;
+        }
+        a[href='#'] {
+            color: red;
+        }
+        /* * for contains http */
+        a[href*='http'] {
+            color: yellow;
+        }
+        /* ^ for start with https */
+        a[href^='https'] {
+            color: green;
+        }
+        /* $ for end with / */
+        a[href$='.com'] {
+            color: blue;
+        }
+        /* | contains value with or without dash(-) */
+        p[lang|='en'] {
+            color: brown;
+            /* <p lang='en-US'></p> */
+        }
+        /* Contains a or multi letters in text */
+        img[alt~='Figure'] {
+            border: 1px solid black;
+        }
+        /* Contains a or multi letters in text */
+        img[alt~='figure' i] { /* 'i' for not important case sensitive */
+            border: 1px solid black;
+        }
+    </style>
+
+</head>
+<body>
+    
+</body>
+</html>
