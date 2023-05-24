@@ -61,7 +61,7 @@ class _State extends State<HomeView> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: const Text('MrBug'),
+        title: const Text('DadfarJS Weather'),
         elevation: 15,
         backgroundColor: Colors.grey.shade900,
         actions: <Widget>[
@@ -72,7 +72,8 @@ class _State extends State<HomeView> {
                   setState(() {
                     currentWeatherFuture = changedCurrentWeatherFuture;
                   });
-                }else if (newValue == 'English' || newValue == 'Persian') {
+                }
+                else if (newValue == 'English' || newValue == 'Persian') {
                   if (newValue.contains('English')) {
                     setState(() {
                       lang_name = 'en';
@@ -104,7 +105,7 @@ class _State extends State<HomeView> {
       body: FutureBuilder<CurrentCityDataModel>(
         future: currentWeatherFuture,
         builder: (context, snapshot) {
-          if (snapshot.hasData) {
+          if (!isLoading) {
             CurrentCityDataModel? cityDataModel = snapshot.data;
             SendRequest7DaysForecast(cityDataModel!.lat, cityDataModel!.lon);
             return SafeArea(
@@ -174,7 +175,8 @@ class _State extends State<HomeView> {
                                                     borderRadius: BorderRadius.circular(8.0),
                                                   )
                                               ),
-                                              child: const Text('find', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),)
+                                              child:  Icon(Icons.search_outlined, size: 20),
+                                              // child: const Text('find', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),)
                                           ),
                                         ],
                                       ),
@@ -357,9 +359,6 @@ class _State extends State<HomeView> {
     var response = await Dio().get('https://api.openweathermap.org/data/2.5/weather?q=${city_name}&lang=${lang_name}&appid=${API_key}&units=metric');
     isLoading = false;
     var data = response.data;
-
-    var lon = data['coord']['lon'];
-    var lat = data['coord']['lat'];
 
     final formatter = DateFormat.jm();
     var sunrise = formatter.format(
