@@ -267,34 +267,44 @@ class _HomePageState extends State<HomePage> {
                                                   children: [
                                                     Container(
                                                       width: 150,
-                                                      child: Card(
-                                                          shape: RoundedRectangleBorder(
-                                                            borderRadius: BorderRadius.circular(15.0),
-                                                          ),
-                                                        color: Colors.white,
-                                                        child: const Column(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment.center,
-                                                            children: [
-                                                              RotationTransition(
-                                                              turns: AlwaysStoppedAnimation(90 / 365),
-                                                                child: Icon(
-                                                                  Icons.expand_circle_down_outlined,
-                                                                  size: 50,
-                                                                  color: Colors.lightBlueAccent,
+                                                      child: GestureDetector(
+                                                        onTap: () {
+                                                          Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder: (context) => AllProduct()
+                                                              )
+                                                          );
+                                                        },
+                                                        child: Card(
+                                                            shape: RoundedRectangleBorder(
+                                                              borderRadius: BorderRadius.circular(15.0),
+                                                            ),
+                                                          color: Colors.white,
+                                                          child: const Column(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment.center,
+                                                              children: [
+                                                                RotationTransition(
+                                                                turns: AlwaysStoppedAnimation(90 / 365),
+                                                                  child: Icon(
+                                                                    Icons.expand_circle_down_outlined,
+                                                                    size: 50,
+                                                                    color: Colors.lightBlueAccent,
+                                                                  ),
                                                                 ),
-                                                              ),
-                                                              SizedBox(
-                                                                height: 10,
-                                                              ),
-                                                              Text(
-                                                                'مشاهده همه',
-                                                                style: TextStyle(
-                                                                    fontWeight: FontWeight.w800,
-                                                                    fontSize: 18,
-                                                                    color: Colors.black87),
-                                                              ),
-                                                        ]),
+                                                                SizedBox(
+                                                                  height: 10,
+                                                                ),
+                                                                Text(
+                                                                  'مشاهده همه',
+                                                                  style: TextStyle(
+                                                                      fontWeight: FontWeight.w800,
+                                                                      fontSize: 18,
+                                                                      color: Colors.black87),
+                                                                ),
+                                                          ]),
+                                                        ),
                                                       ),
                                                     ),
                                                     SpecialofferItem(model[position]),
