@@ -25,7 +25,7 @@ void main() {
         labelColor: Colors.red,
         unselectedLabelColor: Colors.grey,
       ),
-      textTheme: const TextTheme(bodyMedium: TextStyle(color: Colors.purple)),
+      textTheme: const TextTheme(bodyMedium: TextStyle(fontFamily: 'Vazir')),
     ),
     home: HomePage(),
   ));
@@ -433,7 +433,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(5.0),
-                    child: Text(specialOfferModel.productName, style: TextStyle(fontFamily: 'IranSans')),
+                    child: Text(specialOfferModel.productName),
                   ),
                   Expanded(child: Container(
                     child: Row(
@@ -446,13 +446,13 @@ class _HomePageState extends State<HomePage> {
                             children: [
                               Row(
                                 children: [
-                                  Text('تومان ', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 11, fontFamily: 'IranSans')),
-                                  Text('${specialOfferModel.off_price.toString()}', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18, fontFamily: 'IranSans')),
+                                  Text('تومان ', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 11)),
+                                  Text('${specialOfferModel.off_price.toString()}', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18)),
                                 ],
                               ),
                               Row(
                                 children: [
-                                  Text('${specialOfferModel.price.toString()}', style: TextStyle(decoration: TextDecoration.lineThrough, color: Colors.grey, fontSize: 14, fontFamily: 'IranSans')),
+                                  Text('${specialOfferModel.price.toString()}', style: TextStyle(decoration: TextDecoration.lineThrough, color: Colors.grey, fontSize: 14)),
                                 ],
                               )
                             ],
@@ -469,7 +469,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                                child: Text('${specialOfferModel.off_precent.toString()}%', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 12.8, fontFamily: 'IranSans')),
+                                child: Text('${specialOfferModel.off_precent.toString()}%', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 12.8)),
                               ),
                             )
                           ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'BottomNavigationBar.dart';
+
 class AllProduct extends StatefulWidget {
   const AllProduct({Key? key}) : super(key: key);
 
@@ -11,9 +13,16 @@ class _AllProductState extends State<AllProduct> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        backgroundColor: Colors.blue,
+        child: const Icon(Icons.add),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: BottomNav(),
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('فروشگاه'),
+        title: const Text('فروشگاه', style: TextStyle(fontFamily: 'Vazir')),
         backgroundColor: Colors.red,
         actions: [
           IconButton(
@@ -26,7 +35,7 @@ class _AllProductState extends State<AllProduct> {
         data: ThemeData.from(
           colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.red),
         ),
-        child: const Placeholder(
+        child: Container(
 
         ),
       ),

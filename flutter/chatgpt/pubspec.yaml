@@ -71,6 +71,9 @@ flutter:
     - family: IranSans
       fonts:
         - asset: fonts/IRANSansWeb.ttf
+    - family: Vazir
+      fonts:
+        - asset: fonts/VazirMatn.ttf
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
