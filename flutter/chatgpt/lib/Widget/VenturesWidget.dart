@@ -14,11 +14,11 @@ class _VentureWidgetState extends State<VentureWidget> {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 4, // Number of columns
       ),
       itemBuilder: (context, index) {
-        VenturesModel venture = widget.venturesFuture![index];
+        VenturesModel venture = widget.venturesFuture[index];
         return Padding(
           padding: const EdgeInsets.all(8.0),
           child: VenturesRenderItem(venture),
@@ -35,7 +35,7 @@ class _VentureWidgetState extends State<VentureWidget> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Image.network(venturesModel.imgUrl, width: 40, height: 40,),
-          Text(utf8.decode(venturesModel.text.toString().codeUnits), style: TextStyle(fontSize: 12))
+          Text(utf8.decode(venturesModel.text.toString().codeUnits), style: const TextStyle(fontSize: 12))
         ],
       ),
     );

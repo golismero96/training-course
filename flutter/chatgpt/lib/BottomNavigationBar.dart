@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'main.dart';
-
 
 class BottomNav extends StatefulWidget {
   const BottomNav({Key? key}) : super(key: key);
