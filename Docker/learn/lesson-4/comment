@@ -1,4 +1,0 @@
-docker build -t <Name Container> -f Dockerfile app
-// اجرای فایل داکرفایل 
-docker stop <Name Container> //متوقف کردن کانتینر
-docker run -d --rm <Name Image> <Random Name> // ساخت کانتینر از ایمیج در بک اند ، بدون داخل کانتینر رفتن
