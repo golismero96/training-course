@@ -43,6 +43,7 @@ dependencies:
   flutter_svg: ^2.0.6
   internet_connection_checker: ^1.0.0+1
   connectivity_plus: ^4.0.1
+  resize: ^1.0.0
 
 flutter_native_splash:
   color: "#ffffff"

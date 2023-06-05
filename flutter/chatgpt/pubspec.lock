@@ -312,6 +312,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.0"
+  resize:
+    dependency: "direct main"
+    description:
+      name: resize
+      sha256: "121eed0fc52d111e2e23d363c8d1615ef4f196219a4c711974aec09c9fa3b679"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   sky_engine:
     dependency: transitive
     description: flutter
