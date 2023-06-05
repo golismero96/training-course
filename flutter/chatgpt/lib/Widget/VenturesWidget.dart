@@ -3,7 +3,7 @@ import '../Model/VenturesModel.dart';
 import 'dart:convert';
 
 class VentureWidget extends StatefulWidget {
-  final List<VenturesModel> venturesFuture;
+  final Future<List<VenturesModel>> venturesFuture;
   const VentureWidget(this.venturesFuture, {Key? key}) : super(key: key);
 
   @override
@@ -14,18 +14,18 @@ class _VentureWidgetState extends State<VentureWidget> {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 4, // Number of columns
-      ),
-      itemBuilder: (context, index) {
-        VenturesModel venture = widget.venturesFuture[index];
-        return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: VenturesRenderItem(venture),
-        );
-      },
-      itemCount: widget.venturesFuture!.length,
-    );
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 4, // Number of columns
+                ),
+                itemBuilder: (context, index) {
+                  VenturesModel venture = model[index];
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: VenturesRenderItem(venture),
+                  );
+                },
+                itemCount: model!.length,
+              );
   }
   Container VenturesRenderItem(VenturesModel venturesModel){
     return Container(

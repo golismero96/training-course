@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:chatgpt/utils/MyDrawer.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -10,25 +11,22 @@ import 'Model/EventsModel.dart';
 import 'Model/PageViewModel.dart';
 import 'Model/SpecialOfferModel.dart';
 import 'package:http/http.dart' as http;
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'dart:convert';
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'Model/VenturesModel.dart';
-import 'Widget/DialogConnectionStatus.dart';
 
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
     theme: ThemeData(
-      colorScheme: ColorScheme.fromSwatch().copyWith(
-        secondary: Colors.green,
-      ),
+      colorScheme: ColorScheme.fromSeed(seedColor: Colors.red),
       tabBarTheme: const TabBarTheme(
         labelColor: Colors.red,
         unselectedLabelColor: Colors.grey,
       ),
       textTheme: const TextTheme(bodyMedium: TextStyle(fontFamily: 'Vazir')),
     ),
-    home: HomePage(),
+    home: const HomePage(),
   ));
 }
 
@@ -41,13 +39,14 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool hovered = false;
-  bool connectionStatus = false;
+  bool isConnected = false;
   String connectionTool = '';
+  bool updatedVariables = false;
   late StreamSubscription subscription;
-  late Future<List<PageViewModel>> pageViewFuture;
-  late Future<List<SpecialOfferModel>> specialofferFuture;
-  late Future<List<EventsModel>> eventsFuture;
-  late Future<List<VenturesModel>> venturesFuture;
+  Future<List<PageViewModel>>? pageViewFuture;
+  Future<List<SpecialOfferModel>>? specialofferFuture;
+  Future<List<EventsModel>>? eventsFuture;
+  Future<List<VenturesModel>>? venturesFuture;
 
   PageController pageController = PageController();
   String baseAPI = 'http://151.80.86.139:8080';
@@ -58,43 +57,44 @@ class _HomePageState extends State<HomePage> {
     var specialofferVal = SendRequestSpecialOffer();
     var eventsVal = SendRequestEvents();
 
-    checkStatus();
-
-    if (venturesVal != []) {
-      setState(() {
-        venturesFuture = venturesVal;
-      });
-    }
-    if (pageViewVal != []) {
+    var isInternet = await checkConnectionStatus();
+    if(isInternet) {
       setState(() {
         pageViewFuture = pageViewVal;
-      });
-    }
-    if (specialofferVal != []) {
-      setState(() {
+        venturesFuture = venturesVal;
         specialofferFuture = specialofferVal;
-      });
-    }
-    if (eventsVal != []) {
-      setState(() {
         eventsFuture = eventsVal;
+        updatedVariables = true;
       });
     }
+  }
+
+  void CheckConnectivity() {
+    subscription = Connectivity().onConnectivityChanged.listen((ConnectivityResult result) async {
+      if(result != ConnectivityResult.none) {
+        var isDeviceConnected = await InternetConnectionChecker().hasConnection;
+        if(!updatedVariables) {
+          customInitialState();
+        }
+        setState(() {
+          isConnected = isDeviceConnected;
+        });
+      } else {
+        setState(() {
+          isConnected = false;
+          updatedVariables = false;
+        });
+      }
+    });
   }
 
   @override
   void initState() {
     super.initState();
+    CheckConnectivity();
     customInitialState();
-
-    subscription = Connectivity()
-        .onConnectivityChanged
-        .listen((ConnectivityResult result) {
-      setState(() {
-        connectionTool = result.toString();
-      });
-    });
   }
+
 
   @override
   void dispose() {
@@ -119,7 +119,7 @@ class _HomePageState extends State<HomePage> {
             icon: const Icon(Icons.shopping_cart_outlined),
             onPressed: () {},
           ),
-          IconButton(
+          updatedVariables ? const SizedBox.shrink() :  IconButton(
             icon: const Icon(Icons.refresh_outlined),
             onPressed: () {
               customInitialState();
@@ -141,11 +141,9 @@ class _HomePageState extends State<HomePage> {
                   color: Colors.white,
                   child: Column(
                     children: [
-                      DialogConnectionStatus(),
+                      // if(!isConnected)DialogConnectionStatus(),
                       Container(
-                        child: errmsg("No Internet Connection Available",
-                            connectionStatus),
-                        //to show internet connection message on ConnectionStatus = true.
+                          child: isConnected ? const SizedBox.shrink() : errmsg("No Internet Connection Available"),
                       ),
                       Container(
                         height: 200,
@@ -229,9 +227,8 @@ class _HomePageState extends State<HomePage> {
                                           },
                                           itemCount: model!.length);
                                     } else {
-                                      return Center(
-                                          child: Text(
-                                              "Loading... ${connectionStatus ? 'True' : 'False'}"));
+                                      return const Center(
+                                          child: Text("Loading..."));
                                     }
                                   }))),
                       Padding(
@@ -318,7 +315,7 @@ class _HomePageState extends State<HomePage> {
                                                   ],
                                                 ));
                                           } else {
-                                            if (position == model.length - 1) {
+                                            if (position == model!.length - 1) {
                                               return Container(
                                                   height: 300,
                                                   width: 350,
@@ -407,8 +404,8 @@ class _HomePageState extends State<HomePage> {
                                     children: [
                                       Padding(
                                         padding:
-                                            const EdgeInsets.only(top: 10.0),
-                                        child: Row(
+                                          const EdgeInsets.only(top: 10.0),
+                                          child: Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceEvenly,
                                           children: [
@@ -470,19 +467,11 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                 );
                               } else {
-                                return Container(
-                                    color: Colors.grey[400],
-                                    child: Stack(
-                                        alignment: Alignment.center,
-                                        children: [
-                                          Image.asset('images/notImage.png'),
-                                          JumpingDotsProgressIndicator(
-                                            fontSize: 65.0,
-                                          ),
-                                        ]));
+                                return const Center(
+                                  child: Text("Loading..."));
                               }
                             }),
-                      )
+                      ),
                     ],
                   )),
             ),
@@ -490,68 +479,37 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget errmsg(String text, bool show) {
+  Widget errmsg(String text) {
     //error message widget.
-    if (show == true) {
-      //if error is true then show error message box
-      return Container(
-        padding: EdgeInsets.all(10.00),
-        margin: EdgeInsets.only(bottom: 10.00),
+    return Container(
+        padding: const EdgeInsets.all(10.00),
+        margin: const EdgeInsets.only(bottom: 10.00),
         color: Colors.red,
         child: Row(children: [
           Container(
-            margin: EdgeInsets.only(right: 6.00),
-            child: Icon(Icons.info, color: Colors.white),
+            margin: const EdgeInsets.only(right: 6.00),
+            child: const Icon(Icons.info, color: Colors.white),
           ), // icon for error message
 
-          Text(text, style: TextStyle(color: Colors.white)),
+          Text(text, style: const TextStyle(color: Colors.white)),
           //show error message text
         ]),
       );
-    } else {
-      return AnimatedContainer(
-          duration: Duration(seconds: 1),
-          width: 200,
-          height: 200,
-          color: Colors.blue,
-          child: Container(
-            padding: EdgeInsets.all(10.00),
-            margin: EdgeInsets.only(bottom: 10.00),
-            color: Colors.red,
-            child: Row(children: [
-              Container(
-                margin: EdgeInsets.only(right: 6.00),
-                child: Icon(Icons.info, color: Colors.white),
-              ), // icon for error message
-
-              Text(connectionTool, style: TextStyle(color: Colors.white)),
-              //show error message text
-            ]),
-          ));
-      //if error is false, return empty container.
-    }
   }
 
-  void checkStatus() async {
-    var connectivityResult = await Connectivity().checkConnectivity();
-    print("---11111--- ${connectionStatus}");
-    if (connectivityResult == ConnectivityResult.mobile) {
+  Future<bool> checkConnectionStatus() async {
+    var connectivityResult = await InternetConnectionChecker().hasConnection;
+    if (connectivityResult) {
       setState(() {
-        connectionStatus = true;
+        isConnected = true;
       });
-      print("---22222--- ${connectionStatus}");
-    } else if (connectivityResult == ConnectivityResult.wifi) {
-      setState(() {
-        connectionStatus = true;
-      });
-      print("---33333--- ${connectionStatus}");
+      return true;
     } else {
       setState(() {
-        connectionStatus = false;
+        isConnected = false;
       });
-      print("---44444--- ${connectionStatus}");
+      return false;
     }
-    print("---55555--- ${connectionStatus}");
   }
 
   Container VenturesRenderItem(VenturesModel venturesModel) {
@@ -712,7 +670,7 @@ class _HomePageState extends State<HomePage> {
     } catch (error) {
       // Handle the error here
       print('Error occurred during API request: $error');
-      return []; // Or you can return a default value or handle it in a different way
+      return [];
     }
   }
 
