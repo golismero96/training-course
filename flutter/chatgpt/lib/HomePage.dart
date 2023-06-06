@@ -4,12 +4,10 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:http/http.dart' as http;
 import 'package:resize/resize.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:chatgpt/utils/MyDrawer.dart';
-import 'package:progress_indicators/progress_indicators.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:provider/provider.dart';
@@ -21,6 +19,7 @@ import 'Model/PageViewModel.dart';
 import 'Model/SpecialOfferModel.dart';
 import 'Model/VenturesModel.dart';
 import 'Provider/ChangeNotifier.dart';
+import 'Requests/PageView.dart';
 
 
 
@@ -43,22 +42,17 @@ class _HomePageState extends State<HomePage> {
   Future<List<EventsModel>>? eventsFuture;
   Future<List<VenturesModel>>? venturesFuture;
 
-  late BuildContext _context;
-  late CounterModel counterModel;
-
-  PageController pageController = PageController();
   String baseAPI = 'http://151.80.86.139:8080';
 
   void customInitialState() async {
     var venturesVal = VenturesRender();
-    var pageViewVal = SendRequestPageView();
+    SendRequestPageView();
     var specialofferVal = SendRequestSpecialOffer();
     var eventsVal = SendRequestEvents();
 
     var isInternet = await checkConnectionStatus();
     if (isInternet) {
       setState(() {
-        pageViewFuture = pageViewVal;
         venturesFuture = venturesVal;
         specialofferFuture = specialofferVal;
         eventsFuture = eventsVal;
@@ -87,14 +81,6 @@ class _HomePageState extends State<HomePage> {
       }
     });
   }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    _context = context;
-    counterModel = Provider.of<CounterModel>(_context);
-  }
-
   @override
   void initState() {
     super.initState();
@@ -105,7 +91,6 @@ class _HomePageState extends State<HomePage> {
   @override
   void dispose() {
     super.dispose();
-    pageController.dispose();
     subscription.cancel();
   }
 
@@ -175,67 +160,6 @@ class _HomePageState extends State<HomePage> {
                               child: isConnected
                                   ? const SizedBox.shrink()
                                   : errmsg("No Internet Connection Available"),
-                            ),
-                            Container(
-                              height: 200,
-                              child: FutureBuilder<List<PageViewModel>>(
-                                  future: pageViewFuture,
-                                  builder: (context, snapshot) {
-                                    if (snapshot.hasData) {
-                                      List<PageViewModel>? model = snapshot.data;
-                                      return Stack(
-                                        alignment: Alignment.bottomCenter,
-                                        children: [
-                                          PageView.builder(
-                                            reverse: true,
-                                            controller: pageController,
-                                            scrollDirection: Axis.horizontal,
-                                            allowImplicitScrolling: true,
-                                            itemCount: model!.length,
-                                            itemBuilder: (context, position) {
-                                              return PageViewItems(model[position]);
-                                            },
-                                          ),
-                                          Padding(
-                                            padding:
-                                            const EdgeInsets.only(bottom: 10),
-                                            child: SmoothPageIndicator(
-                                              textDirection: TextDirection.rtl,
-                                              controller: PageController(),
-                                              count: model.length,
-                                              effect: const ExpandingDotsEffect(
-                                                dotColor: Colors.white,
-                                                activeDotColor: Colors.red,
-                                                dotHeight: 10,
-                                                dotWidth: 8,
-                                                spacing: 5.0,
-                                                expansionFactor: 4,
-                                              ),
-                                              onDotClicked: (index) => {
-                                                pageController.animateToPage(
-                                                  index,
-                                                  duration: const Duration(
-                                                      milliseconds: 500),
-                                                  curve: Curves.ease,
-                                                )
-                                              },
-                                            ),
-                                          )
-                                        ],
-                                      );
-                                    } else {
-                                      return Container(
-                                          color: Colors.grey[400],
-                                          child: Stack(
-                                              alignment: Alignment.center,
-                                              children: [
-                                                Image.asset('images/notImage.png'),
-                                                JumpingDotsProgressIndicator(
-                                                  fontSize: 65.0,
-                                                ),
-                                              ]));
-                                    }
-                                  }),
                             ),
                             Padding(
                                 padding: const EdgeInsets.symmetric(vertical: 10),
@@ -687,24 +611,6 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  Future<List<PageViewModel>> SendRequestPageView() async {
-    List<PageViewModel> model = [];
-
-    try {
-      final response = await http.get(Uri.parse('${baseAPI}/pageViewPics/'));
-      var responseData = json.decode(response.body);
-
-      for (var item in responseData['photos']) {
-        model.add(PageViewModel(item['id'], item['imgurl']));
-      }
-      return model;
-    } catch (error) {
-      // Handle the error here
-      print('Error occurred during API request: $error');
-      return [];
-    }
-  }
-
   Future<List<SpecialOfferModel>> SendRequestSpecialOffer() async {
     List<SpecialOfferModel> models = [];
 
@@ -730,14 +636,4 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  Padding PageViewItems(PageViewModel pageViewModel) {
-    return Padding(
-        padding: const EdgeInsets.all(5.0),
-        child: ClipRRect(
-            borderRadius: BorderRadiusGeometry.lerp(
-                BorderRadius.circular(10.0), BorderRadius.circular(10.0), 10),
-            child: Container(
-              child: Image.network(pageViewModel.imgurl, fit: BoxFit.fill),
-            )));
-  }
 }
