@@ -20,6 +20,7 @@ import 'Model/SpecialOfferModel.dart';
 import 'Model/VenturesModel.dart';
 import 'Provider/ChangeNotifier.dart';
 import 'Requests/PageView.dart';
+import 'Widget/PageViewFuture.dart';
 
 
 
@@ -46,7 +47,7 @@ class _HomePageState extends State<HomePage> {
 
   void customInitialState() async {
     var venturesVal = VenturesRender();
-    SendRequestPageView();
+    SendRequestPageView(context);
     var specialofferVal = SendRequestSpecialOffer();
     var eventsVal = SendRequestEvents();
 
@@ -161,6 +162,7 @@ class _HomePageState extends State<HomePage> {
                                   ? const SizedBox.shrink()
                                   : errmsg("No Internet Connection Available"),
                             ),
+                            // PageViewFuture(),
                             Padding(
                                 padding: const EdgeInsets.symmetric(vertical: 10),
                                 child: Container(

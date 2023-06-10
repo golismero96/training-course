@@ -3,6 +3,7 @@ import 'package:progress_indicators/progress_indicators.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../Model/PageViewModel.dart';
+import '../Provider/PageViewFutureState.dart';
 import '../Requests/PageView.dart';
 
 class PageViewFuture extends StatefulWidget {
@@ -28,16 +29,15 @@ class _PageViewFutureState extends State<PageViewFuture> {
 
   @override
   Widget build(BuildContext context) {
-
-    return Consumer<Future<List<PageViewModel>>>(
-      builder: (context, pageViewFutureState, child) {
     return Container(
       height: 200,
-      child: FutureBuilder<List<PageViewModel>>(
-          future: pageViewFutureState,
+      child: Consumer<PageViewFutureState>(
+        builder: (context, pageViewFutureState, child) {
+      return FutureBuilder<PageViewFutureState>(
+          future: pageViewFutureState.pageViewState == null ? SendRequestPageView(context) : pageViewFutureState.pageViewState,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              List<PageViewModel>? model = snapshot.data;
+              PageViewFutureState model = snapshot.data!;
               return Stack(
                 alignment: Alignment.bottomCenter,
                 children: [
@@ -46,9 +46,9 @@ class _PageViewFutureState extends State<PageViewFuture> {
                     controller: pageController,
                     scrollDirection: Axis.horizontal,
                     allowImplicitScrolling: true,
-                    itemCount: model!.length,
+                    itemCount: model!.pageViewState.length,
                     itemBuilder: (context, position) {
-                      return PageViewItems(model[position]);
+                      return PageViewItems(model.pageViewState[position]);
                     },
                   ),
                   Padding(
@@ -57,7 +57,7 @@ class _PageViewFutureState extends State<PageViewFuture> {
                     child: SmoothPageIndicator(
                       textDirection: TextDirection.rtl,
                       controller: PageController(),
-                      count: model.length,
+                      count: model.pageViewState.length,
                       effect: const ExpandingDotsEffect(
                         dotColor: Colors.white,
                         activeDotColor: Colors.red,
@@ -90,9 +90,9 @@ class _PageViewFutureState extends State<PageViewFuture> {
                         ),
                       ]));
             }
-          }),
-    );
+          },);
       },
+      )
     );
   }
 

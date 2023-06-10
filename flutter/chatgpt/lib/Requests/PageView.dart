@@ -1,6 +1,5 @@
 
 import 'dart:convert';
-import 'dart:js';
 
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:http/http.dart' as http;
@@ -10,7 +9,7 @@ import 'package:provider/provider.dart';
 import '../Model/PageViewModel.dart';
 import '../Provider/PageViewFutureState.dart';
 
-SendRequestPageView() async {
+SendRequestPageView(BuildContext context) async {
   List<PageViewModel> model = [];
 
   try {
@@ -20,7 +19,7 @@ SendRequestPageView() async {
     for (var item in responseData['photos']) {
       model.add(PageViewModel(item['id'], item['imgurl']));
     }
-    Provider.of<PageViewFutureState>(context as BuildContext, listen: false).PageViewFetched(model);
+    Provider.of<PageViewFutureState>(context, listen: false).PageViewFetched(await model);
   } catch (error) {
     // Handle the error here
     print('Error occurred during API request: $error');
