@@ -78,3 +78,7 @@ button:focus-visible {
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
 }
+
+:root {
+  border: 4px solid rgb(146, 153, 156);
+}
