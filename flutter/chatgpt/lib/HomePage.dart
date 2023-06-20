@@ -21,6 +21,7 @@ import 'Model/VenturesModel.dart';
 import 'Provider/ChangeNotifier.dart';
 import 'Requests/PageView.dart';
 import 'Widget/PageViewFuture.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 
 
@@ -45,7 +46,7 @@ class _HomePageState extends State<HomePage> {
 
   String baseAPI = 'http://151.80.86.139:8080';
 
-  void customInitialState() async {
+  void ImproveState() async {
     var venturesVal = VenturesRender();
     SendRequestPageView(context);
     var specialofferVal = SendRequestSpecialOffer();
@@ -69,7 +70,7 @@ class _HomePageState extends State<HomePage> {
       if (result != ConnectivityResult.none) {
         var isDeviceConnected = await InternetConnectionChecker().hasConnection;
         if (!updatedVariables) {
-          customInitialState();
+          ImproveState();
         }
         setState(() {
           isConnected = isDeviceConnected;
@@ -83,11 +84,24 @@ class _HomePageState extends State<HomePage> {
     });
   }
   @override
-  void initState() {
+  void initState() async {
     super.initState();
     CheckConnectivity();
-    customInitialState();
+    ImproveState();
+    initialization();
   }
+
+  void initialization() async {
+    print('ready in 3...');
+    await Future.delayed(const Duration(seconds: 1));
+    print('ready in 2...');
+    await Future.delayed(const Duration(seconds: 1));
+    print('ready in 1...');
+    await Future.delayed(const Duration(seconds: 1));
+    print('go!');
+    FlutterNativeSplash.remove();
+  }
+
 
   @override
   void dispose() {
@@ -97,6 +111,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final counterModel = Provider.of<CounterModel>(context);
     return Resize(
         builder: () {
           return Scaffold(
@@ -105,32 +120,24 @@ class _HomePageState extends State<HomePage> {
               title: const Text('DadfarJs'),
               backgroundColor: Colors.red,
               actions: <Widget>[
-                Consumer<CounterModel>(
-                  builder: (context, counterModel, child) {
-                    return IconButton(
+                    IconButton(
                       onPressed: () {
                         counterModel.increment();
                       },
                       icon: const Icon(Icons.search),
-                    );
-                  },
-                ),
-                Consumer<CounterModel>(
-                  builder: (context, counterModel, child) {
-                    return IconButton(
+                    ),
+                IconButton(
                       onPressed: () {
                         counterModel.decrement();
                       },
                       icon: const Icon(Icons.shopping_cart_outlined),
-                    );
-                  },
-                ),
+                    ),
                 updatedVariables
                     ? const SizedBox.shrink()
                     : IconButton(
                   icon: const Icon(Icons.refresh_outlined),
                   onPressed: () {
-                    customInitialState();
+                    ImproveState();
                   },
                 ),
               ],
@@ -142,7 +149,7 @@ class _HomePageState extends State<HomePage> {
                 child: RefreshIndicator(
                   color: Colors.red,
                   onRefresh: () async {
-                    customInitialState();
+                    ImproveState();
                   },
                   child: SingleChildScrollView(
                     child: Container(
@@ -162,7 +169,7 @@ class _HomePageState extends State<HomePage> {
                                   ? const SizedBox.shrink()
                                   : errmsg("No Internet Connection Available"),
                             ),
-                            // PageViewFuture(),
+                            PageViewFuture(),
                             Padding(
                                 padding: const EdgeInsets.symmetric(vertical: 10),
                                 child: Container(
