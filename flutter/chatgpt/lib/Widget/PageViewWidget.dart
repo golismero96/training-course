@@ -6,14 +6,14 @@ import '../Model/PageViewModel.dart';
 import '../Provider/PageViewFutureProvider.dart';
 import '../Requests/PageView.dart';
 
-class PageViewFuture extends StatefulWidget {
-  const PageViewFuture({super.key});
+class PageViewWidget extends StatefulWidget {
+  const PageViewWidget({super.key});
 
   @override
-  State<PageViewFuture> createState() => _PageViewFutureState();
+  State<PageViewWidget> createState() => _PageViewWidgetState();
 }
 
-class _PageViewFutureState extends State<PageViewFuture> {
+class _PageViewWidgetState extends State<PageViewWidget> {
 
   PageController pageController = PageController();
 

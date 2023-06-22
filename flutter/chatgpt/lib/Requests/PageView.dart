@@ -19,9 +19,14 @@ Future<List<PageViewModel>> serializerModel(responseData) async {
 
 SendRequestPageView(BuildContext context) async {
   try {
-    final response = await http.get(Uri.parse('${dotenv.env['BASEAPI']}/pageViewPics/'));
+    final response = await http.get(
+        Uri.parse('${dotenv.env['BASEAPI']}/pageViewPics/')
+    );
     var responseData = json.decode(response.body);
-    final pageFetch = Provider.of<PageViewFutureProvider>(context, listen: false);
+    final pageFetch = Provider.of<PageViewFutureProvider>(
+        context,
+        listen: false
+    );
     Future<List<PageViewModel>> models = serializerModel(responseData);
     pageFetch.PageViewFetched(models);
   } catch (error) {

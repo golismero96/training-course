@@ -20,7 +20,7 @@ import 'Model/SpecialOfferModel.dart';
 import 'Model/VenturesModel.dart';
 import 'Provider/ChangeNotifier.dart';
 import 'Requests/PageView.dart';
-import 'Widget/PageViewFuture.dart';
+import 'Widget/PageViewWidget.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 
@@ -169,32 +169,7 @@ class _HomePageState extends State<HomePage> {
                                   ? const SizedBox.shrink()
                                   : errmsg("No Internet Connection Available"),
                             ),
-                            PageViewFuture(),
-                            Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 10),
-                                child: Container(
-                                    height: 70,
-                                    width: double.infinity,
-                                    child: FutureBuilder<List<VenturesModel>>(
-                                        future: venturesFuture,
-                                        builder: (context, snapshot) {
-                                          if (snapshot.hasData) {
-                                            List<VenturesModel>? model =
-                                                snapshot.data;
-                                            return ListView.builder(
-                                                reverse: true,
-                                                shrinkWrap: true,
-                                                scrollDirection: Axis.horizontal,
-                                                itemBuilder: (context, position) {
-                                                  return VenturesRenderItem(
-                                                      model[position]);
-                                                },
-                                                itemCount: model!.length);
-                                          } else {
-                                            return const Center(
-                                                child: Text("Loading..."));
-                                          }
-                                        }))),
+                            PageViewWidget(),
                             Padding(
                                 padding: const EdgeInsets.only(bottom: 5),
                                 child: Container(
