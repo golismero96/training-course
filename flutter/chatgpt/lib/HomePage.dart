@@ -23,6 +23,8 @@ import 'Requests/PageView.dart';
 import 'Widget/PageViewWidget.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 
+import 'Widget/VenturesWidget.dart';
+
 
 
 
@@ -170,6 +172,7 @@ class _HomePageState extends State<HomePage> {
                                   : errmsg("No Internet Connection Available"),
                             ),
                             PageViewWidget(),
+                            VenturesWidget(),
                             Padding(
                                 padding: const EdgeInsets.only(bottom: 5),
                                 child: Container(
@@ -451,24 +454,6 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  Container VenturesRenderItem(VenturesModel venturesModel) {
-    return Container(
-      width: 85,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Image.network(
-            venturesModel.imgUrl,
-            width: 40,
-            height: 40,
-          ),
-          Text(utf8.decode(venturesModel.text.toString().codeUnits),
-              style: TextStyle(fontSize: 4.5.sp))
-        ],
-      ),
-    );
-  }
 
   Container SpecialofferItem(SpecialOfferModel specialOfferModel) {
     return Container(

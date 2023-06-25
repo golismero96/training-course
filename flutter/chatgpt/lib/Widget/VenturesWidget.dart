@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:resize/resize.dart';
 import '../Model/VenturesModel.dart';
 import 'dart:convert';
 
-class VentureWidget extends StatefulWidget {
-  final Future<List<VenturesModel>> venturesFuture;
-  const VentureWidget(this.venturesFuture, {Key? key}) : super(key: key);
+import '../Provider/VenturesFutureProvider.dart';
+
+class VenturesWidget extends StatefulWidget {
+  const VenturesWidget({super.key});
 
   @override
-  State<VentureWidget> createState() => _VentureWidgetState();
+  State<VenturesWidget> createState() => _VenturesWidgetState();
 }
 
-class _VentureWidgetState extends State<VentureWidget> {
-  PageController pageController = PageController();
+class _VenturesWidgetState extends State<VenturesWidget> {
+  // VenturesModel venturesController = VenturesFutureProvider();
 
   @override
   Widget build(BuildContext context) {
@@ -20,14 +23,14 @@ class _VentureWidgetState extends State<VentureWidget> {
           child: Container(
               height: 70,
               width: double.infinity,
-              child: Consumer<PageViewFutureProvider>(
-                builder: (context, pageViewProvider, child) {
-                  if(pageViewProvider.pageViewState == null) {
+              child: Consumer<VenturesFutureProvider>(
+                builder: (context, venturesProvider, child) {
+                  if(venturesProvider.venturesState == null) {
                     return SizedBox();
                   }
                   else {
                     return FutureBuilder<List<VenturesModel>>(
-                                  future: venturesFuture,
+                                  future: venturesProvider.venturesState,
                                   builder: (context, snapshot) {
                                     if (snapshot.hasData) {
                                       List<VenturesModel>? model =
