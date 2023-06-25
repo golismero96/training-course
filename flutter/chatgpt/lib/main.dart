@@ -8,7 +8,9 @@ import 'HomePage.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 import 'Provider/ChangeNotifier.dart';
+import 'Provider/EventsFutureProvider.dart';
 import 'Provider/PageViewFutureProvider.dart';
+import 'Provider/SpecialOffersFutureProvider.dart';
 import 'Provider/VenturesFutureProvider.dart';
 
 void main() async {
@@ -20,6 +22,8 @@ void main() async {
         providers: [
           ChangeNotifierProvider(create: (context) => PageViewFutureProvider()),
           ChangeNotifierProvider(create: (context) => VenturesFutureProvider()),
+          ChangeNotifierProvider(create: (context) => SpecialOffersFutureProvider()),
+          ChangeNotifierProvider(create: (context) => EventsFutureProvider()),
           ChangeNotifierProvider(create: (context) => CounterModel()),
         ],
         child:MaterialApp(

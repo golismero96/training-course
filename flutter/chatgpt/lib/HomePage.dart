@@ -13,6 +13,7 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:provider/provider.dart';
 
 
+import 'Requests/Events.dart';
 import 'Requests/SpecialOffers.dart';
 import 'Widget/AllProduct.dart';
 import 'Model/EventsModel.dart';
@@ -52,12 +53,11 @@ class _HomePageState extends State<HomePage> {
     SendRequestVentures(context);
     SendRequestPageView(context);
     SendRequestSpecialOffers(context);
-    var eventsVal = SendRequestEvents();
+    SendRequestEvents(context);
 
     var isInternet = await checkConnectionStatus();
     if (isInternet) {
       setState(() {
-        eventsFuture = eventsVal;
         updatedVariables = true;
       });
     }
@@ -445,24 +445,6 @@ class _HomePageState extends State<HomePage> {
         isConnected = false;
       });
       return false;
-    }
-  }
-
-  Future<List<EventsModel>> SendRequestEvents() async {
-    List<EventsModel> models = [];
-
-    try {
-      final response = await http.get(Uri.parse('${baseAPI}/events/'));
-      var responseData = json.decode(response.body);
-
-      for (var item in responseData['product']) {
-        models.add(EventsModel(item['imgUrl']));
-      }
-      return models;
-    } catch (error) {
-      // Handle the error here
-      print('Error occurred during API request: $error');
-      return []; // Or you can return a default value or handle it in a different way
     }
   }
 
