@@ -13,13 +13,15 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:provider/provider.dart';
 
 
-import 'AllProduct.dart';
+import 'Requests/SpecialOffers.dart';
+import 'Widget/AllProduct.dart';
 import 'Model/EventsModel.dart';
 import 'Model/PageViewModel.dart';
 import 'Model/SpecialOfferModel.dart';
 import 'Model/VenturesModel.dart';
 import 'Provider/ChangeNotifier.dart';
 import 'Requests/PageView.dart';
+import 'Requests/Ventures.dart';
 import 'Widget/PageViewWidget.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 
@@ -41,24 +43,20 @@ class _HomePageState extends State<HomePage> {
   String connectionTool = '';
   bool updatedVariables = false;
   late StreamSubscription subscription;
-  Future<List<PageViewModel>>? pageViewFuture;
   Future<List<SpecialOfferModel>>? specialofferFuture;
   Future<List<EventsModel>>? eventsFuture;
-  Future<List<VenturesModel>>? venturesFuture;
 
   String baseAPI = 'http://151.80.86.139:8080';
 
   void ImproveState() async {
-    var venturesVal = VenturesRender();
+    SendRequestVentures(context);
     SendRequestPageView(context);
-    var specialofferVal = SendRequestSpecialOffer();
+    SendRequestSpecialOffers(context);
     var eventsVal = SendRequestEvents();
 
     var isInternet = await checkConnectionStatus();
     if (isInternet) {
       setState(() {
-        venturesFuture = venturesVal;
-        specialofferFuture = specialofferVal;
         eventsFuture = eventsVal;
         updatedVariables = true;
       });
@@ -94,13 +92,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   void initialization() async {
-    print('ready in 3...');
     await Future.delayed(const Duration(seconds: 1));
-    print('ready in 2...');
     await Future.delayed(const Duration(seconds: 1));
-    print('ready in 1...');
     await Future.delayed(const Duration(seconds: 1));
-    print('go!');
     FlutterNativeSplash.remove();
   }
 
@@ -454,114 +448,6 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-
-  Container SpecialofferItem(SpecialOfferModel specialOfferModel) {
-    return Container(
-      width: 200,
-      height: 300,
-      child: Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15.0),
-          ),
-          child: Container(
-            width: 200,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Image.network(specialOfferModel.imgUrl,
-                        height: 150, fit: BoxFit.fill),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Text(specialOfferModel.productName, style: TextStyle(fontSize: 6.5.sp),),
-                  ),
-                  Expanded(
-                      child: Container(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 20, left: 10),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Text('تومان ',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: 5.5.sp)),
-                                        Text(
-                                            '${specialOfferModel.off_price.toString()}',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: 5.5.sp)),
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        Text('${specialOfferModel.price.toString()}',
-                                            style: TextStyle(
-                                                decoration: TextDecoration.lineThrough,
-                                                color: Colors.grey,
-                                                fontSize: 5.5.sp)),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ),
-                              Align(
-                                alignment: Alignment.center,
-                                child: Padding(
-                                    padding:
-                                    const EdgeInsets.only(bottom: 20, left: 10),
-                                    child: Container(
-                                      decoration: new BoxDecoration(
-                                        color: Colors.red,
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 8, vertical: 2),
-                                        child: Text(
-                                            '${specialOfferModel.off_precent.toString()}%',
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: 6.sp)),
-                                      ),
-                                    )),
-                              )
-                            ],
-                          )))
-                ],
-              ),
-            ),
-          )),
-    );
-  }
-
-  Future<List<VenturesModel>> VenturesRender() async {
-    List<VenturesModel> models = [];
-    try {
-      final response =
-      await http.get(Uri.parse('${baseAPI}/events/venturesRender/'));
-      var responseData = json.decode(response.body);
-
-      for (var model in responseData['ventures']) {
-        models.add(VenturesModel(model['text'], model['imgurl']));
-      }
-      return models;
-    } catch (error) {
-      // Handle the error here
-      print('Error occurred during API request: $error');
-      return []; // Or you can return a default value or handle it in a different way
-    }
-  }
-
   Future<List<EventsModel>> SendRequestEvents() async {
     List<EventsModel> models = [];
 
@@ -580,29 +466,5 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  Future<List<SpecialOfferModel>> SendRequestSpecialOffer() async {
-    List<SpecialOfferModel> models = [];
-
-    try {
-      final response = await http.get(Uri.parse('${baseAPI}/specialOffer/'));
-      var responseData = json.decode(response.body);
-
-      for (var item in responseData['product']) {
-        models.add(SpecialOfferModel(
-            item['id'],
-            utf8.decode(item['productName'].toString().codeUnits),
-            item['price'],
-            item['off_price'],
-            item['off_precent'],
-            item['imgUrl']));
-      }
-
-      return models;
-    } catch (error) {
-      // Handle the error here
-      print('Error occurred during API request: $error');
-      return []; // Or you can return a default value or handle it in a different way
-    }
-  }
 
 }

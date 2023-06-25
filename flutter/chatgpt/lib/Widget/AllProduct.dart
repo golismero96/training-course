@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'BottomNavigationBar.dart';
-import 'Model/SpecialOfferModel.dart';
+import '../BottomNavigationBar.dart';
+import '../Model/SpecialOfferModel.dart';
 
 class AllProduct extends StatefulWidget {
   const AllProduct({Key? key}) : super(key: key);

@@ -5,9 +5,11 @@ import 'package:provider/provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'HomePage.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
+
 import 'Provider/ChangeNotifier.dart';
 import 'Provider/PageViewFutureProvider.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'Provider/VenturesFutureProvider.dart';
 
 void main() async {
   await dotenv.load(fileName: ".env");
@@ -17,6 +19,7 @@ void main() async {
       MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (context) => PageViewFutureProvider()),
+          ChangeNotifierProvider(create: (context) => VenturesFutureProvider()),
           ChangeNotifierProvider(create: (context) => CounterModel()),
         ],
         child:MaterialApp(

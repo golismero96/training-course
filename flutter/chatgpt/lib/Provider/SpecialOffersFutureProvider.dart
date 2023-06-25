@@ -1,13 +1,14 @@
 import 'package:flutter/foundation.dart';
+import '../Model/SpecialOfferModel.dart';
 import '../Model/VenturesModel.dart';
 
-class VenturesFutureProvider extends ChangeNotifier {
-  late Future<List<VenturesModel>> _venturesState;
+class SpecialOffersFutureProvider extends ChangeNotifier {
+  late Future<List<SpecialOfferModel>> _specialOffersState;
 
-  Future<List<VenturesModel>> get venturesState => _venturesState;
+  Future<List<SpecialOfferModel>> get specialOffersState => _specialOffersState;
 
-  void VenturesFetched(venturesFuture) {
-    _venturesState = venturesFuture;
+  void SpecialOffersFetched(specialOffersFuture) {
+    _specialOffersState = specialOffersFuture;
     notifyListeners();
   }
 }
