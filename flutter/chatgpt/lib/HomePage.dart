@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'dart:async';
-import 'dart:convert';
 
-import 'package:http/http.dart' as http;
 import 'package:resize/resize.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:chatgpt/utils/MyDrawer.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -13,11 +10,8 @@ import 'package:provider/provider.dart';
 
 import 'Requests/Events.dart';
 import 'Requests/SpecialOffers.dart';
-import 'Widget/AllProduct.dart';
 import 'Model/EventsModel.dart';
-import 'Model/PageViewModel.dart';
 import 'Model/SpecialOfferModel.dart';
-import 'Model/VenturesModel.dart';
 import 'Provider/ChangeNotifier.dart';
 import 'Requests/PageView.dart';
 import 'Requests/Ventures.dart';
@@ -82,7 +76,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
-  void initState() async {
+  void initState() {
     super.initState();
     CheckConnectivity();
     ImproveState();
@@ -161,10 +155,10 @@ class _HomePageState extends State<HomePage> {
                               ? const SizedBox.shrink()
                               : errmsg("No Internet Connection Available"),
                         ),
-                        PageViewWidget(),
-                        VenturesWidget(),
-                        SpecialOffersWidget(),
-                        EventsWidget(),
+                        const PageViewWidget(),
+                        const VenturesWidget(),
+                        const SpecialOffersWidget(),
+                        const EventsWidget(),
                       ],
                     )),
               ),

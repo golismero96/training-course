@@ -167,89 +167,118 @@ class _SpecialOffersWidgetState extends State<SpecialOffersWidget> {
 
   Container SpecialofferItem(SpecialOfferModel specialOfferModel) {
     return Container(
-      width: 200,
+      width: 180,
       height: 300,
       child: Card(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15.0),
           ),
           child: Container(
-            width: 200,
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(10.0),
               child: Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Image.network(specialOfferModel.imgUrl,
-                        height: 150, fit: BoxFit.fill),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Text(
-                      specialOfferModel.productName,
-                      style: TextStyle(fontSize: 6.5.sp),
+                  Container(
+              constraints: const BoxConstraints(
+                    maxWidth: 150,
+                    maxHeight: 230),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Container(
+                            constraints: const BoxConstraints(
+                                minWidth: 100,
+                                maxWidth: 120,
+                                minHeight: 100,
+                                maxHeight: 150),
+                            child: Image.network(specialOfferModel.imgUrl,
+                                height: 150, fit: BoxFit.fill),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 10),
+                          child: Container(
+                            height: 40.sp,
+                            width: double.infinity,
+                            child: Text(
+                              textAlign: TextAlign.right,
+                              specialOfferModel.productName,
+                              style: TextStyle(
+                                  overflow: TextOverflow.ellipsis,
+                                  fontSize: 10.5.sp,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   Expanded(
                       child: Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.red)),
                           child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 20, left: 10),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Row(
-                              children: [
-                                Text('تومان ',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 5.5.sp)),
-                                Text(
-                                    '${specialOfferModel.off_price.toString()}',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 5.5.sp)),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Text('${specialOfferModel.price.toString()}',
-                                    style: TextStyle(
-                                        decoration: TextDecoration.lineThrough,
-                                        color: Colors.grey,
-                                        fontSize: 5.5.sp)),
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.center,
-                        child: Padding(
-                            padding:
-                                const EdgeInsets.only(bottom: 20, left: 10),
-                            child: Container(
-                              decoration: new BoxDecoration(
-                                color: Colors.red,
-                                borderRadius: BorderRadius.circular(12),
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(bottom: 20, left: 10),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Text('تومان ',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 5.5.sp)),
+                                        Text(
+                                            '${specialOfferModel.off_price.toString()}',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 5.5.sp)),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                            '${specialOfferModel.price.toString()}',
+                                            style: TextStyle(
+                                                decoration:
+                                                    TextDecoration.lineThrough,
+                                                color: Colors.grey,
+                                                fontSize: 5.5.sp)),
+                                      ],
+                                    )
+                                  ],
+                                ),
                               ),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 8, vertical: 2),
-                                child: Text(
-                                    '${specialOfferModel.off_precent.toString()}%',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 6.sp)),
-                              ),
-                            )),
-                      )
-                    ],
-                  )))
+                              Align(
+                                alignment: Alignment.center,
+                                child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        bottom: 20, left: 10),
+                                    child: Container(
+                                      decoration: new BoxDecoration(
+                                        color: Colors.red,
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 8, vertical: 2),
+                                        child: Text(
+                                            '${specialOfferModel.off_precent.toString()}%',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 6.sp)),
+                                      ),
+                                    )),
+                              )
+                            ],
+                          )))
                 ],
               ),
             ),
