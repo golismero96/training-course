@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import 'dart:async';
@@ -12,7 +11,6 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:provider/provider.dart';
 
-
 import 'Requests/Events.dart';
 import 'Requests/SpecialOffers.dart';
 import 'Widget/AllProduct.dart';
@@ -23,13 +21,12 @@ import 'Model/VenturesModel.dart';
 import 'Provider/ChangeNotifier.dart';
 import 'Requests/PageView.dart';
 import 'Requests/Ventures.dart';
+import 'Widget/EventsWidget.dart';
 import 'Widget/PageViewWidget.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 
+import 'Widget/SpecialOffersWidget.dart';
 import 'Widget/VenturesWidget.dart';
-
-
-
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -83,6 +80,7 @@ class _HomePageState extends State<HomePage> {
       }
     });
   }
+
   @override
   void initState() async {
     super.initState();
@@ -98,7 +96,6 @@ class _HomePageState extends State<HomePage> {
     FlutterNativeSplash.remove();
   }
 
-
   @override
   void dispose() {
     super.dispose();
@@ -108,311 +105,72 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final counterModel = Provider.of<CounterModel>(context);
-    return Resize(
-        builder: () {
-          return Scaffold(
-            drawer: const Drawer(child: MyDrawer()),
-            appBar: AppBar(
-              title: const Text('DadfarJs'),
-              backgroundColor: Colors.red,
-              actions: <Widget>[
-                    IconButton(
-                      onPressed: () {
-                        counterModel.increment();
-                      },
-                      icon: const Icon(Icons.search),
-                    ),
-                IconButton(
-                      onPressed: () {
-                        counterModel.decrement();
-                      },
-                      icon: const Icon(Icons.shopping_cart_outlined),
-                    ),
-                updatedVariables
-                    ? const SizedBox.shrink()
-                    : IconButton(
-                  icon: const Icon(Icons.refresh_outlined),
-                  onPressed: () {
-                    ImproveState();
-                  },
-                ),
-              ],
+    return Resize(builder: () {
+      return Scaffold(
+        drawer: const Drawer(child: MyDrawer()),
+        appBar: AppBar(
+          title: const Text('DadfarJs'),
+          backgroundColor: Colors.red,
+          actions: <Widget>[
+            IconButton(
+              onPressed: () {
+                counterModel.increment();
+              },
+              icon: const Icon(Icons.search),
             ),
-            body: Theme(
-                data: ThemeData.from(
-                  colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.red),
-                ),
-                child: RefreshIndicator(
-                  color: Colors.red,
-                  onRefresh: () async {
-                    ImproveState();
-                  },
-                  child: SingleChildScrollView(
-                    child: Container(
-                        color: Colors.white,
-                        child: Column(
-                          children: [
-                            // if(!isConnected)DialogConnectionStatus(),
-                            Consumer<CounterModel>(
-                              builder: (context, counterModel, child) {
-                                return Text(
-                                  'Counter: ${counterModel.counter}',
-                                );
-                              },
-                            ),
-                            Container(
-                              child: isConnected
-                                  ? const SizedBox.shrink()
-                                  : errmsg("No Internet Connection Available"),
-                            ),
-                            PageViewWidget(),
-                            VenturesWidget(),
-                            Padding(
-                                padding: const EdgeInsets.only(bottom: 5),
-                                child: Container(
-                                    color: Colors.red,
-                                    height: 300,
-                                    width: double.infinity,
-                                    child: FutureBuilder<List<SpecialOfferModel>>(
-                                        future: specialofferFuture,
-                                        builder: (context, snapshot) {
-                                          if (snapshot.hasData) {
-                                            List<SpecialOfferModel>? model =
-                                                snapshot.data;
-                                            return ListView.builder(
-                                              reverse: true,
-                                              shrinkWrap: true,
-                                              scrollDirection: Axis.horizontal,
-                                              itemBuilder: (context, position) {
-                                                if (position == 0) {
-                                                  return Container(
-                                                      height: 300,
-                                                      width: 370,
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                        MainAxisAlignment.center,
-                                                        children: [
-                                                          SpecialofferItem(
-                                                              model[position]),
-                                                          Column(
-                                                              mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                              crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .center,
-                                                              children: [
-                                                                Padding(
-                                                                  padding:
-                                                                  const EdgeInsets
-                                                                      .only(
-                                                                      left: 10,
-                                                                      right: 10),
-                                                                  child: Column(
-                                                                    children: [
-                                                                      SvgPicture.network(
-                                                                          'https://www.digikala.com/statics/img/svg/specialCarousel/Amazings.svg',
-                                                                          width: 85,
-                                                                          height: 85),
-                                                                      Image.network(
-                                                                          'https://www.digikala.com/statics/img/png/specialCarousel/box.png',
-                                                                          height: 120,
-                                                                          width: 150)
-                                                                    ],
-                                                                  ),
-                                                                ),
-                                                                OutlinedButton(
-                                                                    style: OutlinedButton.styleFrom(
-                                                                        side: const BorderSide(
-                                                                            width: 2,
-                                                                            color: Colors
-                                                                                .white)),
-                                                                    onPressed: () {
-                                                                      Navigator.push(
-                                                                          context,
-                                                                          MaterialPageRoute(
-                                                                              builder:
-                                                                                  (context) =>
-                                                                                  AllProduct()));
-                                                                    },
-                                                                    child: Text(
-                                                                      'مشاهده همه',
-                                                                      style: TextStyle(
-                                                                          fontSize:
-                                                                          6.sp,
-                                                                          fontWeight:
-                                                                          FontWeight
-                                                                              .w800,
-                                                                          color: hovered
-                                                                              ? Colors
-                                                                              .white60
-                                                                              : Colors
-                                                                              .white),
-                                                                    )),
-                                                              ]),
-                                                        ],
-                                                      ));
-                                                } else {
-                                                  if (position == model!.length - 1) {
-                                                    return Container(
-                                                        height: 300,
-                                                        width: 350,
-                                                        child: Row(children: [
-                                                          Container(
-                                                            width: 150,
-                                                            child: GestureDetector(
-                                                              onTap: () {
-                                                                Navigator.push(
-                                                                    context,
-                                                                    MaterialPageRoute(
-                                                                        builder:
-                                                                            (context) =>
-                                                                            AllProduct()));
-                                                              },
-                                                              child: Card(
-                                                                shape:
-                                                                RoundedRectangleBorder(
-                                                                  borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                      15.0),
-                                                                ),
-                                                                color: Colors.white,
-                                                                child: Column(
-                                                                    mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .center,
-                                                                    children: [
-                                                                      RotationTransition(
-                                                                        turns: AlwaysStoppedAnimation(
-                                                                            90 / 365),
-                                                                        child: Icon(
-                                                                          Icons
-                                                                              .expand_circle_down_outlined,
-                                                                          size: 50,
-                                                                          color: Colors
-                                                                              .lightBlueAccent,
-                                                                        ),
-                                                                      ),
-                                                                      SizedBox(
-                                                                        height: 10,
-                                                                      ),
-                                                                      Text(
-                                                                        'مشاهده همه',
-                                                                        style: TextStyle(
-                                                                            fontWeight: FontWeight.w800,
-                                                                            fontSize: 8.sp,
-                                                                            color: Colors.black87
-                                                                        ),
-                                                                      ),
-                                                                    ]),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          SpecialofferItem(
-                                                              model[position]),
-                                                        ]));
-                                                  } else {
-                                                    return SpecialofferItem(
-                                                        model[position]);
-                                                  }
-                                                }
-                                              },
-                                              itemCount: model!.length,
-                                            );
-                                          } else {
-                                            return const Center(
-                                                child: Text("Loading..."));
-                                          }
-                                        }))),
-                            Container(
-                              width: double.infinity,
-                              child: FutureBuilder<List<EventsModel>>(
-                                  future: eventsFuture,
-                                  builder: (context, snapshot) {
-                                    if (snapshot.hasData) {
-                                      List<EventsModel>? model = snapshot.data;
-                                      return Container(
-                                        height: 340,
-                                        child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          children: [
-                                            Padding(
-                                              padding:
-                                              const EdgeInsets.only(top: 10.0),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
-                                                children: [
-                                                  Container(
-                                                    height: 150,
-                                                    child: ClipRRect(
-                                                        borderRadius:
-                                                        BorderRadius.circular(
-                                                            10.0),
-                                                        child: Image.network(
-                                                            model![0].imgUrl,
-                                                            fit: BoxFit.fill,
-                                                            width: 180)),
-                                                  ),
-                                                  Container(
-                                                    height: 150,
-                                                    child: ClipRRect(
-                                                        borderRadius:
-                                                        BorderRadius.circular(
-                                                            10.0),
-                                                        child: Image.network(
-                                                            model![1].imgUrl,
-                                                            fit: BoxFit.fill,
-                                                            width: 180)),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              height: 10,
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                              children: [
-                                                Container(
-                                                  height: 150,
-                                                  child: ClipRRect(
-                                                      borderRadius:
-                                                      BorderRadius.circular(10.0),
-                                                      child: Image.network(
-                                                          model![2].imgUrl,
-                                                          fit: BoxFit.fill,
-                                                          width: 180)),
-                                                ),
-                                                Container(
-                                                  height: 150,
-                                                  child: ClipRRect(
-                                                      borderRadius:
-                                                      BorderRadius.circular(10.0),
-                                                      child: Image.network(
-                                                          model![3].imgUrl,
-                                                          fit: BoxFit.fill,
-                                                          width: 180)),
-                                                ),
-                                              ],
-                                            )
-                                          ],
-                                        ),
-                                      );
-                                    } else {
-                                      return const Center(child: Text("Loading..."));
-                                    }
-                                  }),
-                            ),
-                          ],
-                        )),
+            IconButton(
+              onPressed: () {
+                counterModel.decrement();
+              },
+              icon: const Icon(Icons.shopping_cart_outlined),
+            ),
+            updatedVariables
+                ? const SizedBox.shrink()
+                : IconButton(
+                    icon: const Icon(Icons.refresh_outlined),
+                    onPressed: () {
+                      ImproveState();
+                    },
                   ),
-                )),
-          );
-        }
-    );
+          ],
+        ),
+        body: Theme(
+            data: ThemeData.from(
+              colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.red),
+            ),
+            child: RefreshIndicator(
+              color: Colors.red,
+              onRefresh: () async {
+                ImproveState();
+              },
+              child: SingleChildScrollView(
+                child: Container(
+                    color: Colors.white,
+                    child: Column(
+                      children: [
+                        // if(!isConnected)DialogConnectionStatus(),
+                        Consumer<CounterModel>(
+                          builder: (context, counterModel, child) {
+                            return Text(
+                              'Counter: ${counterModel.counter}',
+                            );
+                          },
+                        ),
+                        Container(
+                          child: isConnected
+                              ? const SizedBox.shrink()
+                              : errmsg("No Internet Connection Available"),
+                        ),
+                        PageViewWidget(),
+                        VenturesWidget(),
+                        SpecialOffersWidget(),
+                        EventsWidget(),
+                      ],
+                    )),
+              ),
+            )),
+      );
+    });
   }
 
   Widget errmsg(String text) {
@@ -447,6 +205,4 @@ class _HomePageState extends State<HomePage> {
       return false;
     }
   }
-
-
 }
