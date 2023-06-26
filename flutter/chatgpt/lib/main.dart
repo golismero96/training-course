@@ -1,5 +1,4 @@
 
-import 'package:chatgpt/utils/MyDrawer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -7,10 +6,10 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'HomePage.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 
-import 'Provider/ChangeNotifier.dart';
 import 'Provider/EventsFutureProvider.dart';
 import 'Provider/PageViewFutureProvider.dart';
 import 'Provider/SpecialOffersFutureProvider.dart';
+import 'Provider/ThemeProvider.dart';
 import 'Provider/VenturesFutureProvider.dart';
 
 void main() async {
@@ -24,7 +23,7 @@ void main() async {
           ChangeNotifierProvider(create: (context) => VenturesFutureProvider()),
           ChangeNotifierProvider(create: (context) => SpecialOffersFutureProvider()),
           ChangeNotifierProvider(create: (context) => EventsFutureProvider()),
-          ChangeNotifierProvider(create: (context) => CounterModel()),
+          ChangeNotifierProvider(create: (context) => ThemeProvider()),
         ],
         child:MaterialApp(
           debugShowCheckedModeBanner: false,

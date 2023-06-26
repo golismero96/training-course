@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'dart:async';
@@ -12,7 +13,6 @@ import 'Requests/Events.dart';
 import 'Requests/SpecialOffers.dart';
 import 'Model/EventsModel.dart';
 import 'Model/SpecialOfferModel.dart';
-import 'Provider/ChangeNotifier.dart';
 import 'Requests/PageView.dart';
 import 'Requests/Ventures.dart';
 import 'Widget/EventsWidget.dart';
@@ -20,6 +20,7 @@ import 'Widget/PageViewWidget.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 import 'Widget/SpecialOffersWidget.dart';
+import 'Widget/ThemeSwitcher.dart';
 import 'Widget/VenturesWidget.dart';
 
 class HomePage extends StatefulWidget {
@@ -38,7 +39,7 @@ class _HomePageState extends State<HomePage> {
   Future<List<SpecialOfferModel>>? specialofferFuture;
   Future<List<EventsModel>>? eventsFuture;
 
-  String baseAPI = 'http://151.80.86.139:8080';
+
 
   void ImproveState() async {
     SendRequestVentures(context);
@@ -98,7 +99,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final counterModel = Provider.of<CounterModel>(context);
     return Resize(builder: () {
       return Scaffold(
         drawer: const Drawer(child: MyDrawer()),
@@ -106,18 +106,7 @@ class _HomePageState extends State<HomePage> {
           title: const Text('DadfarJs'),
           backgroundColor: Colors.red,
           actions: <Widget>[
-            IconButton(
-              onPressed: () {
-                counterModel.increment();
-              },
-              icon: const Icon(Icons.search),
-            ),
-            IconButton(
-              onPressed: () {
-                counterModel.decrement();
-              },
-              icon: const Icon(Icons.shopping_cart_outlined),
-            ),
+            const ThemeSwitcher(),
             updatedVariables
                 ? const SizedBox.shrink()
                 : IconButton(
@@ -143,13 +132,6 @@ class _HomePageState extends State<HomePage> {
                     child: Column(
                       children: [
                         // if(!isConnected)DialogConnectionStatus(),
-                        Consumer<CounterModel>(
-                          builder: (context, counterModel, child) {
-                            return Text(
-                              'Counter: ${counterModel.counter}',
-                            );
-                          },
-                        ),
                         Container(
                           child: isConnected
                               ? const SizedBox.shrink()
