@@ -40,6 +40,7 @@ dependencies:
   skeletons: ^0.0.3
   intl: ^0.17.0
   dio: ^4.0.6
+  http: ^1.0.0
 
 dev_dependencies:
   flutter_test:
