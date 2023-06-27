@@ -100,24 +100,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Resize(builder: () {
-      return Scaffold(
-        drawer: const Drawer(child: MyDrawer()),
-        appBar: AppBar(
-          title: const Text('DadfarJs'),
-          backgroundColor: Colors.red,
-          actions: <Widget>[
-            const ThemeSwitcher(),
-            updatedVariables
-                ? const SizedBox.shrink()
-                : IconButton(
-                    icon: const Icon(Icons.refresh_outlined),
-                    onPressed: () {
-                      ImproveState();
-                    },
-                  ),
-          ],
-        ),
-        body: Theme(
+      return Theme(
             data: ThemeData.from(
               colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.red),
             ),
@@ -144,8 +127,7 @@ class _HomePageState extends State<HomePage> {
                       ],
                     )),
               ),
-            )),
-      );
+            ));
     });
   }
 

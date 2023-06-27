@@ -36,7 +36,6 @@ class _SpecialOffersWidgetState extends State<SpecialOffersWidget> {
                       if (snapshot.hasData) {
                         List<SpecialOfferModel>? model = snapshot.data;
                         return ListView.builder(
-                          reverse: true,
                           shrinkWrap: true,
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context, position) {
@@ -47,7 +46,6 @@ class _SpecialOffersWidgetState extends State<SpecialOffersWidget> {
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      SpecialofferItem(model[position]),
                                       Column(
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
@@ -85,7 +83,7 @@ class _SpecialOffersWidgetState extends State<SpecialOffersWidget> {
                                                 child: Text(
                                                   'مشاهده همه',
                                                   style: TextStyle(
-                                                      fontSize: 6.sp,
+                                                      fontSize: 10.sp,
                                                       fontWeight:
                                                           FontWeight.w800,
                                                       color: hovered
@@ -93,6 +91,7 @@ class _SpecialOffersWidgetState extends State<SpecialOffersWidget> {
                                                           : Colors.white),
                                                 )),
                                           ]),
+                                      SpecialofferItem(model[position]),
                                     ],
                                   ));
                             } else {
@@ -101,6 +100,7 @@ class _SpecialOffersWidgetState extends State<SpecialOffersWidget> {
                                     height: 300,
                                     width: 350,
                                     child: Row(children: [
+                                      SpecialofferItem(model[position]),
                                       Container(
                                         width: 150,
                                         child: GestureDetector(
@@ -141,14 +141,13 @@ class _SpecialOffersWidgetState extends State<SpecialOffersWidget> {
                                                     style: TextStyle(
                                                         fontWeight:
                                                             FontWeight.w800,
-                                                        fontSize: 8.sp,
+                                                        fontSize: 10.sp,
                                                         color: Colors.black87),
                                                   ),
                                                 ]),
                                           ),
                                         ),
                                       ),
-                                      SpecialofferItem(model[position]),
                                     ]));
                               } else {
                                 return SpecialofferItem(model[position]);

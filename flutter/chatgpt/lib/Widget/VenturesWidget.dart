@@ -33,16 +33,18 @@ class _VenturesWidgetState extends State<VenturesWidget> {
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         List<VenturesModel>? model = snapshot.data;
-                        return GridView.builder(
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 4,
-                            ),
-                            shrinkWrap: true,
-                            itemBuilder: (context, position) {
-                              return VenturesRenderItem(model[position]);
-                            },
-                            itemCount: model!.length);
+                        return Center(
+                          child: GridView.builder(
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 4,
+                              ),
+                              shrinkWrap: true,
+                              itemBuilder: (context, position) {
+                                return VenturesRenderItem(model[position]);
+                              },
+                              itemCount: model!.length),
+                        );
                       } else {
                         return const Center(child: Text("Loading..."));
                       }
